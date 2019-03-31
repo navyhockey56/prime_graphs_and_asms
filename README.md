@@ -21,6 +21,9 @@ Since all cycles start at the center in the 'on' position, and we move the 'on' 
 ### Technicality
 I said there'd be no arithmetic needed for the Prime-Graph, and I'm technically right - the result of running the Prime-Graph algorithm is a list of completed graphs. As such, you don't know what the prime numbers are when the algorithm finishes; instead, you just have a list of graphs that represent the prime numbers. To get the actual prime numbers, you have to run the size method on each cycle, and the size method has to use addition in order to count the number of points.
 
+### Confused?
+If you're confused, try drawing out the Prime-Graph by hand! You can also try modifying the algorithm to print out the current state of things for each iteration.
+
 ### Running
 To run the Prime-Graph algorithm, simply load the progam into a ruby seesion and call run_machine:
 ```ruby
@@ -29,3 +32,6 @@ graphs = PrimeGraph.run_machine 5000
 primes = graphs.map(&:size)
 puts "The first #{primes.count} are #{primes}"
 ```
+
+### Calling Curious People
+I would love to get a detailed analysis on the complexity of this algorithm! Feel free to submit a PR containing your explanation to the complexity of this alogrithm!
