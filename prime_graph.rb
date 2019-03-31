@@ -1,21 +1,28 @@
 module PrimeGraph
 
   def PrimeGraph.reload
-    load '/home/will/Code/ruby/prime_graph.rb'
+    load 'prime_graph.rb'
   end
 
   def PrimeGraph.run_machine(number_of_iterations)
+    
     initial_point = InitialPoint.new 
     initial_graph = Graph.new(initial_point: initial_point)
-    graphs = [initial_graph]
-    current_graph = Graph.new(graph: initial_graph)
-    while ((number_of_iterations -= 1) > 0)
+    
+    graphs = []
+    current_graph = initial_graph
+    i = 0
+    while ((number_of_iterations -= 1) >= 0)
+      puts "Iteration: #{i += 1}"
       graphs.each(&:move)
+  
       if initial_point.active
-        current_graph << Point.new
-      else 
+         current_graph << Point.new
+      else
         graphs << current_graph
+        current_graph.move
         current_graph = Graph.new(graph: current_graph)
+        current_graph << Point.new
       end
     end
 
@@ -29,35 +36,37 @@ module PrimeGraph
     def initialize(initial_point: nil, graph: nil)
       if initial_point
         @initial_point = initial_point
-        new_point = Point.new
-        new_point.active = true
-        @initial_point.add_next(self, new_point)
-        @current_point = new_point
+        initial_point.add_next(self, nil)
+        @current_point = initial_point
       else
         @initial_point = graph.initial_point
         current = @initial_point.next(graph).dup
         @initial_point.add_next(self, current)
         
         @current_point = current
-        while (next_point = current.next) 
+        while (next_point = @current_point.next) 
           self << next_point.dup
         end
       end
+
     end
 
     def <<(point)
       if @current_point.class == InitialPoint
-        raise "You cannot add a new point to the initial point in this manner."
+        @current_point.add_next(self, point)
       else
         @current_point.next = point
-        @current_point = point
       end
+      @current_point = point
     end
 
     def move
-      @current_point.active = false
-      @current_point = current_point.next || initial_point
-      @current_point.active = true
+      if (@current_point.class == InitialPoint)
+        @current_point = current_point.next(self)
+      else
+        @current_point = current_point.next
+        @current_point ||= @initial_point
+      end
     end
 
     def inspect
@@ -65,23 +74,46 @@ module PrimeGraph
         current_point: current_point.inspect
       }
     end
+
+    def to_s
+      JSON.pretty_generate(self.inspect)
+    end
+
+    def size
+      count = 2
+      current = @initial_point.next(self)
+      while (next_point = current.next)
+        count += 1
+        current = next_point
+      end
+      count
+    end
   end
 
   class Point
-    attr_accessor :active, :next
+    attr_accessor :next
 
     def inspect
       {
-        active: self.active,
         has_next: !self.next.nil?
       }
+    end
+
+    def dup
+      point = Point.new
+      point.next = @next if @next
+      point 
+    end
+
+    def to_s
+      JSON.pretty_generate(self.inspect)
     end
   end
 
   class InitialPoint < Point
     def initialize()
+      super
       @all_next = {}
-      @active = false
     end
 
     def next(graph)
@@ -90,6 +122,14 @@ module PrimeGraph
 
     def add_next(graph, point)
       @all_next[graph] = point
+    end
+
+    def active
+      @all_next.keys.any? {|g| g.current_point.class == InitialPoint}
+    end
+
+    def inspect
+      "Initial Point"
     end
 
   end
