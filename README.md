@@ -30,7 +30,7 @@ To run the Prime-Graph algorithm, simply load the progam into a ruby seesion and
 load 'prime_graphs.rb'
 graphs = PrimeGraph.run_machine 5000
 primes = graphs.map(&:size)
-puts "The first #{primes.count} are #{primes}"
+puts "The first #{primes.count} primes are: #{primes}"
 ```
 
 ### Calling Curious People
