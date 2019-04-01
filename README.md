@@ -29,12 +29,12 @@ If you're confused, try drawing out the Prime-Graph by hand! You can also try mo
 ![alt text](https://raw.githubusercontent.com/navyhockey56/prime_graphs/master/PrimeGraphProgression3a.png)
 
 ### Running
-To run the Prime-Graph algorithm, simply load the progam into a ruby seesion and call run_machine:
+To run the Prime-Graph algorithm, simply load the progam into a ruby seesion, create a PrimeGraph and call run_machine:
 ```ruby
 load 'prime_graphs.rb'
-graphs = PrimeGraph.run_machine 5000
-primes = graphs.map(&:size)
-puts "The first #{primes.count} primes are: #{primes}"
+prime_graph = PrimeGraph::PrimeGraph.new
+prime_graph.run_machine 500
+puts "The first #{prime_graph.cycles.count} primes are: #{prime_graph.primes}"
 ```
 
 ### Calling Curious People
