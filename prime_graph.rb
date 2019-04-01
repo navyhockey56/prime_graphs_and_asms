@@ -38,7 +38,6 @@ module PrimeGraph
     graphs
   end
 
-
   class Graph
     attr_reader :current_point, :initial_point
 
@@ -156,6 +155,109 @@ module PrimeGraph
 
     def inspect
       "Initial Point"
+    end
+
+  end
+
+  class CycleGraph
+    attr_reader :cycles
+
+    def initialize(*cycles)
+      raise "Cycles cannot be null or empty" unless (cycles || cycles.empty?)
+      @cycles = cycles.sort {|a,b| a.length <=> b.length }
+    end
+
+    def move(number_of_moves=1)
+      (0...number_of_moves).each { @cycles.each(&:move) }
+      self
+    end
+
+    def ==(cycle_graph)
+      cycle_graph && cycle_graph.class == CycleGraph && (@cycles.map(&:size) - cycle_graph.cycles.map(&:size))
+    end
+
+    def position
+      @cycles.map(&:position)
+    end
+
+    def inspect
+      {
+        position: self.position,
+        cycles: self.cycles
+      }
+    end
+
+  end
+
+  class Cycle
+    attr_reader :current_point, :initial_point, :is_complete
+
+    def initialize(initial_point: nil, cycle: nil)
+      raise "You need to pass the initial point or a cycle" unless (initial_point || cycle)
+      if initial_point
+        @initial_point = initial_point
+      else
+        @initial_point = cycle.initial_point
+      end
+      @current_point = @initial_point
+      @is_complete = false
+    end
+
+    def <<(point)
+      raise "The cycle has already been closed" if @is_complete
+      @current_point.next = point 
+      @current_point = point
+      self
+    end
+
+    def close_cycle
+      self << @initial_point
+      @is_complete = true
+      self
+    end
+
+    def length
+      return @length if @length
+      
+      current = @initial_point
+      count = 1
+      while ((next_point = current.next) && next_point != @initial_point)
+        count += 1
+        current = next_point
+      end
+      @length = count if @is_complete
+      count
+    end
+
+    def at_starting_point?
+      @current_point.class != InitialPoint
+    end
+
+    def move(number_of_moves=1)
+      (0...number_of_moves).each { @current_point = @current_point.next }
+      self
+    end
+
+    def position
+      position = 0
+      current = @initial_point
+      while (current != @current_point)
+        position += 1
+        current = current.next
+      end
+      position 
+    end
+
+    def ==(cycle)
+      cycle && cycle.class == Cycle && (cycle.is_complete == @is_complete) && cycle.length == self.length
+    end
+
+    def inspect
+      {
+        length: self.length,
+        position: self.position,
+        is_complete: self.is_complete
+      }
     end
 
   end
