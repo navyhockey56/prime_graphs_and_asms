@@ -24,6 +24,8 @@ I said there'd be no arithmetic needed for the Prime-Graph, and I'm technically 
 ### Confused?
 If you're confused, try drawing out the Prime-Graph by hand! You can also try modifying the algorithm to print out the current state of things for each iteration.
 
+![alt text](https://raw.githubusercontent.com/navyhockey56/prime_graphs/master/PrimeGraphProgression.png)
+
 ### Running
 To run the Prime-Graph algorithm, simply load the progam into a ruby seesion and call run_machine:
 ```ruby
