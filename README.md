@@ -26,7 +26,7 @@ If you're confused, try drawing out the Prime-Graph by hand! You can also try mo
 
 ![alt text](https://raw.githubusercontent.com/navyhockey56/prime_graphs/master/PrimeGraphProgression.png)
 ![alt text](https://raw.githubusercontent.com/navyhockey56/prime_graphs/master/PrimeGraphProgression2.png)
-![alt text](https://raw.githubusercontent.com/navyhockey56/prime_graphs/master/PrimeGraphProgression3.png)
+![alt text](https://raw.githubusercontent.com/navyhockey56/prime_graphs/master/PrimeGraphProgression3a.png)
 
 ### Running
 To run the Prime-Graph algorithm, simply load the progam into a ruby seesion and call run_machine:
