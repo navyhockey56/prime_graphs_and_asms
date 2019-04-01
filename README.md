@@ -10,7 +10,7 @@ The Prime-Graph is self-building. We start with the center and then using the st
 
 - There exists an unfinished cycle at the start of each iteration. At the end of the iteration that cycle will either be connected to the center (thus completing the cycling) or another point will be added to the end of the unfinished cycle. The end of an unfinished cycle is always the 'on' point. If the unfinished cycle is connected to the center, then a new unfinished cycle will be created of the same length and then the new point will be added to that cycle. Thus, every iteration adds a new point to the graph.
 
-- The unfinished cycle should be completed at the end of the iteration if and only if the center is 'off' after all the other cycles have moved. In this event, the unfinished cycle is connected to the center, and then it moves, thus turning the center on. (Thus, the center is always 'on' at the end of every iteration).
+- The unfinished cycle should be completed at the end of the iteration if and only if the center is 'off' after all the other cycles have moved. In this event, the unfinished cycle is connected to the center, and then it moves, thus turning the center on. (Thus, the center is always 'on' at the end of every iteration [other than the first iteration]).
 
 ### Relationship to primes
 Each of the completed cycles produced by running the Prime-Graph reprents a unique prime number. The prime number a cycle represents is equal to the number of points within it (thus, the state machine produces cycles of prime length). Furthermore, the cycles are produced in consequetive order (2, 3, 5, 7, ...). 
