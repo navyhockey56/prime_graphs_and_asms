@@ -36,4 +36,4 @@ puts "The first #{primes.count} primes are: #{primes}"
 ```
 
 ### Calling Curious People
-I would love to get a detailed analysis on the complexity of this algorithm! Feel free to submit a PR containing your explanation to the complexity of this alogrithm!
+I would love to get a detailed analysis on the complexity of this algorithm; please submit a PR containing your explanation!
