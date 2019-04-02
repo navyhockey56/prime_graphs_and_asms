@@ -93,6 +93,27 @@ module PrimeGraph
       cycle && cycle.class == Cycle && (cycle.is_complete == @is_complete) && cycle.length == self.length
     end
 
+    def Cycle.add(cycle1, cycle2)
+      raise "Cycle is not closed" unless cycle1.is_complete && cycle2.is_complete
+      raise "Incompatible cycle lengths" unless cycle1.length == cycle2.length
+      
+      cycle = Cycle.new cycle: cycle1
+      cycle.close_cycle
+      
+      current = cycle1.initial_point
+      while (current != cycle1.current_point)
+        current = current.next
+        cycle.move
+      end
+      current = cycle2.initial_point
+      while (current != cycle2.current_point)
+        current = current.next
+        cycle.move
+      end
+  
+      cycle
+    end
+
     def inspect
       {
         length: self.length,
@@ -107,7 +128,7 @@ module PrimeGraph
     attr_reader :cycles
 
     def initialize(*cycles)
-      @cycles = cycles.sort {|a,b| a.length <=> b.length } if cycles
+      @cycles = cycles.flatten.sort {|a,b| a.length <=> b.length } if cycles
       @cycles ||= []
     end
 
@@ -118,6 +139,21 @@ module PrimeGraph
 
     def ==(cycle_graph)
       cycle_graph && cycle_graph.class == CycleGraph && (@cycles.map(&:size) - cycle_graph.cycles.map(&:size))
+    end
+
+    def CycleGraph.add(cycle1, cycle2)
+      if cycle1.cycles.map(&:length) != cycle2.cycles.map(&:length)
+        raise "Incompatible cycle lengths"
+      end
+      cycles = []
+      (0...(cycle1.cycles.count)).each do |i|
+        cycles << Cycle.add(cycle1[i], cycle2[i])
+      end
+      CycleGraph.new cycles
+    end
+
+    def [](i)
+      @cycles[i]
     end
 
     def position
