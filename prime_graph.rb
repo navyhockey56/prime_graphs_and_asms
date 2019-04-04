@@ -4,13 +4,42 @@ module PrimeGraph
     load 'prime_graph.rb'
   end
 
-  class Point
-    attr_accessor :next
+  class Vertex
+    attr_reader :edges
 
-    def inspect
-      {
-        has_next: !self.next.nil?
-      }
+    def initialize
+      @edges = {}
+    end 
+
+    def add_edge(key:, point:)
+      @edges[key] = point
+    end
+
+    def [](key)
+      @edges[key]
+    end
+
+  end
+
+  # Represents a point in a graph
+  class Point < Vertex
+    attr_reader :next
+
+    def initialize(multiple_edges=false)
+      super if multiple_edges
+    end
+
+    def next(key=nil)
+      @next || @edges[key]
+    end
+
+    def add_edge(key: nil, point:)
+      if key && @edges
+        super
+      else
+        @next = point
+      end
+      self 
     end
 
     def dup
@@ -19,21 +48,30 @@ module PrimeGraph
       point 
     end
 
+    def inspect
+      {
+        has_next: !self.next.nil?
+      }
+    end
+
     def to_s
       JSON.pretty_generate(self.inspect)
     end
+
   end
 
+  # Represents the graph of a cycle
   class Cycle
     attr_reader :current_point, :initial_point, :is_complete
-
+=begin
     def initialize(initial_point: nil, cycle: nil)
       raise "You need to pass the initial point or a cycle" unless (initial_point || cycle)
+      
       if initial_point
         @initial_point = initial_point
         @current_point = @initial_point
       else
-        @initial_point = cycle.initial_point.dup
+        @initial_point = cycle.initial_point
         @current_point = @initial_point
         current = @initial_point
         while ((next_point = current.next) && next_point != cycle.initial_point)
@@ -41,12 +79,32 @@ module PrimeGraph
           self << current
         end
       end
+
       @is_complete = false
+    end
+=end
+    def initialize(initial_point: nil, cycle_to_copy: nil)
+      puts "Ignoring initial_point since cycle_to_copy was passed" if initial_point && cycle_to_copy
+      @is_complete = false
+
+      if cycle_to_copy
+        initial_point = cycle_to_copy.initial_point
+        @initial_point = initial_point.edges ? initial_point : initial_point.dup
+        @current_point = @initial_point
+        current = @initial_point
+        while ((next_point = current.next(cycle_to_copy)) && next_point != cycle_to_copy.initial_point)
+          current = next_point.dup
+          self << current
+        end
+      else
+        @initial_point = initial_point ? initial_point : Point.new
+        @current_point = @initial_point
+      end      
     end
 
     def <<(point)
       raise "The cycle has already been closed" if @is_complete
-      @current_point.next = point 
+      @current_point.add_edge(key: self, point: point) 
       @current_point = point
       self
     end
@@ -75,7 +133,7 @@ module PrimeGraph
     end
 
     def move(number_of_moves=1)
-      (0...number_of_moves).each { @current_point = @current_point.next }
+      (0...number_of_moves).each { @current_point = @current_point.next(self) }
       self
     end
 
@@ -84,7 +142,7 @@ module PrimeGraph
       current = @initial_point
       while (current != @current_point)
         position += 1
-        current = current.next
+        current = current.next(self)
       end
       position 
     end
@@ -124,7 +182,11 @@ module PrimeGraph
 
   end
 
-  class CycleGraph
+  # This is currently implemented as a disconnected graph
+  #
+  # TODO: Add version where all the cycles share the same center
+  # TODO: Add version where all cycles share as many points as possible
+  class CyclesGraph
     attr_reader :cycles
 
     def initialize(*cycles)
@@ -141,7 +203,7 @@ module PrimeGraph
       cycle_graph && cycle_graph.class == CycleGraph && (@cycles.map(&:size) - cycle_graph.cycles.map(&:size))
     end
 
-    def CycleGraph.add(cycle1, cycle2)
+    def CyclesGraph.add(cycle1, cycle2)
       if cycle1.cycles.map(&:length) != cycle2.cycles.map(&:length)
         raise "Incompatible cycle lengths"
       end
@@ -177,7 +239,7 @@ module PrimeGraph
 
   end
 
-  class PrimeGraph < CycleGraph
+  class PrimeGraph < CyclesGraph
 
     attr_reader :iteration
 
