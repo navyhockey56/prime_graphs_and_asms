@@ -51,7 +51,7 @@ Each iteration, `i`, the algorithm will need to:
 Step `1` will always require `p(i)` operations, and step `2` will require at most `p(i)` operations. Thus, between steps `1` and `2` we will perform at most `2p(i)` operations. Step `3` has a constant number of iterations, `c`.
 
 Thus, to run the algorithm for the first `n` iterations, the number of operations, `o(n)`, is given by:
-`o(n) = Sum[i=1, n]{ 2p(i) + c } = 2*Sum[i=1, n]{ p(i) } + n*c <= 2*Sum[i=1, n]{ i } + n+c = n*(n+1) + n*c = n^2 + n*(c + 1)`.  
+`o(n) <= Sum[i=1, n]{ 2p(i) + c } = 2*Sum[i=1, n]{ p(i) } + n*c <= 2*Sum[i=1, n]{ i } + n+c = n*(n+1) + n*c = n^2 + n*(c + 1)`.  
 
 Furthermore, the number of nodes within the fully-connected graph on for any iteration, `i`, is `i` itself. Thus, the size of the fully-connected graph grows linearly!
 
