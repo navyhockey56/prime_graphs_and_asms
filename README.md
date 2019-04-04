@@ -39,12 +39,14 @@ puts "The first #{prime_graph.cycles.count} primes are: #{prime_graph.primes}"
 
 ### Analysis
 Let `p(n) = the number of primes less than or equal to n.`  
-(When the algorith is run using the fully-connected representation)  
+
+
+#### Fully-connected 
 
 Each iteration, `i`, the algorithm will need to:  
 1. Move each existing cycle.  
 2. Check if any existing cycle is on the center.
-3. Add the new node.
+3. Add the new node.  
 Step `1` will always require `p(i)` operations, and step `2` will require at most `p(i)` operations. Thus, between steps `1` and `2` we will perform at most `2p(i)` operations. Step `3` has a constant number of iterations, `c`.
 
 Thus, to run the algorithm for the first `n` iterations, the number of operations, `o(n)`, is given by:
