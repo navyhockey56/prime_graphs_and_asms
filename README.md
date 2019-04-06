@@ -60,9 +60,9 @@ Furthermore, the number of nodes within the fully-connected graph on for any ite
 Time to generalize! 
 
 ### Framing
-What if instead of starting with a branch of length 1 extending from our center, we started with a branch of length 2 or 3, or any other number?  For example, the initial state would like:`[center : off] -> (node 1 : off) -> ... -> (node n : on)`.
+What if instead of starting with a branch of length 1 extending from our center, we started with a branch of length 2 or 3, or any other number?  For example, what if our initial state looked like:`[center : off] -> (node 1 : off) -> ... -> (node n : on)`.
 
-Simarily, what if instead of starting with a single center, we started with 2 or more nodes that activated our machine? For example, the initial state would like: `[activator 1 : off] -> ... -> [activator n : off] -> (node 1 : off) -> ... (node m : off)`.
+Simarily, what if instead of starting with a single center, we started with 2 or more nodes that activated our machine? For example, what if our initial state looked like: `[activator 1 : off] -> ... -> [activator n : off] -> (node 1 : off) -> ... (node m : off)`.
 
 We will refer to these machines as `Awkward State Machines` or `ASM`s. When referring to a specific machine, we include the number of activators, `m`, it has; and the length, `n`, of it's initial branch `ASM<n, m>`. Please note, the initial branches length is equal to the number of non-activator nodes only! For example, the inital state of `ASM<2, 2>` is given by: `[activator 1 : off] -> [activator 2 : off] -> (node 1 : off) -> (node 2 : on)`.
 
