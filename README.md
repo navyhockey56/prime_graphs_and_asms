@@ -66,7 +66,7 @@ Simarily, what if instead of starting with a single center, we started with 2 or
 
 We will refer to these machines as `Awkward State Machines` or `ASM`s. When referring to a specific machine, we include the number of activators, `m`, it has; and the length, `n`, of it's initial branch `ASM<n, m>`. Please note, the initial branches length is equal to the number of non-activator nodes only! For example, the inital state of `ASM<2, 2>` is given by: `[activator 1 : off] -> [activator 2 : off] -> (node 1 : off) -> (node 2 : on)`.
 
-An `ASM` behaves the same way as the `Prime Graph` (in fact, the Prime Graph is equal to `ASM<1,1>`!). As such, a new node is added each iteration, the branch is closed whenever the machine is not active (thus activating the machine). Given these two properties, we know that the length of the branch for any given state is equal to the state's iteration, `i`, plus the length of the initial branch `m` (`branch_length = i + m`).
+An `ASM` behaves the same way as the `Prime Graph` (in fact, the Prime Graph is equal to `ASM<1,1>`!). As such, a new node is added each iteration, the branch is copied and closed into a cycle whenever the machine is not active (thus activating the machine). Given these familiar properties, we know that the length of the branch for any given state is equal to the state's iteration, `i`, plus the length of the initial branch `m` (`branch_length = i + m`).
 
 ### Usage
 Creating a new `ASM<n,m>` is simple:
