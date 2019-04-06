@@ -162,4 +162,8 @@ module AwkwardMath
 
 	end
 
+	def AwkwardMath.prime_graph
+		AwkwardStateMachine.new 1, 1
+	end
+
 end
