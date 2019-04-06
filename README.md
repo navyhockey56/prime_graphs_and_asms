@@ -94,9 +94,9 @@ asm_2_3.lengths # -> [5, 7, 9, 12, 17, 23, 32, 38, 44, 53, 58, 62, 67, 74, 79, 8
 You can shortcut creating a new prime graph, `ASM<1,1>`, using:
 ```ruby
 pg = AwkwardMath.prime_graph
-=> #<AwkwardMath::AwkwardStateMachine:0x00007f8c6e1195c0
- @branch=#<AwkwardMath::Branch:0x00007f8c6e119408 @current_point=Point: has next? false, @starting_point=ActivePoint: has next? true>,
- @cycles=[]>
+pg.run_machine 100
+pg.to_s
+# => "ASM<1, 1> -> [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101]"
 ```
 
 ### The first 100 iterations
