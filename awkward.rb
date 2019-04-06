@@ -90,12 +90,13 @@ module AwkwardMath
 		end
 
 		def length
+			return @length if @length
 			count = 1
 			current = @starting_point
 			while (current = current.next) != @starting_point
 				count += 1
 			end
-			count
+			@length = count
 		end
 
 	end
@@ -116,13 +117,14 @@ module AwkwardMath
 	end
 
 	class AwkwardStateMachine < StateMachine
-		attr_reader :cycles, :branch
+		attr_reader :cycles, :branch, :number_of_activators, :initial_branch_length
 
 		# 
 		# @param [int] intial_branch_length - The length of the initial
 		# branch when disconnected from the activators
 		def initialize(number_of_activators, initial_branch_length)
-			
+			@number_of_activators = number_of_activators
+			@initial_branch_length = initial_branch_length
 			activator = ActivePoint.new
 			starting_point = activator
 			(number_of_activators - 1).times do 
@@ -159,6 +161,10 @@ module AwkwardMath
 		def lengths
 			@cycles.map(&:length)
 		end
+
+		def to_s
+			"ASM<#{@number_of_activators}, #{@initial_branch_length}> -> #{self.lengths}"
+		end	
 
 	end
 
