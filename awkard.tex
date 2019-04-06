@@ -41,4 +41,18 @@ If you run the above experiment and then count the number of tacks in each bar, 
 \section{Awkward State Machines}
 
 
+\textbf{Definition} \\
+An activation cycle machine (ACM) is a directed cycle graph, $G$, containing $0 < n < |G|$ consequetive nodes called activation nodes. The activation node that is connected to by a non-activation is referred to as position $0$, with all other nodes' positions being determined by their relative position to $0$. An ACM's initial state starts at position $0$, then moves to the next consequetive position with each iteration. An $ACM$ state's step is the number of iterations needed to get to that state from the initial state (thus, the initial state is step 0, the next state is state 1, and the state after 9 billion iterations is step 9 billion). An $ACM$'s state is said to be active if it's position is on one of it's activator nodes; otherwise, the $ACM$ is called inactive. We can refer to the $ACM$ containing, $a$, activation nodes and, $n$, non-activation nodes as $ACM_{a,n}$. An $ACM$'s length is equal to the number of nodes it contains.\\
+\\
+\textbf{Lemma}\\
+If $ACM_{a,n}$ is on position $p$ on step $m$, then $m$ $mod$ $(a + n) = p$.\\
+\\
+\textit{Proof}\\  
+TODO\\
+\\
+\textbf{Corollary}\\
+$ACM_{a,n}$ is active on step $m$ if and only if $m$ $mod$ $(a + n) < n$\\
+\\
+  
+
 \end{document}
