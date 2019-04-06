@@ -4,6 +4,18 @@ module AwkwardMath
 		load 'awkward.rb'
 	end
 
+	def AwkwardMath.prime_graph
+		AwkwardStateMachine.new 1, 1
+	end
+
+	def AwkwardMath.nine_by_nine
+		(1..9).each_with_object([]) do |i, machines|
+			(1..9).each do |j|
+				machines << AwkwardStateMachine.new(i, j)
+			end
+		end
+	end
+
 	class Point
 		attr_reader :next_point
 
@@ -166,10 +178,6 @@ module AwkwardMath
 			"ASM<#{@number_of_activators}, #{@initial_branch_length}> -> #{self.lengths}"
 		end	
 
-	end
-
-	def AwkwardMath.prime_graph
-		AwkwardStateMachine.new 1, 1
 	end
 
 end
