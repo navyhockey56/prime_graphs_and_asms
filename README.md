@@ -71,6 +71,7 @@ An `ASM` behaves the same way as the `Prime Graph` (in fact, the Prime Graph is 
 ### Usage
 Creating a new `ASM<n,m>` is simple:
 ```ruby
+load 'awkward.rb'
 number_of_activators = 2
 initial_branch_length = 3
 asm_2_3 = AwkwardMath::AwkwardStateMachine.new(2, 3)
