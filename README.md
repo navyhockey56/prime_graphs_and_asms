@@ -183,4 +183,9 @@ ASM<9, 7> -> [16, 25, 41, 59, 73, 91, 109]
 ASM<9, 8> -> [17, 26, 43, 61, 77, 95, 113]
 ASM<9, 9> -> [18, 27, 45, 63, 99, 117]
 ```
+NOTE: The first 8100 iterations of the ASTs above can be found within `nine_by_nine_iter_8102.txt`.  
 
+NOTE: You can quickly produce an array containing the ASTs above with:
+```ruby
+niners = AwkwardMath.nine_by_nine
+```
