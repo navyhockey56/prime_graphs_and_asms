@@ -120,11 +120,12 @@ class Asm {
 
   nextState() {
     this.cycles.forEach(c => c.move())
-    if (!this.active()) {
+    const addNewCycle = !this.active()
+    if (addNewCycle) {
       this.cycles.push(this.branch.copyAndClose())
     }
     this.branch.addPoint(new Point())
-    return this
+    return addNewCycle
   }
 
   runMachine(iterations: number) {
@@ -144,6 +145,10 @@ class Asm {
 
   longestCycleLength() {
     return this.cycles[this.cycles.length - 1].length()
+  }
+
+  longestCycle() {
+    return this.cycles[this.cycles.length - 1]
   }
 
 }
