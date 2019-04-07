@@ -1,19 +1,24 @@
 class Point {
-  private _nextPoint: Point
+  public next?: Point
 
   constructor(public active: boolean = false) {}
 
-  public set next(vertex: Point) {
-    this._nextPoint = vertex
+  public setNext(vertex: Point) {
+    this.next = vertex
   }
 
-  public get next(): Point {
-    return this._nextPoint
+  public getNext(): Point {
+    if(!this.next) throw("Doesn't have next")
+    return this.next
+  }
+
+  public hasNext(): boolean {
+    return !!this.next
   }
 
   dup(): Point {
     let p = new Point(this.active)
-    p.next = this.next
+    if (this.hasNext()) p.next = this.next
     return p
   }
 }
@@ -21,9 +26,9 @@ class Point {
 class Branch {
   constructor(
     private startingPoint: Point,
-    private currentPoint: Point = null
+    private currentPoint: Point = startingPoint
   ) {
-    this.currentPoint = this.currentPoint || this.startingPoint
+    if(!this.startingPoint) throw("need starting point for Branch")
   }
 
   addPoint(point: Point) {
@@ -35,7 +40,9 @@ class Branch {
     const startingPoint = this.startingPoint.dup()
     let current = startingPoint
     let nextPoint;
-    while ((nextPoint = current.next.dup()) !== null) {
+    while (current.hasNext()) {
+      const next = current.next as Point
+      nextPoint = next.dup()
       current.next = nextPoint
       current = nextPoint
     }
@@ -51,7 +58,8 @@ class Branch {
   length() {
     let count = 1;
     let current = this.startingPoint
-    while (current = current.next) {
+    while (current.hasNext()) {
+      current = current.next as Point
       count++
     }
     return count
@@ -59,10 +67,11 @@ class Branch {
 }
 
 class Cycle {
-  private _length: Number
+  private _length?: Number
   private startingPoint: Point
 
   constructor(private currentPoint: Point) {
+    if(!(currentPoint instanceof Point)) throw('currentPoint must have a value')
     this.startingPoint = this.currentPoint
   }
 
@@ -71,7 +80,7 @@ class Cycle {
   }
 
   move() {
-    this.currentPoint = this.currentPoint.next
+    this.currentPoint = this.currentPoint.next as Point
   }
 
   length() {
@@ -79,8 +88,8 @@ class Cycle {
 
     let count = 1
     let current = this.startingPoint
-
-    while ((current = current.next) !== this.startingPoint) {
+    while (current.next !== this.startingPoint) {
+      current = current.next as Point
       count++
     }
     return this._length = count
@@ -118,7 +127,7 @@ class Asm {
     return this
   }
 
-  runMachine(iterations) {
+  runMachine(iterations: number) {
     for (let i = 1; i <= iterations; i++) {
       this.nextState()
     }
@@ -134,3 +143,11 @@ class Asm {
   }
 
 }
+
+console.info('boot')
+const a = new Asm(1, 1)
+console.debug('made Asm', a)
+console.debug('about to run machine')
+a.runMachine(20)
+console.debug('finished running machine')
+console.info(`Lengths: ${a.lengths()}`)
