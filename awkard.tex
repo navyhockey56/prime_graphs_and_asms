@@ -208,7 +208,16 @@ Thus we have shown that, $|C_i|$ $mod$ $|C_j| \geq a$.\\
 For any $C_i \in [S_{a,n}]$, $|C_i|$ is the least positive integer such that $|C_i|$ $mod$ $|C_j| \geq a$ for all $j < i$.\\
 \\
 \textit{Proof}\\
-TODO\\
+Assume $k$ is the first step after discovering $C_{i-1}$ such that $k$ $mod$ $|C_{j}| \geq a$ for all $j \leq i-1$.\\
+\\ 
+Assume you discovered $C_{i-1}$ on step $p < k$\\.
+\\
+Therefore, on all steps, $q$, such that $p \leq q < k$, there exists at least one cycle $C_j$ such that $q$ $mod$ $|C_j| < a$, and is thus active. Therefore, the ASM algoirthm cannot create cycle $C_i$ on any step $p \leq q < k$.\\
+\\
+Furthermore, on step $k$, for all $j \leq i-1$, $C_j$ is inactive. Thus, the algorithm must create $C_i$ on step $k$, giving us $|C_i| = k$.\\
+\\ 
+Thus, since $k$ is the least positive integer such that $|C_i|$ $mod$ $|C_j| \geq a$ for all $j < i$, and $|C_i| = k$, we have proved our lemma.\\
+\textit{Q.E.D}\\
 \\
 \textbf{Definition}\\
 An positive integer is prime if it's only factors are 1 and itself.\\
