@@ -106,6 +106,23 @@ To progress from state $S^i$ to state $S^{i+1}$, increment the state each of the
 We'll define $[S^a] = \{$ $C_{a.n}$ discovered by $S$ on step $a$ $\}$, and $[S] = \{$ $C_{a,n}$ discoverable by $S$ $\}$.\\
 \\
 \textbf{Lemma}\\
+For $S_{a,n}$, $|C_{i}| \geq |C_{i-1}| + a$.\\
+\\
+\textit{Proof}\\  
+Assume cycle $C_i$ is discovered by $S_{a,n}$ on step $k$.\\
+\\
+Then $\overline{C^k_i} = 0$.\\
+Furthermore, the new branch, $B$, will have $|C_i| + 1$ nodes at step $k$.\\
+\\
+For next, $1 \leq j < a$ steps, the cycle  $C^{k+j}_i$ will be active since there are $a$ activation nodes.\\
+Furthermore, the length of the branch $B$ at each step will be given by $|B| = |C_i| + j + 1$.\\
+\\
+The $a$th step after discovering $C_i$ will be the first time that $C_i$ will be inactive. The branch length of the $(a-1)$th step is given by $|B^{j + a - 1}| = |C_i| + a$. Thus, if $C_p$ for $0 \leq p < i$ are also inactive on step $a$th step after discovering $C_i$, then we will have to close $B$ on the $a$th step, thus creating cycle $C_{i+1}$ with length $|C_{i+1}| = |B^{j + a - 1}| = |C_i| + a$. Furthermore, if any of the cycles $C_p$ were active on the $a$th step after discovering $C_i$, then the branch would not close, thus the next cycle's length is at least as long as the branch on the $(j+a)$th step: $|C_{i+1}| >= |B^{j + a}| = |C_i| + a + 1$.\\
+\\
+Thus, we have shown that  $|C_{i}| \geq |C_{i-1}| + a$.\\
+\textit{Q.E.D}\\
+\\
+\textbf{Lemma}\\
 $S_{1,1}$ produces the prime numbers.\\
 \\
 \textbf{Lemma}\\

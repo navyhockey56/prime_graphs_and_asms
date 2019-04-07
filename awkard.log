@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.3.2)  6 APR 2019 22:17
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.3.2)  7 APR 2019 08:17
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -122,72 +122,102 @@ Underfull \hbox (badness 10000) in paragraph at lines 97--102
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 103--141
+Underfull \hbox (badness 10000) in paragraph at lines 103--158
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 103--141
+Underfull \hbox (badness 10000) in paragraph at lines 103--158
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 103--141
+Underfull \hbox (badness 10000) in paragraph at lines 103--158
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 103--141
+Underfull \hbox (badness 10000) in paragraph at lines 103--158
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 103--141
+Underfull \hbox (badness 10000) in paragraph at lines 103--158
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 103--141
+Underfull \hbox (badness 10000) in paragraph at lines 103--158
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 103--141
+Underfull \hbox (badness 10000) in paragraph at lines 103--158
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 103--141
+Underfull \hbox (badness 10000) in paragraph at lines 103--158
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 103--141
+Underfull \hbox (badness 10000) in paragraph at lines 103--158
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 103--141
+Underfull \hbox (badness 10000) in paragraph at lines 103--158
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 103--141
+Underfull \hbox (badness 10000) in paragraph at lines 103--158
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 103--141
+Underfull \hbox (badness 10000) in paragraph at lines 103--158
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 103--141
+Underfull \hbox (badness 10000) in paragraph at lines 103--158
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 103--141
+Underfull \hbox (badness 10000) in paragraph at lines 103--158
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 103--158
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 103--158
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 103--158
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 103--158
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 103--158
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 103--158
 
  []
 
@@ -195,7 +225,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 103--141
 Here is how much of TeX's memory you used:
  327 strings out of 492982
  3828 string characters out of 6134897
- 62883 words of memory out of 5000000
+ 65883 words of memory out of 5000000
  3951 multiletter control sequences out of 15000+600000
  12443 words of font info for 48 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -207,11 +237,12 @@ mmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pf
 b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr
 /share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/t
 exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on awkard.pdf (7 pages, 104309 bytes).
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
+Output written on awkard.pdf (7 pages, 113550 bytes).
 PDF statistics:
- 60 PDF objects out of 1000 (max. 8388607)
- 42 compressed objects within 1 object stream
+ 64 PDF objects out of 1000 (max. 8388607)
+ 45 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
