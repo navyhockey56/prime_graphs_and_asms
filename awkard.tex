@@ -160,6 +160,31 @@ Thus we have shown that $|C_{i}| \geq |C_j| + (i - j)a$ by induction.\\
 \textit{Q.E.D}\\
 \\
 \textbf{Lemma}\\
+For any step, $k$, for any $C_i \in [S^k_{a,n}]$, it holds that $\overline{C^k_i} = (k + a + n)$ $mod$ $|C_i|$.\\
+\textit{Proof}\\  
+The initial cycle $C_0$ starts at position $0$ on step $0$. By properties of ACM's, we know that the position of $C_0$ is given by:\\
+\\
+$\overline{C^k_0} = k$ $mod$ $|C_0| $
+$= [k +(a + n)]$ $mod$ $(a + n)$
+$= (k + a + n)$ $mod$ $|C_0|$.\\
+\\
+If a cycle, $C_i$, is discovered on step $k$, then we know it's length is given by $|C_i| = k + a + n$. Furthermore, when it's dicovered, it's position is set to 0.\\
+\\
+Thus, the position of $C^k_i$ is given by:\\
+\\
+$\overline{C^k_i} = 0 = (k + a + n)$ $mod$ $(k + a + n) = (k + a + n)$ $mod$ $|C_i|$.\\
+\\
+By properties of ACM's, the position for all steps $j > k$ will be given by:\\
+\\
+$\overline{C^j} = (\overline{C^k} + (j - k))$ $mod$ $|C^i|$
+$= (0 + (j-k))$ $mod$ $(k + a + n)$\\
+$= (k + a +n) + (j-k)$ $mod$ $|C_i| $
+$= (j + a + n)$ $mod$ $|C_i|$.\\
+\\
+Therefor we have shown that the position of $C_i$ on step $k$ for any $C_i \in [S^k_{a,n}]$ is given by $\overline{C^k_i} = (k + a + n)$ $mod$ $|C_i|$ for any $C_i$ in $[S^k]$.\\
+\textit{Q.E.D}\\
+\\
+\textbf{Lemma}\\
 For any $C_i, C_j \in [S_{a,n}]$ with $j < i$, it holds that $|C_i|$ $mod$ $|C_j| \geq a$.\\
 \\
 \textit{Proof}\\  
