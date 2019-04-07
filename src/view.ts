@@ -116,11 +116,42 @@ class NonActivatorImageView extends ImageView {
   }
 }
 
+class CreateAsmButton {
+  constructor() {
+    const btn = document.getElementById("createAsmButton");
+    if (!btn) throw "Could not locate button"
+    btn.addEventListener("click", (e: Event) => this.setUpAsm());
+  }
+
+  setUpAsm() {
+    const initialDiv = document.getElementById("initialDiv")
+    if (!initialDiv) throw "Could not find initial div"
+    initialDiv.setAttribute('style', 'display: none;')
+
+    const numberOfActivators = document.getElementById("numberOfActivators");
+    if (!numberOfActivators) throw "Could not number of activators"
+    const numberOfNonActivators = document.getElementById("numberOfNonActivators");
+    if (!numberOfNonActivators) throw "Could not number of non-activators"
+
+    let nodeValue = (numberOfActivators as HTMLInputElement).value
+    if (!nodeValue) nodeValue = "1"
+    let numAct = +nodeValue
+    if (numAct < 1) numAct = 1
+
+    nodeValue = (numberOfNonActivators as HTMLInputElement).value
+    if (!nodeValue) nodeValue = "1"
+    let numNonAct = +nodeValue
+    if (numNonAct < 1) numNonAct = 1
+
+    new Main(numAct, numNonAct)
+  }
+}
 class NextStateButton {
   constructor(private main: Main) {
     const btn = document.getElementById("nextStateButton");
     if (!btn) throw "Could not locate button"
     btn.addEventListener("click", (e: Event) => this.main.move());
+    btn.setAttribute('style', 'display: block;')
   }
 }
 class Main {
@@ -129,13 +160,14 @@ class Main {
   private branchView: CycleView
   private mainDiv: HTMLElement
 
-  constructor(private activators: number, private nonActivators: number) {
+  constructor(private activators: number, nonActivators: number) {
     this.mainDiv = document.getElementById("mainDiv") as HTMLElement
     if (!this.mainDiv) throw ('Need a main div for this shit!')
-
+    //debugger
     this.asm = new Asm(activators, nonActivators)
     const firstCycleView = new CycleView(this.mainDiv, activators, nonActivators)
     firstCycleView.closeCycle()
+    firstCycleView.move()
     this.views.push(firstCycleView)
     this.branchView = new CycleView(this.mainDiv, activators, nonActivators + 1)
     new NextStateButton(this)
@@ -156,5 +188,4 @@ class Main {
   }
 }
 
-let m = new Main(3, 4)
-m.move()
+new CreateAsmButton()

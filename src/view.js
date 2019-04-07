@@ -119,6 +119,41 @@ var NonActivatorImageView = /** @class */ (function (_super) {
     };
     return NonActivatorImageView;
 }(ImageView));
+var CreateAsmButton = /** @class */ (function () {
+    function CreateAsmButton() {
+        var _this = this;
+        var btn = document.getElementById("createAsmButton");
+        if (!btn)
+            throw "Could not locate button";
+        btn.addEventListener("click", function (e) { return _this.setUpAsm(); });
+    }
+    CreateAsmButton.prototype.setUpAsm = function () {
+        var initialDiv = document.getElementById("initialDiv");
+        if (!initialDiv)
+            throw "Could not find initial div";
+        initialDiv.setAttribute('style', 'display: none;');
+        var numberOfActivators = document.getElementById("numberOfActivators");
+        if (!numberOfActivators)
+            throw "Could not number of activators";
+        var numberOfNonActivators = document.getElementById("numberOfNonActivators");
+        if (!numberOfNonActivators)
+            throw "Could not number of non-activators";
+        var nodeValue = numberOfActivators.value;
+        if (!nodeValue)
+            nodeValue = "1";
+        var numAct = +nodeValue;
+        if (numAct < 1)
+            numAct = 1;
+        nodeValue = numberOfNonActivators.value;
+        if (!nodeValue)
+            nodeValue = "1";
+        var numNonAct = +nodeValue;
+        if (numNonAct < 1)
+            numNonAct = 1;
+        new Main(numAct, numNonAct);
+    };
+    return CreateAsmButton;
+}());
 var NextStateButton = /** @class */ (function () {
     function NextStateButton(main) {
         var _this = this;
@@ -127,20 +162,22 @@ var NextStateButton = /** @class */ (function () {
         if (!btn)
             throw "Could not locate button";
         btn.addEventListener("click", function (e) { return _this.main.move(); });
+        btn.setAttribute('style', 'display: block;');
     }
     return NextStateButton;
 }());
 var Main = /** @class */ (function () {
     function Main(activators, nonActivators) {
         this.activators = activators;
-        this.nonActivators = nonActivators;
         this.views = [];
         this.mainDiv = document.getElementById("mainDiv");
         if (!this.mainDiv)
             throw ('Need a main div for this shit!');
+        //debugger
         this.asm = new Asm(activators, nonActivators);
         var firstCycleView = new CycleView(this.mainDiv, activators, nonActivators);
         firstCycleView.closeCycle();
+        firstCycleView.move();
         this.views.push(firstCycleView);
         this.branchView = new CycleView(this.mainDiv, activators, nonActivators + 1);
         new NextStateButton(this);
@@ -161,5 +198,4 @@ var Main = /** @class */ (function () {
     };
     return Main;
 }());
-var m = new Main(3, 4);
-m.move();
+new CreateAsmButton();

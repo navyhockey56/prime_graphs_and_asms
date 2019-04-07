@@ -10,8 +10,16 @@
 
 <body>
 
+  <div id="initialDiv" style="overflow: auto;">
+    <ul>
+      <li>Number of Activators: <input id="numberOfActivators" value="1"></input></li>
+      <li>Number of Non-Activators: <input id="numberOfNonActivators" value="1"></input></li>
+      <input type="button" value="Click" id="createAsmButton"></input>
+    </ul>
+  </div>
+
   <div id="mainDiv" style="overflow: auto;">
-    <input type="button" value="Click" id="nextStateButton"></input>
+    <input type="button" value="Click" id="nextStateButton" style="display: none;"></input>
   </div>
 
   <script src="src/awkward.js"></script>
