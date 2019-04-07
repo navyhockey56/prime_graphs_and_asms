@@ -105,6 +105,9 @@ To progress from state $S^i$ to state $S^{i+1}$, increment the state each of the
 \textbf{Definition}\\  
 We'll define $[S^a] = \{$ $C_{a.n}$ discovered by $S$ on step $a$ $\}$, and $[S] = \{$ $C_{a,n}$ discoverable by $S$ $\}$.\\
 \\
+\textbf{Definition}\\  
+We'll define $|S^a| = \{$ $q$ $|$ $q =  |C_i|$ for $C_i \in [S^a]$ $\}$, and $|S| = \{$ $q$ $|$ $q =  |C_i|$ for $C_i \in [S^a]$ $\}$.\\
+\\
 \textbf{Lemma}\\
 For $S_{a,n}$, the length of the branch, $B$, on step $k$ is given by $|B^k| = k + a + n + 1$.\\
 \\
@@ -202,13 +205,34 @@ Thus we have shown that, $|C_i|$ $mod$ $|C_j| \geq a$.\\
 \textit{Q.E.D}\\ 
 \\
 \textbf{Lemma}\\
-$S_{1,1}$ produces the prime numbers.\\
+For any $C_i \in [S_{a,n}]$, $|C_i|$ is the least positive integer such that $|C_i|$ $mod$ $|C_j| \geq a$ for all $j < i$.\\
 \\
+\textit{Proof}\\
+TODO\\
+\\
+\textbf{Definition}\\
+An positive integer is prime if it's only factors are 1 and itself.\\
+\\
+\textbf{Axiom}\\
+The $i$th prime number, $p_i$, is the least integer such that $p_i$ is not divisible by $p_j$ for all $j < i$. (Note: This is only an axiom because proving the statement is distracting to ASMs).\\
+\\
+\textbf{Lemma}\\
+$|S_{1,1}| = P = \{$ the set of prime numbers $\}$\\
+\\
+\textit{Proof}\\
+$S_{1,1}$ starts with an initial cycle of length $1 + 1 = 2$, and an initial branch of length $3$.\\
+\\
+For all $i, j$ such that $i > j \geq 0$, $C_i$ will have the property that $|C_i|$ $mod$ $|C_j| \geq 1$. Not only that, $|C_i|$ is also the smallest such integer with the property.\\
+\\
+Thus by our axiom, $S_{1,1}$ produces the prime numbers.
 \textbf{Lemma}\\
 If $C_i, C_j \in [S]$ with $i < j$, then $C_j<|C_i|> = [C_j]$\\
 \\
 \textit{Proof}\\  
 TODO\\
+\\
+\textbf{Corollary}\\
+If $C_i, C_j \in [S]$ with $i < j$, then you can reach any position in $|C_j|$ by moving $|C_i|$ units at a time.\\
 \\
 \textbf{Theorem}\\
 For every ASM, $S$, the set $[S]$ is non-finite.\\
