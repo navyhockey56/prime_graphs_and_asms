@@ -220,18 +220,18 @@ Thus, since $k$ is the least positive integer such that $|C_i|$ $mod$ $|C_j| \ge
 \textit{Q.E.D}\\
 \\
 \textbf{Definition}\\
-An positive integer is prime if it's only factors are 1 and itself.\\
+A positive integer is prime if it's only factors are 1 and itself.\\
 \\
 \textbf{Axiom}\\
-The $i$th prime number, $p_i$, is the least integer such that $p_i$ is not divisible by $p_j$ for all $j < i$. (Note: This is only an axiom because proving the statement is distracting to ASMs).\\
+The $i$th prime number, $p_i$, is the least integer such that $p_i$ is not divisible by $p_j$ for all $j < i$, with the first prime number $p_0=2$. (Note: This is only an axiom because proving the statement is distracting to ASMs).\\
 \\
 \textbf{Lemma}\\
 $|S_{1,1}| = P = \{$ the set of prime numbers $\}$\\
 \\
 \textit{Proof}\\
-$S_{1,1}$ starts with an initial cycle of length $1 + 1 = 2$, and an initial branch of length $3$.\\
+$S_{1,1}$ starts with an initial cycle of length $1 + 1 = 2$, thus giving us the first prime number.\\
 \\
-For all $i, j$ such that $i > j \geq 0$, $C_i$ will have the property that $|C_i|$ $mod$ $|C_j| \geq 1$. Not only that, $|C_i|$ is also the smallest such integer with the property of not being divisible by the previous cycle lengths.\\
+For all $i, j$ such that $i > j \geq 0$, $C_i$ will have the property that $|C_i|$ $mod$ $|C_j| \geq 1$, equivalenty, $|C_i|$ is not divisible by any of the previous lengths $|C_j|$. Not only that, $|C_i|$ is also the smallest such integer with the property of not being divisible by the previous cycle lengths.\\
 \\
 Thus by our axiom, $S_{1,1}$ produces the prime numbers.\\
 \textit{Q.E.D}\\
@@ -240,10 +240,14 @@ Thus by our axiom, $S_{1,1}$ produces the prime numbers.\\
 If $C_i, C_j \in [S]$ with $i < j$, then $C_j<|C_i|> = [C_j]$\\
 \\
 \textit{Proof}\\  
-TODO\\
+Assume $C_i, C_j \in [S]$ with $i < j$.\\
+Then we know that $|C_j|$ $mod$ $|C_i| \geq a$.\\
+Thus, $|C_j|$ is not divisible by $|C_i|$.\\
+By properties of ACM's, $C_j<|C_i|> = [C_j]$.\\
+\textit{Q.E.D}\\ 
 \\
 \textbf{Corollary}\\
-If $C_i, C_j \in [S]$ with $i < j$, then you can reach any position in $|C_j|$ by moving $|C_i|$ units at a time.\\
+If $C_i, C_j \in [S]$ with $i < j$, then you can reach any position in $|C_j|$ by moving $|C_i|$ states at a time.\\
 \\
 \textbf{Theorem}\\
 For every ASM, $S$, the set $[S]$ is non-finite.\\
