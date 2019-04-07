@@ -1,0 +1,23 @@
+{
+  "name": "prime_graphs",
+  "version": "0.0.1",
+  "description": "prime graphs and awkward state machines",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc --target es5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/navyhockey56/prime_graphs_and_asms.git"
+  },
+  "author": "Sam Ballan, Will Dengler",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/navyhockey56/prime_graphs_and_asms/issues"
+  },
+  "homepage": "https://github.com/navyhockey56/prime_graphs_and_asms#readme",
+  "dependencies": {
+    "typescript": "^3.4.2"
+  }
+}

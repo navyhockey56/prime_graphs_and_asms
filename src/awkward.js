@@ -106,11 +106,12 @@ var Asm = /** @class */ (function () {
     }
     Asm.prototype.nextState = function () {
         this.cycles.forEach(function (c) { return c.move(); });
-        if (!this.active()) {
+        var addNewCycle = !this.active();
+        if (addNewCycle) {
             this.cycles.push(this.branch.copyAndClose());
         }
         this.branch.addPoint(new Point());
-        return this;
+        return addNewCycle;
     };
     Asm.prototype.runMachine = function (iterations) {
         for (var i = 1; i <= iterations; i++) {
@@ -126,6 +127,9 @@ var Asm = /** @class */ (function () {
     };
     Asm.prototype.longestCycleLength = function () {
         return this.cycles[this.cycles.length - 1].length();
+    };
+    Asm.prototype.longestCycle = function () {
+        return this.cycles[this.cycles.length - 1];
     };
     return Asm;
 }());

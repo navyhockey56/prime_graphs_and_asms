@@ -16,21 +16,13 @@ var EMPTY_CIRCLE = 'empty_circle.png';
 var EMPTY_SQUARE = 'empty_square.png';
 var FILLED_CIRCLE = 'filled_in_circle.png';
 var FILLED_SQUARE = 'filled_in_square.png';
-var Foo = /** @class */ (function () {
-    function Foo(asm) {
-        this.asm = asm;
-        this.views = [];
-    }
-    return Foo;
-}());
 var CycleView = /** @class */ (function () {
-    function CycleView(activators, nonActivators) {
+    function CycleView(mainDiv, activators, nonActivators) {
         this.activators = activators;
         this.nonActivators = nonActivators;
         this.position = 0;
         this.imageViews = [];
         this.isClosed = false;
-        var mainDiv = document.getElementById("mainDiv");
         this.base = document.createElement('ul');
         if (!mainDiv)
             throw ("base is null");
@@ -82,7 +74,7 @@ var ImageView = /** @class */ (function () {
     };
     ImageView.prototype.render = function () {
         var node = document.createElement('li');
-        node.setAttribute('style', 'display: inline; margin: -90px 0 0 -90px;');
+        node.setAttribute('style', 'display: inline; margin: -40px;');
         this.base.appendChild(node);
         node.appendChild(this.image);
     };
@@ -127,3 +119,35 @@ var NonActivatorImageView = /** @class */ (function (_super) {
     };
     return NonActivatorImageView;
 }(ImageView));
+var Main = /** @class */ (function () {
+    function Main(activators, nonActivators) {
+        this.activators = activators;
+        this.nonActivators = nonActivators;
+        this.views = [];
+        this.mainDiv = document.getElementById("mainDiv");
+        if (!this.mainDiv)
+            throw ('Need a main div for this shit!');
+        this.asm = new Asm(activators, nonActivators);
+        var firstCycleView = new CycleView(this.mainDiv, activators, nonActivators);
+        firstCycleView.closeCycle();
+        this.views.push(firstCycleView);
+        this.branchView = new CycleView(this.mainDiv, activators, nonActivators + 1);
+    }
+    Main.prototype.move = function () {
+        this.views.forEach(function (v) { return v.move(); });
+        if (this.asm.nextState()) {
+            this.branchView.closeCycle();
+            this.branchView.move();
+            this.views.push(this.branchView);
+            var newCycleLength = this.asm.longestCycle().length();
+            var newView = new CycleView(this.mainDiv, this.activators, newCycleLength - this.activators + 1);
+            this.branchView = newView;
+        }
+        else {
+            this.branchView.move();
+        }
+    };
+    return Main;
+}());
+var m = new Main(3, 4);
+m.move();
