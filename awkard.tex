@@ -89,6 +89,17 @@ We define the $\alpha$ operation from arbitrary state $C^i$ to the unique state 
 Let $C^a<n> = \{$ $C(i)$ $|$  $C(i) = \alpha(C^a + jn)$ for some integer $j$ $\}$\\
 \\
 \textbf{Lemma}\\
+For $n < |C|$, $C^a<n> = [C]$ if $n$ does not divide $|C|$.\\ 
+\\
+\textit{Proof}\\
+Assume $n$ does not $|C|$.
+Consider the set:\\ $C<n> = \{$ $\alpha(C^0 + 0n),$ $\alpha(C^0 + 1n),$ $\alpha(C^0 + 2n),$ .. $\alpha(C^0 + (|C| - 1)n)$ $\}$ \\
+= $\{$ $C(0$ $mod$ $|C|),$ $C(n$ $mod$ $|C|),$ $C(2n$ $mod$ $|C|),$ ..., $C(|C| - 1$ $mod$ $|C|)$ $\}$\\
+\\
+If any two elements, $C(in$ $mod$ $|C|) = C(jn$ $mod$ $|C|)$ with $j \neq i$, then:\\
+$in$ $mod$ $|C| = jn$ $mod$ $|C|$. 
+\\
+\textbf{Lemma}\\
 $C^a<n> = [C]$ if $n$ $mod$ $|C|$ does not divide $|C|$. 
 
   
