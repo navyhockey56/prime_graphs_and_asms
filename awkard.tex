@@ -191,9 +191,15 @@ For any $C_i, C_j \in [S_{a,n}]$ with $j < i$, it holds that $|C_i|$ $mod$ $|C_j
 Assume for ASM, $S_{a,n}$, that ACM, $C_i$, is discovered on step $k$.\\
 \\
 Then $|C_i| = k + a + n$.\\
-Furthermore, $\overline{C^k_j} \geq a$, otherwise $C^k_j$ would be active and we could not have discovered $C_i$.\\
+We know also know that the position of $C^k_j$ must be greater than or equal to $a$; otherwise, $C_j$ would be active on step $k$ and we would not have discovered $C_j$.\\
 \\
-Thus, $|C_j| = |C_i|$ $mod$ $|C_j| = \overline{C^k_j} \geq a$. 
+Furthermore, we know the position of $C^k_j$ is given by:\\
+$\overline{C^k_j} = (k + a + n)$ $mod$ $|C_j|$.\\ 
+\\
+Finally, subsitituting gives us: $\overline{C^k_j} = |C_i|$ $mod$ $|C_j| \geq a$.\\
+\\
+Thus we have shown that, $|C_i|$ $mod$ $|C_j| \geq a$.\\
+\textit{Q.E.D}\\ 
 \\
 \textbf{Lemma}\\
 $S_{1,1}$ produces the prime numbers.\\
