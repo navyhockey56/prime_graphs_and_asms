@@ -3,14 +3,6 @@ const EMPTY_SQUARE = 'empty_square.png'
 const FILLED_CIRCLE = 'filled_in_circle.png'
 const FILLED_SQUARE = 'filled_in_square.png'
 
-class Foo {
-  private views: CycleView[] = []
-
-  constructor(private asm : Asm) {
-
-  }
-}
-
 class CycleView {
   private position = 0
   private imageViews: ImageView[] = []
@@ -19,10 +11,10 @@ class CycleView {
   private isClosed: boolean = false
 
   constructor(
+    mainDiv: HTMLElement,
     private activators: number,
     private nonActivators: number
   ) {
-    const mainDiv = document.getElementById("mainDiv")
     this.base = document.createElement('ul')
     if (!mainDiv) throw("base is null")
     mainDiv.appendChild(this.base)
@@ -81,7 +73,7 @@ class ImageView {
 
   render() {
     const node = document.createElement('li')
-    node.setAttribute('style', 'display: inline; margin: -90px 0 0 -90px;')
+    node.setAttribute('style', 'display: inline; margin: -40px;')
     this.base.appendChild(node)
     node.appendChild(this.image)
   }
@@ -123,3 +115,38 @@ class NonActivatorImageView extends ImageView {
     }
   }
 }
+
+class Main {
+  private views: CycleView[] = []
+  private asm : Asm
+  private branchView: CycleView
+  private mainDiv: HTMLElement
+
+  constructor(private activators: number, private nonActivators: number) {
+    this.mainDiv = document.getElementById("mainDiv") as HTMLElement
+    if(!this.mainDiv) throw('Need a main div for this shit!')
+
+    this.asm = new Asm(activators, nonActivators)
+    const firstCycleView = new CycleView(this.mainDiv, activators, nonActivators)
+    firstCycleView.closeCycle()
+    this.views.push(firstCycleView)
+    this.branchView = new CycleView(this.mainDiv, activators, nonActivators + 1)
+  }
+
+  move() {
+    this.views.forEach(v => v.move())
+    if (this.asm.nextState()) {
+      this.branchView.closeCycle()
+      this.branchView.move()
+      this.views.push(this.branchView)
+      const newCycleLength = this.asm.longestCycle().length()
+      const newView = new CycleView(this.mainDiv, this.activators, newCycleLength - this.activators + 1)
+      this.branchView = newView
+    } else {
+      this.branchView.move()
+    }
+  }
+}
+
+let m = new Main(3,4)
+m.move()
