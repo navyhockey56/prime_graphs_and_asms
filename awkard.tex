@@ -38,14 +38,40 @@ If you run the above experiment and then count the number of tacks in each bar, 
 \section{The Prime Graph Machine}
 
 
-\section{Awkward State Machines}
+\section{Activation Cycle Machines}
 
 
 \textbf{Definition} \\
-An activation cycle machine (ACM) is a directed cycle graph, $G$, containing $0 < n < |G|$ consequetive nodes called activation nodes. The activation node that is connected to by a non-activation is referred to as position $0$, with all other nodes' positions being determined by their relative position to $0$. An ACM's initial state starts at position $0$, then moves to the next consequetive position with each iteration. An $ACM$ state's step is the number of iterations needed to get to that state from the initial state (thus, the initial state is step 0, the next state is state 1, and the state after 9 billion iterations is step 9 billion). An $ACM$'s state is said to be active if it's position is on one of it's activator nodes; otherwise, the $ACM$ is called inactive. We can refer to the $ACM$ containing, $a$, activation nodes and, $n$, non-activation nodes as $ACM_{a,n}$. An $ACM$'s length is equal to the number of nodes it contains.\\
+An activation cycle machine (ACM) is a directed cycle graph, $C$, containing $0 < n < |G|$ consequetive nodes called activation nodes.
+
+We can refer to the $ACM$ containing, $a$, activation nodes and, $n$, non-activation nodes as $C_{a,n}$.
+ 
+An $ACM$'s length is equal to the number of nodes it contains; thus, $C_{a,n}$'s length is $a + n$. We use the notation $|C|$ to refer to $C$'s length. 
+
+The activation node that is connected to by a non-activation node is said to be at position $0$, with all other nodes' positions being determined by their relative position to $0$. Thus, there are $|C|$ unique positions the ASM $C$ can have. We use the notation $\overline{C}$ to refer to $C$'s position. Furthermore, we can identify the $|C|$ unique states as $C(0)$, $C(1)$, ..., $C(|C| - 1)$.
+
+An ACM's initial state starts at position $0$, then moves to the next consequetive position with each iteration. We can keep track of how which state we are on using the notation $C^i$, where $i$ refers to how many iterations we've performed. Thus, $C^0$ denotes the initial state, $C^1$ the next, and $C^{50}$ would be the 51st state. We call $i$ the step of the ASM.
+
+An $ACM$'s state is said to be active if it's position is on one of it's activator nodes; otherwise, the $ACM$ is called inactive.\\
+\\
+\textbf{Definition} \\
+For an ASM, $C$, we can define the $*$ operation between two states $C(i)$ and $C(j)$ as:
+$C(i) * C(j) =$ $C(i + j$ $mod$ $|C|)$\\
 \\
 \textbf{Lemma}\\
-If $ACM_{a,n}$ is on position $p$ on step $m$, then $m$ $mod$ $(a + n) = p$.\\
+The $*$ operation for an ASM, $C$, forms a group with $C(0)$ as the identity. We can refer to this group as $<C>$.\\ 
+\\
+\textit{Proof}\\  
+TODO\\
+\\
+\textbf{Lemma}\\
+The group $<C>$ is isomorphic to the group of integers modulo $|C|$.\\
+\\
+\textit{Proof}\\  
+TODO\\
+\\
+\textbf{Lemma}\\
+If $C_{a,n}$ is on position $p$ at step $m$, then $m$ $mod$ $|C| = p$.\\
 \\
 \textit{Proof}\\  
 TODO\\
@@ -54,5 +80,6 @@ TODO\\
 $ACM_{a,n}$ is active on step $m$ if and only if $m$ $mod$ $(a + n) < n$\\
 \\
   
+\section{Awkward State Machines}
 
 \end{document}
