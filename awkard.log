@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.3.2)  6 APR 2019 21:13
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.3.2)  6 APR 2019 21:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -57,52 +57,57 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3]
-Underfull \hbox (badness 10000) in paragraph at lines 55--82
+Underfull \hbox (badness 10000) in paragraph at lines 55--90
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 55--82
+Underfull \hbox (badness 10000) in paragraph at lines 55--90
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 55--82
+Underfull \hbox (badness 10000) in paragraph at lines 55--90
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 55--82
+Underfull \hbox (badness 10000) in paragraph at lines 55--90
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 55--82
+Underfull \hbox (badness 10000) in paragraph at lines 55--90
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 55--82
+Underfull \hbox (badness 10000) in paragraph at lines 55--90
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 55--82
+Underfull \hbox (badness 10000) in paragraph at lines 55--90
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 55--82
+Underfull \hbox (badness 10000) in paragraph at lines 55--90
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 55--82
+Underfull \hbox (badness 10000) in paragraph at lines 55--90
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 55--82
+Underfull \hbox (badness 10000) in paragraph at lines 55--90
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 55--90
 
  []
 
@@ -110,7 +115,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 55--82
 Here is how much of TeX's memory you used:
  327 strings out of 492982
  3828 string characters out of 6134897
- 58883 words of memory out of 5000000
+ 59883 words of memory out of 5000000
  3951 multiletter control sequences out of 15000+600000
  12443 words of font info for 48 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -123,7 +128,7 @@ usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/sha
 re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/tex
 mf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on awkard.pdf (5 pages, 95484 bytes).
+Output written on awkard.pdf (5 pages, 97003 bytes).
 PDF statistics:
  52 PDF objects out of 1000 (max. 8388607)
  36 compressed objects within 1 object stream

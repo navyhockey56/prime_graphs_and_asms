@@ -65,7 +65,7 @@ The $*$ operation for an ASM, $C$, forms a group with $C(0)$ as the identity. We
 TODO\\
 \\
 \textbf{Lemma}\\
-The group $<C>$ is isomorphic to the group of integers modulo $|C|$.\\
+The group $<C>$ is isomorphic to the group of integers under addition modulo $|C|$.\\
 \\
 \textit{Proof}\\  
 TODO\\
@@ -77,8 +77,16 @@ If $C_{a,n}$ is on position $p$ at step $m$, then $m$ $mod$ $|C| = p$.\\
 TODO\\
 \\
 \textbf{Corollary}\\
-$ACM_{a,n}$ is active on step $m$ if and only if $m$ $mod$ $(a + n) < n$\\
+$C$ is active on step $m$ if and only if $m$ $mod$ $|C| < n$\\
 \\
+\textbf{Definition} \\
+We can define the $+$ operation between an ACM, $C$, and a positive integer $n$ as: $C^i + n = C^{j+n}$.\\
+\\
+\textbf{Definition} \\
+We define the $\alpha$ operation from arbitrary state $C^i$ to the unique state $C(i)$ as $\alpha(C^i) = C(i$ $mod$ $|C|$).\\  
+\\
+\textbf{Definition}\\
+Let $C^a<n> = \{$ $C(i)$ $|$  $C(i) = \alpha(C^a + jn)$ for some integer $j$ $\}$
   
 \section{Awkward State Machines}
 
