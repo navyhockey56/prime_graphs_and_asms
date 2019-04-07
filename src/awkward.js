@@ -134,7 +134,7 @@ var a = new Asm(9, 8);
 console.debug('made Asm', a);
 console.debug('about to run machine');
 var start = new Date();
-a.runMachine(50000);
+a.runMachine(500);
 var diff = new Date() - start;
 console.info(diff + " ms");
 console.debug("finished running machine, found " + a.longestCycleLength());

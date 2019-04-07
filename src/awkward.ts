@@ -55,7 +55,7 @@ class Branch {
     return new Cycle(copy.currentPoint)
   }
 
-  length() {
+  length() : number {
     let count = 1;
     let current = this.startingPoint
     while (current.hasNext()) {
@@ -67,7 +67,7 @@ class Branch {
 }
 
 class Cycle {
-  private _length?: Number
+  private _length?: number
   private startingPoint: Point
 
   constructor(private currentPoint: Point) {
@@ -83,7 +83,7 @@ class Cycle {
     this.currentPoint = this.currentPoint.next as Point
   }
 
-  length() {
+  length(): number {
     if (this._length) return this._length
 
     let count = 1
@@ -153,7 +153,7 @@ const a = new Asm(9, 8)
 console.debug('made Asm', a)
 console.debug('about to run machine')
 const start = new Date()
-a.runMachine(50000)
+a.runMachine(500)
 const diff = new Date() as any - (start as any)
 console.info(`${diff} ms`)
 console.debug(`finished running machine, found ${a.longestCycleLength()}`)
