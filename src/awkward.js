@@ -1,3 +1,4 @@
+"use strict";
 var Point = /** @class */ (function () {
     function Point(active) {
         if (active === void 0) { active = false; }

@@ -142,12 +142,19 @@ class Asm {
     return this.cycles.map(c => c.length())
   }
 
+  longestCycleLength() {
+    return this.cycles[this.cycles.length - 1].length()
+  }
+
 }
 
 console.info('boot')
-const a = new Asm(1, 1)
+const a = new Asm(9, 8)
 console.debug('made Asm', a)
 console.debug('about to run machine')
-a.runMachine(20)
-console.debug('finished running machine')
-console.info(`Lengths: ${a.lengths()}`)
+const start = new Date()
+a.runMachine(50000)
+const diff = new Date() as any - (start as any)
+console.info(`${diff} ms`)
+console.debug(`finished running machine, found ${a.longestCycleLength()}`)
+// console.info(`Lengths: ${a.lengths()}`)
