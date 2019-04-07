@@ -106,6 +106,25 @@ To progress from state $S^i$ to state $S^{i+1}$, increment the state each of the
 We'll define $[S^a] = \{$ $C_{a.n}$ discovered by $S$ on step $a$ $\}$, and $[S] = \{$ $C_{a,n}$ discoverable by $S$ $\}$.\\
 \\
 \textbf{Lemma}\\
+For $S_{a,n}$, the length of the branch, $B$, on step $k$ is given by $|B^k| = k + a + n + 1$.\\
+\\
+\textit{Proof}\\  
+One step $0$, the length of branch $B$ is given by $|B^0| = 0 + a + n + 1$.\\
+With each step, a single node is added to the branch $B$. Thus, $|B^{i+1}| = |B^{i}| + 1$.\\
+\\
+Assume $|B^{i}| = i + a + n + 1$.\\
+Then $|B^{i+1}| = |B^{i}| + 1 = i + a + n + 1 = (i + 1) + a + n + 1$.\\
+\\
+Thus we have shown that $|B^k| = k + a + n + 1$ by induction.\\
+\textit{Q.E.D}\\
+\\
+\textbf{Lemma}\\
+For $S_{a,n}$, if $C_i$ is discovered on step $k$, then the length of $|C_i| = |B^{k-1}| = k + a + n$.\\
+\\
+\textit{Proof}\\  
+TODO\\
+\\
+\textbf{Lemma}\\
 For $S_{a,n}$, $|C_{i}| \geq |C_{i-1}| + a$.\\
 \\
 \textit{Proof}\\  
@@ -121,6 +140,17 @@ The $a$th step after discovering $C_i$ will be the first time that $C_i$ will be
 \\
 Thus, we have shown that  $|C_{i}| \geq |C_{i-1}| + a$.\\
 \textit{Q.E.D}\\
+\\
+\textbf{Lemma}\\
+For any $C_i, C_j \in [S_{a,n}]$ with $j < i$, it holds that $|C_i|$ $mod$ $|C_j| \geq a$.\\
+\\
+\textit{Proof}\\  
+Assume for ASM, $S_{a,n}$, that ACM, $C_i$, is discovered on step $k$.\\
+\\
+Then $|C_i| = k + a + n$.\\
+Furthermore, $\overline{C^k_j} \geq a$, otherwise $C^k_j$ would be active and we could not have discovered $C_i$.\\
+\\
+Thus, $|C_j| = |C_i|$ $mod$ $|C_j| = \overline{C^k_j} \geq a$. 
 \\
 \textbf{Lemma}\\
 $S_{1,1}$ produces the prime numbers.\\
