@@ -119,6 +119,17 @@ var NonActivatorImageView = /** @class */ (function (_super) {
     };
     return NonActivatorImageView;
 }(ImageView));
+var NextStateButton = /** @class */ (function () {
+    function NextStateButton(main) {
+        var _this = this;
+        this.main = main;
+        var btn = document.getElementById("nextStateButton");
+        if (!btn)
+            throw "Could not locate button";
+        btn.addEventListener("click", function (e) { return _this.main.move(); });
+    }
+    return NextStateButton;
+}());
 var Main = /** @class */ (function () {
     function Main(activators, nonActivators) {
         this.activators = activators;
@@ -132,6 +143,7 @@ var Main = /** @class */ (function () {
         firstCycleView.closeCycle();
         this.views.push(firstCycleView);
         this.branchView = new CycleView(this.mainDiv, activators, nonActivators + 1);
+        new NextStateButton(this);
     }
     Main.prototype.move = function () {
         this.views.forEach(function (v) { return v.move(); });
