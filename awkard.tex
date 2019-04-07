@@ -48,7 +48,7 @@ We can refer to the $ACM$ containing, $a$, activation nodes and, $n$, non-activa
  
 An $ACM$'s length is equal to the number of nodes it contains; thus, $C_{a,n}$'s length is $a + n$. We use the notation $|C|$ to refer to $C$'s length. 
 
-The activation node that is connected to by a non-activation node is said to be at position $0$, with all other nodes' positions being determined by their relative position to $0$. Thus, there are $|C|$ unique positions the ASM $C$ can have. We use the notation $\overline{C}$ to refer to $C$'s position. Furthermore, we can identify the $|C|$ unique states as $C(0)$, $C(1)$, ..., $C(|C| - 1)$.
+The activation node that is connected to by a non-activation node is said to be at position $0$, with all other nodes' positions being determined by their relative position to $0$. Thus, there are $|C|$ unique positions the ASM $C$ can have. We use the notation $\overline{C}$ to refer to $C$'s position. Furthermore, we can identify the $|C|$ unique states as $C(0)$, $C(1)$, ..., $C(|C| - 1)$. We denote the set of unique states with $[C].$
 
 An ACM's initial state starts at position $0$, then moves to the next consequetive position with each iteration. We can keep track of how which state we are on using the notation $C^i$, where $i$ refers to how many iterations we've performed. Thus, $C^0$ denotes the initial state, $C^1$ the next, and $C^{50}$ would be the 51st state. We call $i$ the step of the ASM.
 
@@ -86,8 +86,56 @@ We can define the $+$ operation between an ACM, $C$, and a positive integer $n$ 
 We define the $\alpha$ operation from arbitrary state $C^i$ to the unique state $C(i)$ as $\alpha(C^i) = C(i$ $mod$ $|C|$).\\  
 \\
 \textbf{Definition}\\
-Let $C^a<n> = \{$ $C(i)$ $|$  $C(i) = \alpha(C^a + jn)$ for some integer $j$ $\}$
+Let $C^a<n> = \{$ $C(i)$ $|$  $C(i) = \alpha(C^a + jn)$ for some integer $j$ $\}$\\
+\\
+\textbf{Lemma}\\
+$C^a<n> = [C]$ if $n$ $mod$ $|C|$ does not divide $|C|$. 
+
   
 \section{Awkward State Machines}
 
+\textbf{Definition}\\
+An Activation Branch is defined to be...\\
+\\
+\textbf{Definition}\\
+An Akward State Machine (ASM) is a machine for producing $ACM$'s as it progresses through it's successive states. An ASM, $S_{a,n}$, begins with the ACM, $C_{a,n}$, and a activation branch of length $a + n + 1$.Like an ACM, we can denote an ASM's state as $S^i$ where $i$ is the number of iterations performed to produce the state. In it's initial state, $S^0$, the position of the initial cycle $C$ is 0.
+
+To progress from state $S^i$ to state $S^{i+1}$, increment the state each of the discovered cycle's by one. If none of the cycles are active after doing so, the machine copies the activation branch, then closes one of the branches to create a new ACM with a position of $0$ (thus activating the new ACM). Finally, regardless of whether one of the previous cycles were active, add a new node to the end of the activation branch.\\
+\\
+\textbf{Definition}\\  
+We'll define $[S^a] = \{$ $C_{a.n}$ discovered by $S$ on step $a$ $\}$, and $[S] = \{$ $C_{a,n}$ discoverable by $S$ $\}$.\\
+\\
+\textbf{Lemma}\\
+$S_{1,1}$ produces the prime numbers.\\
+\\
+\textbf{Lemma}\\
+If $C_i, C_j \in [S]$ with $i < j$, then $C_j<|C_i|> = [C_j]$\\
+\\
+\textit{Proof}\\  
+TODO\\
+\\
+\textbf{Theorem}\\
+For every ASM, $S$, the set $[S]$ is non-finite.\\
+\\
+\textit{Proof}\\  
+Assume there exists an ASM, $S_{a,n}$ such that $[S_{a,n}]$ is finite.\\
+Then there must exist some integer, $j$, such that $\forall k \geq j$, $[S^k] = [S]$.\\
+\\
+Move to the next state $S^k$ from $S^j$ such that the initial cycle, $C_0$, is at position $a$.\\
+\\
+Now repeatedly move $S$ $|C_0|$ states at a time until $C_1$ is at position $a$. Notice that by moving $|C_0|$ positions at a time, $\overline{C_0} = a$ as well.\\
+\\
+Now repeatedly move $S$ $|C_0|*|C_1|$ state's at a time until $C_2$ is at position $n$. Notice that both $C_0$ and $C_1$ are also still on position $a$ (view it as moving $|C_0|$ moves $|C_1|$ times and as moving $|C_1|$ moves $|C_0|$ times).\\
+\\
+Continue to repeat this process in order until all the cycles in $[S]$ are at position $a$. Explicity, when cycle's $C_0$, $C_1$, ..., $C_i$ are all at position $a$, move $|C_0|*|C_1|*...*|C_i|$ positions at a time until cycle $C_{i+1}$ is at position $a$ as well.\\
+\\
+Once all cycles are on position $a$, move the $S$ to the next state. Then all the cycles will be at position $n + 1$ which is not an activator node. Thus, we would need to add a new cycle to the ASM. Therefor, $[S^j] \neq [S]$ for any integer $j$ by contradiction. Thus, $[S]$ is non-finite for all ASM's.\\
+\textit{Q.E.D}\\     
+\\
+\textbf{Corollary}\\
+There are an infinite number of prime numbers.\\
+\\
+\textit{Proof}\\ 
+$S_{1,1}$ produces the prime numbers, and $[S_{1,1}]$ is non-finite by the above theorem.\\
+\textit{Q.E.D}\\
 \end{document}
