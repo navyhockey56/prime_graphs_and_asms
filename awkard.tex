@@ -113,7 +113,7 @@ One step $0$, the length of branch $B$ is given by $|B^0| = 0 + a + n + 1$.\\
 With each step, a single node is added to the branch $B$. Thus, $|B^{i+1}| = |B^{i}| + 1$.\\
 \\
 Assume $|B^{i}| = i + a + n + 1$.\\
-Then $|B^{i+1}| = |B^{i}| + 1 = i + a + n + 1 = (i + 1) + a + n + 1$.\\
+Then $|B^{i+1}| = |B^{i}| + 1 = (i + a + n + 1) + 1 = (i + 1) + a + n + 1$.\\
 \\
 Thus we have shown that $|B^k| = k + a + n + 1$ by induction.\\
 \textit{Q.E.D}\\
@@ -121,8 +121,12 @@ Thus we have shown that $|B^k| = k + a + n + 1$ by induction.\\
 \textbf{Lemma}\\
 For $S_{a,n}$, if $C_i$ is discovered on step $k$, then the length of $|C_i| = |B^{k-1}| = k + a + n$.\\
 \\
-\textit{Proof}\\  
-TODO\\
+Assume for $S_{a,n}$, that $C_i$ is discovered on step $k$.\\
+\\
+To produce state $k$, the ASM algorithm first moved all $C_j$ for $j < i$ from state $C^{k-1}$ to state $C^k$. After doing so, there did not exist a $j < i$ such that $C_j$ was active. Therefor, the algorithm copied the branch $B^{k-1}$ and closed one of the two branches to create $C_i$.\\
+\\ 
+Thus, the length of $C_i$ is given by: $|C_i| = |B^{k-1}| = (k - 1) + a + n + 1 = k + a + n$.\\
+\textit{Q.E.D}\\
 \\
 \textbf{Lemma}\\
 For $S_{a,n}$, $|C_{i}| \geq |C_{i-1}| + a$.\\
