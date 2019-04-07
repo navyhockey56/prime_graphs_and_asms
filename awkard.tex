@@ -125,7 +125,7 @@ Assume for $S_{a,n}$, that $C_i$ is discovered on step $k$.\\
 \\
 To produce state $k$, the ASM algorithm first moved all $C_j$ for $j < i$ from state $C^{k-1}$ to state $C^k$. After doing so, there did not exist a $j < i$ such that $C_j$ was active. Therefor, the algorithm copied the branch $B^{k-1}$ and closed one of the two branches to create $C_i$.\\
 \\ 
-Thus, the length of $C_i$ is given by: $|C_i| = |B^{k-1}| = (k - 1) + a + n + 1 = k + a + n$.\\
+Thus, the length of $C_i$ is equal to the length of the branch $B^{k-1}$:\\ $|C_i| = |B^{k-1}| = (k - 1) + a + n + 1 = k + a + n$.\\
 \textit{Q.E.D}\\
 \\
 \textbf{Lemma}\\
@@ -143,6 +143,20 @@ Furthermore, the length of the branch $B$ at each step will be given by $|B| = |
 The $a$th step after discovering $C_i$ will be the first time that $C_i$ will be inactive. The branch length of the $(a-1)$th step is given by $|B^{j + a - 1}| = |C_i| + a$. Thus, if $C_p$ for $0 \leq p < i$ are also inactive on step $a$th step after discovering $C_i$, then we will have to close $B$ on the $a$th step, thus creating cycle $C_{i+1}$ with length $|C_{i+1}| = |B^{j + a - 1}| = |C_i| + a$. Furthermore, if any of the cycles $C_p$ were active on the $a$th step after discovering $C_i$, then the branch would not close, thus the next cycle's length is at least as long as the branch on the $(j+a)$th step: $|C_{i+1}| >= |B^{j + a}| = |C_i| + a + 1$.\\
 \\
 Thus, we have shown that  $|C_{i}| \geq |C_{i-1}| + a$.\\
+\textit{Q.E.D}\\
+\\
+\textbf{Lemma}\\
+For any $C_i, C_j \in [S_{a,n}]$ with $j < i$, it holds that $|C_{i}| \geq |C_j| + (i - j)a$.\\
+\\
+\textit{Proof}\\ 
+If $i = j + 1$, then $|C_i| \geq |C_j| + a = |C_j| + (i - i + 1)a = |C_j| + (i + j)a$ by a previous lemma.\\
+\\
+By the same token of logic, $|C_i| \geq |C_{i-1}| + a \geq (|C_{i-2}| + a) + a = |C_{i=2}| + 2a \geq (|C_{i-3}| + a) + 2a = |C_{i-3}| + 3a \geq ... \geq |C_{i-(i - j)}| + (i-j)a = |C_j| + (i-j)a$.\\
+\\
+More formally, assume for $1 \leq k - i$ that $|C_k| \geq |C_i| + (k-i)a$.\\
+Then $|C_{k+1}| \geq |C_k| + a \geq (|C_i| + (k-i)a) + a = |C_i| + (k + 1 - i)a$.\\
+\\
+Thus we have shown that $|C_{i}| \geq |C_j| + (i - j)a$ by induction.\\
 \textit{Q.E.D}\\
 \\
 \textbf{Lemma}\\
