@@ -73,7 +73,7 @@ class ImageView {
 
   render() {
     const node = document.createElement('li')
-    node.setAttribute('style', 'display: inline; margin: -40px;')
+    node.setAttribute('style', 'display: inline-block; margin: -40px;')
     this.base.appendChild(node)
     node.appendChild(this.image)
   }
@@ -151,7 +151,7 @@ class NextStateButton {
     const btn = document.getElementById("nextStateButton");
     if (!btn) throw "Could not locate button"
     btn.addEventListener("click", (e: Event) => this.main.move());
-    btn.setAttribute('style', 'display: block;')
+    btn.setAttribute('style', 'display: inline-block;')
   }
 }
 class Main {

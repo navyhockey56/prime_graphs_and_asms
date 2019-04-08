@@ -74,7 +74,7 @@ var ImageView = /** @class */ (function () {
     };
     ImageView.prototype.render = function () {
         var node = document.createElement('li');
-        node.setAttribute('style', 'display: inline; margin: -40px;');
+        node.setAttribute('style', 'display: inline-block; margin: -40px;');
         this.base.appendChild(node);
         node.appendChild(this.image);
     };
@@ -162,7 +162,7 @@ var NextStateButton = /** @class */ (function () {
         if (!btn)
             throw "Could not locate button";
         btn.addEventListener("click", function (e) { return _this.main.move(); });
-        btn.setAttribute('style', 'display: block;');
+        btn.setAttribute('style', 'display: inline-block;');
     }
     return NextStateButton;
 }());

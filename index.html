@@ -10,7 +10,7 @@
 
 <body>
 
-  <div id="linkDiv">
+  <div id="linkDiv" style="padding: 5px;">
     <a href="https://github.com/navyhockey56/prime_graphs_and_asms/blob/document_updates/awkard.pdf">Theory</a>
     <a href="https://github.com/navyhockey56/prime_graphs_and_asms/tree/typescript">Code</a>
   </div>
@@ -19,12 +19,15 @@
     <ul>
       <li>Number of Activators: <input id="numberOfActivators" value="1"></input></li>
       <li>Number of Non-Activators: <input id="numberOfNonActivators" value="1"></input></li>
-      <input type="button" value="Click" id="createAsmButton"></input>
     </ul>
+    <input type="button" value="Create ASM!" id="createAsmButton"></input>
   </div>
 
-  <div id="mainDiv" style="overflow: auto;">
-    <input type="button" value="Click" id="nextStateButton" style="display: none;"></input>
+  <div id="nextStateDiv" style="padding: 5px;">
+    <input type="button" value="Next State!" id="nextStateButton" style="display: none;"></input>
+  </div>
+
+  <div id="mainDiv" style="overflow-x: scroll; overflow-y: hidden; white-space: nowrap;">
   </div>
 
   <script src="src/awkward.js"></script>
