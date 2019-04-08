@@ -68,16 +68,18 @@
           the initial cycle (#activator + #non-activator + 1).
         </p>
       </li>
-      <li>
+
+      <li>Number of Activators:
         <p>
           The number of activator nodes each cycle will contain.
           A cycle is 'active' it's current position is on one of the activator nodes.
           The activator nodes are represented as squares. The cycle's position is on a square if the square is empty
           (rather than filled in with blue).
         </p>
+        <input id="numberOfActivators" value="1"></input>
       </li>
-      <li>Number of Activators: <input id="numberOfActivators" value="1"></input></li>
-      <li>
+      <br />
+      <li>Number of Non-Activators:
         <p>
           The number of non-activator nodes the first cycle will contain (giving it a length of [#activator +
           #non-activator]).
@@ -85,8 +87,7 @@
           The non-activator nodes are represented as circles. The cycle's position is on a circle if the circle is empty
           (rather than filled in with blue).
         </p>
-      </li>
-      <li>Number of Non-Activators: <input id="numberOfNonActivators" value="1"></input></li>
+        <input id="numberOfNonActivators" value="1"></input></li>
     </ul>
     <input type="button" value="Create ASM!" id="createAsmButton"></input>
   </div>
