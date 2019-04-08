@@ -1,4 +1,4 @@
-class Point {
+export class Point {
   public next?: Point;
 
   constructor(public active: boolean = false) {}
@@ -23,7 +23,7 @@ class Point {
   }
 }
 
-class Branch {
+export class Branch {
   constructor(
     private startingPoint: Point,
     private currentPoint: Point = startingPoint,
@@ -66,7 +66,7 @@ class Branch {
   }
 }
 
-class Cycle {
+export class Cycle {
   private _length?: number;
   private startingPoint: Point;
 
@@ -97,7 +97,7 @@ class Cycle {
 
 }
 
-class Asm {
+export class Asm {
   private cycles: Cycle[] = [];
   private branch: Branch;
 

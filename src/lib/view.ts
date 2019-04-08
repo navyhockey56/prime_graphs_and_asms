@@ -1,7 +1,9 @@
-const EMPTY_CIRCLE = 'empty_circle.png';
-const EMPTY_SQUARE = 'empty_square.png';
-const FILLED_CIRCLE = 'filled_in_circle.png';
-const FILLED_SQUARE = 'filled_in_square.png';
+import { Asm } from './awkward'
+
+const EMPTY_CIRCLE = '../assets/empty_circle.png';
+const EMPTY_SQUARE = '../assets/empty_square.png';
+const FILLED_CIRCLE = '../assets/filled_in_circle.png';
+const FILLED_SQUARE = '../assets/filled_in_square.png';
 
 class CycleView {
   private position = 0;
@@ -116,7 +118,7 @@ class NonActivatorImageView extends ImageView {
   }
 }
 
-class Main {
+export class Main {
   private views: CycleView[] = [];
   private asm: Asm;
   private branchView: CycleView;
@@ -147,6 +149,3 @@ class Main {
     }
   }
 }
-
-let m = new Main(3, 4);
-m.move();

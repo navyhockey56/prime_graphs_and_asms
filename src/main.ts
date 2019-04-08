@@ -10,3 +10,8 @@ new Vue({
   store,
   render: (h) => h(App),
 }).$mount('#app');
+
+import { Main } from './lib/view'
+const m = new Main(3, 4);
+m.move();
+
