@@ -111,6 +111,7 @@ We'll define $[S^a] = \{$ $C_{a.n}$ discovered by $S$ on step $a$ $\}$, and $[S]
 \textbf{Definition}\\  
 We'll define $|S^a| = \{$ $q$ $|$ $q =  |C_i|$ for $C_i \in [S^a]$ $\}$, and $|S| = \{$ $q$ $|$ $q =  |C_i|$ for $C_i \in [S^a]$ $\}$.\\
 \\
+\\
 \textbf{Lemma}\\
 For $S_{a,n}$, the length of the branch, $B$, on step $k$ is given by $|B^k| = k + a + n + 1$.\\
 \\
@@ -123,6 +124,7 @@ Then $|B^{i+1}| = |B^{i}| + 1 = (i + a + n + 1) + 1 = (i + 1) + a + n + 1$.\\
 \\
 Thus we have shown that $|B^k| = k + a + n + 1$ by induction.\\
 \textit{Q.E.D}\\
+\\
 \\
 \textbf{Lemma}\\
 For $S_{a,n}$, if $C_i$ is discovered on step $k$, then the length of $|C_i| = |B^{k-1}| = k + a + n$.\\
@@ -177,6 +179,18 @@ Then $|C| \geq |C_0| + (j-1-0)a = (a + n) + (j-1)a$.\\
 We can remove if we remove the $a$ activator nodes within the cycle, we are then left with at least $n + (j-1)a$ non-activator nodes.\\
 \textit{Q.E.D}\\
 \\
+\\
+\textbf{Lemma}\\
+Every ASM discovers at least one cycle.\\
+\\
+\textit{Proof}\\
+Let $C_0$ by the initial cycle for ASM, $S_{a,n}$.\\
+\\
+After taking $a$ steps from the initial state of the $S$, the ASM will be on it's first non-activator node.\\
+\\
+Since $C_0$ is the only cycle, the ASM would be inactive, thus a new cycle would be created.\\
+\textit{Q.E.D}\\
+\\ 
 \\
 \textbf{Lemma}\\
 For any step, $k$, for any $C_i \in [S^k_{a,n}]$, it holds that $\overline{C^k_i} = (k + a + n)$ $mod$ $|C_i|$.\\
@@ -293,7 +307,7 @@ Thus, the $(j+1)z$th step will put $C_{max}$ at position $(a-jn)+n \geq a$.\\
 \\
 If the $ASM$ is to remain active, then $(a-jn)+n$ must go beyond all $(s-1)a$ non-activator nodes in $C_{max}$.\\
 \\
-Thus, $(a-jn)+n > (s-1)a \geq 2a$. (TODO: Prove there must be at least 2 cycles)\\
+Thus, $(a-jn)+n > (s-1)a \geq 2a$. (TODO: Prove there must be at least 3 cycles... have proved there must be at least 2)\\
 \\
 But both $n$ and $(a-jn)$ are less then $a$.\\
 But that means: $a + a = 2a > (a-jn)+n \geq 2a$, which is a contradiction!\\
