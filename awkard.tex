@@ -170,13 +170,17 @@ Thus we have shown that $|C_{i}| \geq |C_j| + (i - j)a$ by induction.\\
 \\
 \\
 \textbf{Corollary}\\
-For any cycle $C_{j>0}$ of an ASM, $S_{a,n}$, $C_j$ has at least $n + (j-1)a$ non-activator nodes.\\
+For any cycle $C_{j}$ of an ASM, $S_{a,n}$, $C_j$ has at least $n + ja$ non-activator nodes.\\
 \\
 \textit{Proof}\\
-Let $C_j \in [S_{a,n}]$.\\
-Then $|C| \geq |C_0| + (j-1-0)a = (a + n) + (j-1)a$.\\
+$C_0$ is defined to have $n$ activator nodes.\\
 \\
-We can remove if we remove the $a$ activator nodes within the cycle, we are then left with at least $n + (j-1)a$ non-activator nodes.\\
+Let $C_{j>0} \in [S_{a,n}]$.\\
+\\
+Then $|C_j| \geq |C_1| + (j-1)a \geq (|C_0| + a) + (j-1)a $\\
+$= (2a + n) + (j-1)a = n + (j+1)a$.\\
+\\
+Thus, after removing the $a$ activator nodes from $C_j$, there are at least $n + ja$ non-activator nodes left.\\
 \textit{Q.E.D}\\
 \\
 \\
@@ -307,7 +311,7 @@ Thus, the $(j+1)z$th step will put $C_{max}$ at position $(a-jn)+n \geq a$.\\
 \\
 If the $ASM$ is to remain active, then $(a-jn)+n$ must go beyond all $(s-1)a$ non-activator nodes in $C_{max}$.\\
 \\
-Thus, $(a-jn)+n > (s-1)a \geq 2a$. (TODO: Prove there must be at least 3 cycles... have proved there must be at least 2)\\
+Thus, $(a-jn)+n > (s-1)a \geq 2a$. (TODO: Prove there are at least 3 cycles in every ASM... have proved that there are at least 2 already.)\\
 \\
 But both $n$ and $(a-jn)$ are less then $a$.\\
 But that means: $a + a = 2a > (a-jn)+n \geq 2a$, which is a contradiction!\\
