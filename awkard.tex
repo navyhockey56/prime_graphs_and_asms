@@ -255,18 +255,43 @@ For every ASM, $S$, the set $[S]$ is non-finite.\\
 \\
 \textit{Proof}\\  
 Assume there exists an ASM, $S_{a,n}$ such that $[S_{a,n}]$ is finite.\\
-Then there must exist some integer, $j$, such that $\forall k \geq j$, $[S^k] = [S]$.\\
+Let $s$ be the number of cycles in $[S_{a,n}]$.\\
 \\
-Move to the next state $S^k$ from $S^j$ such that the initial cycle, $C_0$, is at position $a$.\\
+Then there exists some step $p$ on which the last cycle, $C_{max}$ of the ASM is discovered.\\
 \\
-Now repeatedly move $S$ $|C_0|$ states at a time until $C_1$ is at position $a$. Notice that by moving $|C_0|$ positions at a time, $\overline{C_0} = a$ as well.\\
+We know that $C_{max}$ must have at least $(s-1)a$ non-activator nodes (TODO: Prove lemma).\\
 \\
-Now repeatedly move $S$ $|C_0|*|C_1|$ state's at a time until $C_2$ is at position $n$. Notice that both $C_0$ and $C_1$ are also still on position $a$ (view it as moving $|C_0|$ moves $|C_1|$ times and as moving $|C_1|$ moves $|C_0|$ times).\\
+We also know that on step $p$, all cycles $C_{i<s}$ must have been inactive to have discovered $C_{max}$.\\
 \\
-Continue to repeat this process in order until all the cycles in $[S]$ are at position $a$. Explicity, when cycle's $C_0$, $C_1$, ..., $C_i$ are all at position $a$, move $|C_0|*|C_1|*...*|C_i|$ positions at a time until cycle $C_{i+1}$ is at position $a$ as well.\\
+Furthermore, on step $j$, $C_{max}$'s position is at 0.\\
 \\
-Once all cycles are on position $a$, move the $S$ to the next state. Then all the cycles will be at position $n + 1$ which is not an activator node. Thus, we would need to add a new cycle to the ASM. Therefor, $[S^j] \neq [S]$ for any integer $j$ by contradiction. Thus, $[S]$ is non-finite for all ASM's.\\
-\textit{Q.E.D}\\     
+Let $z = \prod_{i<s}|C_i|$.\\
+\\
+If we move the $ASM$ $z$ steps, then the position of every $C_{i<z}$ will be maintained since $z$ is divisible by the length of every $C_{i<z}$ (TODO: Prove lemma).\\
+\\
+Thus, if after moving $z$ steps from $p$, $C_{max}$ is inactive, then we would need to create a new cycle, and we'd be finished with our proof.\\
+\\
+Assume $C_{max}$ was active after moving the $z$ steps.\\
+\\
+Let $n =\overline{C_{max}}$\\
+\\
+We know $n < a$ since $C_{max}$ is inactive.\\
+\\
+Note: the position of $C_{max}$ after moving $zt$ steps is the same as after moving $nt$ steps for any $t$. (TODO: Prove lemma).\\
+\\
+Let $j$ be the greatest integer such that $jn < a$.\\
+Then your position after moving $jz$ steps will be $a - jn$.\\
+Thus, the $(j+1)z$th step will put $C_{max}$ at position $(a-jn)+n \geq a$.\\   
+\\
+If the $ASM$ is to remain active, then $(a-jn)+n$ must go beyond all $(s-1)a$ non-activator nodes in $C_{max}$.\\
+\\
+Thus, $(a-jn)+n > (s-1)a \geq 2a$. (TODO: Prove there must be at least 2 cycles)\\
+\\
+But both $n$ and $(a-jn)$ are less then $a$.\\
+But that means: $a + a = 2a > (a-jn)+n \geq 2a$, which is a contradiction!\\
+\\
+Therefore, moving $(j+1)z$ steps from the discovery of $C_{max}$ will maintain the (inactive) positions of all $C_{i<z}$ and also move $C_{max}$ into one of it's inactive nodes, requiring a new cycle to be made, and completing our proof.\\
+\textit{Q.E.D}\\   
 \\
 \textbf{Corollary}\\
 There are an infinite number of prime numbers.\\
