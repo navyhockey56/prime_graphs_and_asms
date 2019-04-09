@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1 class="title">Welcome to Prime Graphs and ASMs</h1>
     <Controls/>
     <Cycle type="square" :length="5" :activeIndex="3"/>
   </div>
@@ -13,7 +12,7 @@ import Cycle from '@/components/Cycle.vue';
 import Controls from '@/components/Controls.vue';
 
 export default Vue.extend({
-  name: 'home',
+  name: 'Home',
   components: {
     HelloWorld,
     Cycle,
