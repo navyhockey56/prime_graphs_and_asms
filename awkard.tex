@@ -151,6 +151,7 @@ The $a$th step after discovering $C_i$ will be the first time that $C_i$ will be
 Thus, we have shown that  $|C_{i}| \geq |C_{i-1}| + a$.\\
 \textit{Q.E.D}\\
 \\
+\\
 \textbf{Lemma}\\
 For any $C_i, C_j \in [S_{a,n}]$ with $j < i$, it holds that $|C_{i}| \geq |C_j| + (i - j)a$.\\
 \\
@@ -165,8 +166,21 @@ Then $|C_{k+1}| \geq |C_k| + a \geq (|C_i| + (k-i)a) + a = |C_i| + (k + 1 - i)a$
 Thus we have shown that $|C_{i}| \geq |C_j| + (i - j)a$ by induction.\\
 \textit{Q.E.D}\\
 \\
+\\
+\textbf{Corollary}\\
+For any cycle $C_{j>0}$ of an ASM, $S_{a,n}$, $C_j$ has at least $n + (j-1)a$ non-activator nodes.\\
+\\
+\textit{Proof}\\
+Let $C_j \in [S_{a,n}]$.\\
+Then $|C| \geq |C_0| + (j-1-0)a = (a + n) + (j-1)a$.\\
+\\
+We can remove if we remove the $a$ activator nodes within the cycle, we are then left with at least $n + (j-1)a$ non-activator nodes.\\
+\textit{Q.E.D}\\
+\\
+\\
 \textbf{Lemma}\\
 For any step, $k$, for any $C_i \in [S^k_{a,n}]$, it holds that $\overline{C^k_i} = (k + a + n)$ $mod$ $|C_i|$.\\
+\\
 \textit{Proof}\\  
 The initial cycle $C_0$ starts at position $0$ on step $0$. By properties of ACM's, we know that the position of $C_0$ is given by:\\
 \\
@@ -190,6 +204,7 @@ $= (j + a + n)$ $mod$ $|C_i|$.\\
 Therefor we have shown that the position of $C_i$ on step $k$ for any $C_i \in [S^k_{a,n}]$ is given by $\overline{C^k_i} = (k + a + n)$ $mod$ $|C_i|$ for any $C_i$ in $[S^k]$.\\
 \textit{Q.E.D}\\
 \\
+\\
 \textbf{Lemma}\\
 For any $C_i, C_j \in [S_{a,n}]$ with $j < i$, it holds that $|C_i|$ $mod$ $|C_j| \geq a$.\\
 \\
@@ -207,6 +222,7 @@ Finally, subsitituting gives us: $\overline{C^k_j} = |C_i|$ $mod$ $|C_j| \geq a$
 Thus we have shown that, $|C_i|$ $mod$ $|C_j| \geq a$.\\
 \textit{Q.E.D}\\ 
 \\
+\\
 \textbf{Lemma}\\
 For any $C_i \in [S_{a,n}]$, $|C_i|$ is the least positive integer such that $|C_i|$ $mod$ $|C_j| \geq a$ for all $j < i$.\\
 \\
@@ -222,11 +238,13 @@ Furthermore, on step $k$, for all $j \leq i-1$, $C_j$ is inactive. Thus, the alg
 Thus, since $k$ is the least positive integer such that $|C_i|$ $mod$ $|C_j| \geq a$ for all $j < i$, and $|C_i| = k$, we have proved our lemma.\\
 \textit{Q.E.D}\\
 \\
+\\
 \textbf{Definition}\\
 A positive integer is prime if it's only factors are 1 and itself.\\
 \\
 \textbf{Axiom}\\
 The $i$th prime number, $p_i$, is the least integer such that $p_i$ is not divisible by $p_j$ for all $j < i$, with the first prime number $p_0=2$. (Note: This is only an axiom because proving the statement is distracting to ASMs).\\
+\\
 \\
 \textbf{Lemma}\\
 $|S_{1,1}| = P = \{$ the set of prime numbers $\}$\\
@@ -237,18 +255,8 @@ $S_{1,1}$ starts with an initial cycle of length $1 + 1 = 2$, thus giving us the
 For all $i, j$ such that $i > j \geq 0$, $C_i$ will have the property that $|C_i|$ $mod$ $|C_j| \geq 1$, equivalenty, $|C_i|$ is not divisible by any of the previous lengths $|C_j|$. Not only that, $|C_i|$ is also the smallest such integer with the property of not being divisible by the previous cycle lengths.\\
 \\
 Thus by our axiom, $S_{1,1}$ produces the prime numbers.\\
-\textit{Q.E.D}\\
+\textit{Q.E.D}\\ 
 \\
-\textbf{Lemma}\\
-If $C_i, C_j \in [S]$ with $i < j$, then $C_j<|C_i|> = [C_j]$\\
-\\
-\textit{Proof}\\  
-Assume $C_i, C_j \in [S]$ with $i < j$.\\
-Then we know that $|C_j|$ $mod$ $|C_i| \geq a$.\\
-\textit{Incomplete}\\ 
-\\
-\textbf{Corollary}\\
-If $C_i, C_j \in [S]$ with $i < j$, then you can reach any position in $|C_j|$ by moving $|C_i|$ states at a time.\\
 \\
 \textbf{Theorem}\\
 For every ASM, $S$, the set $[S]$ is non-finite.\\
@@ -259,7 +267,7 @@ Let $s$ be the number of cycles in $[S_{a,n}]$.\\
 \\
 Then there exists some step $p$ on which the last cycle, $C_{max}$ of the ASM is discovered.\\
 \\
-We know that $C_{max}$ must have at least $(s-1)a$ non-activator nodes (TODO: Prove lemma).\\
+We know $C_{max}$ must have at least $(s-1)a$ non-activator nodes.\\
 \\
 We also know that on step $p$, all cycles $C_{i<s}$ must have been inactive to have discovered $C_{max}$.\\
 \\
