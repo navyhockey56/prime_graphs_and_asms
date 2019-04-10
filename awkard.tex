@@ -103,7 +103,7 @@ An Activation Branch is defined to be...\\
 \textbf{Definition}\\
 An Akward State Machine (ASM) is a machine for producing $ACM$'s as it progresses through it's successive states. An ASM, $S_{a,n}$, begins with the ACM, $C_{a,n}$, and a activation branch of length $a + n + 1$.Like an ACM, we can denote an ASM's state as $S^i$ where $i$ is the number of iterations performed to produce the state. In it's initial state, $S^0$, the position of the initial cycle $C$ is 0.
 
-To progress from state $S^i$ to state $S^{i+1}$, increment the state each of the discovered cycle's by one. If none of the cycles are active after doing so, the machine copies the activation branch, then closes one of the branches to create a new ACM with a position of $0$ (thus activating the new ACM). Finally, regardless of whether one of the previous cycles were active, add a new node to the end of the activation branch.\\
+To progress from state $S^i$ to state $S^{i+1}$, increment the state each of the cycle's by one. If none of the cycles are active after doing so, the machine copies the activation branch, then closes one of the branches to create a new ACM with a position of $0$ (thus activating the new ACM). Finally, regardless of whether one of the previous cycles were active, add a new node to the end of the activation branch.\\
 \\
 \textbf{Definition}\\  
 We'll define $[S^a] = \{$ $C_{a.n}$ discovered by $S$ on step $a$ $\}$, and $[S] = \{$ $C_{a,n}$ discoverable by $S$ $\}$.\\
@@ -136,6 +136,7 @@ To produce state $k$, the ASM algorithm first moved all $C_j$ for $j < i$ from s
 Thus, the length of $C_i$ is equal to the length of the branch $B^{k-1}$:\\ $|C_i| = |B^{k-1}| = (k - 1) + a + n + 1 = k + a + n$.\\
 \textit{Q.E.D}\\
 \\
+\\
 \textbf{Lemma}\\
 For $S_{a,n}$, $|C_{i}| \geq |C_{i-1}| + a$.\\
 \\
@@ -158,11 +159,11 @@ Thus, we have shown that  $|C_{i}| \geq |C_{i-1}| + a$.\\
 For any $C_i, C_j \in [S_{a,n}]$ with $j < i$, it holds that $|C_{i}| \geq |C_j| + (i - j)a$.\\
 \\
 \textit{Proof}\\ 
-If $i = j + 1$, then $|C_i| \geq |C_j| + a = |C_j| + (i - i + 1)a = |C_j| + (i + j)a$ by a previous lemma.\\
+If $i = j + 1$, then $j - i = 1$.\\
+Thus, $|C_i| \geq |C_j| + a = |C_j| + (j - i)a$.\\
 \\
-By the same token of logic, $|C_i| \geq |C_{i-1}| + a \geq (|C_{i-2}| + a) + a = |C_{i=2}| + 2a \geq (|C_{i-3}| + a) + 2a = |C_{i-3}| + 3a \geq ... \geq |C_{i-(i - j)}| + (i-j)a = |C_j| + (i-j)a$.\\
+Assume for $k$, $i < k \leq j$, that $|C_k| \geq |C_i| + (k-i)a$.\\
 \\
-More formally, assume for $1 \leq k - i$ that $|C_k| \geq |C_i| + (k-i)a$.\\
 Then $|C_{k+1}| \geq |C_k| + a \geq (|C_i| + (k-i)a) + a = |C_i| + (k + 1 - i)a$.\\
 \\
 Thus we have shown that $|C_{i}| \geq |C_j| + (i - j)a$ by induction.\\
@@ -223,6 +224,36 @@ Therefor we have shown that the position of $C_i$ on step $k$ for any $C_i \in [
 \textit{Q.E.D}\\
 \\
 \\
+\textbf{Corollary}\\
+For any cycle $C_j \in [S_{a,n}]$, moving $k|C_j|$ steps will maintain $C_j$'s position.\\
+\\
+\textit{Proof}\\
+Let $C_j \in [S]$.\\
+Assume $S$ is on step $p$.\\
+\\
+Then $\overline{C_j} = p + a + n $ $mod$ $|C_j|$.\\
+Thus, if we move $k|C_j|$ steps from $p$, the position of $C_j$ will be given by:\\
+\\
+$p + a + n + k|C_j|$ $mod$ $|C_j| = p + a + n$ $mod$ $|C_j|$.\\
+\\
+Therefor $C_j$'s position was maintained.\\
+\textit{Q.E.D}\\
+\\
+\\
+\textbf{Lemma}\\
+For any cycle $C \in [S]$, if $k \geq |C|$, then the position of $C$ after moving $k$ steps is the same as moving $k$ $mod$ $|C|$ steps.\\
+\\
+\textit{Proof}\\
+Assume $C \in [S]$, and $S$ is on step $p$.\\
+Then the position of $C$ is given by $p + a + n$ $mod$ $|C|$.\\
+\\
+Let $k > |C|$, $b = k$ $mod$ $|C|$.\\
+\\
+The position of $C$ on step $p + k$ is given by:\\
+$p + k + a + n$ $mod$ $C = p + b + a + n$ $mod$ $C$ which is the position after moving $b$ steps from $p$.\\
+\textit{Q.E.D}\\
+\\
+\\
 \textbf{Lemma}\\
 For any $C_i, C_j \in [S_{a,n}]$ with $j < i$, it holds that $|C_i|$ $mod$ $|C_j| \geq a$.\\
 \\
@@ -242,18 +273,17 @@ Thus we have shown that, $|C_i|$ $mod$ $|C_j| \geq a$.\\
 \\
 \\
 \textbf{Lemma}\\
-For any $C_i \in [S_{a,n}]$, $|C_i|$ is the least positive integer such that $|C_i|$ $mod$ $|C_j| \geq a$ for all $j < i$.\\
+For any $C_i \in [S_{a,n}]$, $|C_i|$ is the least positive integer greater than $|C_{i-1}|$ such that $|C_i|$ $mod$ $|C_j| \geq a$ for all $j < i$.\\
 \\
 \textit{Proof}\\
-Assume $k$ is the first step after discovering $C_{i-1}$ such that $k$ $mod$ $|C_{j}| \geq a$ for all $j \leq i-1$.\\
-\\ 
-Assume you discovered $C_{i-1}$ on step $p < k$\\.
+Assume you discovered $C_{i-1}$ on step $p$.\\
+Assume $k$ is the first step after discovering $C_{i-1}$ such that all cycles are inactive (if we can show that cycle $C_i$ is discovered on step $k$, then our proof will be complete).\\
 \\
-Therefore, on all steps, $q$, such that $p \leq q < k$, there exists at least one cycle $C_j$ such that $q$ $mod$ $|C_j| < a$, and is thus active. Therefore, the ASM algoirthm cannot create cycle $C_i$ on any step $p \leq q < k$.\\
+Then, on all steps, $q$, $p \leq q < k$, there must exist at least one cycle $C_j$ that is active (implying $q + a + n$ $mod$ $|C_j| < a$). Therefore, the ASM algoirthm cannot create cycle $C_i$ on any step $p \leq q < k$.\\
 \\
-Furthermore, on step $k$, for all $j \leq i-1$, $C_j$ is inactive. Thus, the algorithm must create $C_i$ on step $k$, giving us $|C_i| = k$.\\
-\\ 
-Thus, since $k$ is the least positive integer such that $|C_i|$ $mod$ $|C_j| \geq a$ for all $j < i$, and $|C_i| = k$, we have proved our lemma.\\
+Furthermore, on step $k$, the algorithm must create $C_i$, giving us $\overline{C^k_i} = 0 = k + a + n$ $mod$ $|C_i|$.\\
+\\
+Thus, since $k + a + n = |C_i|$ is the least positive integer such that $|C_i|$ $mod$ $|C_j| \geq a$ for all $j < i$, and have proved our lemma.\\
 \textit{Q.E.D}\\
 \\
 \\
@@ -261,7 +291,8 @@ Thus, since $k$ is the least positive integer such that $|C_i|$ $mod$ $|C_j| \ge
 A positive integer is prime if it's only factors are 1 and itself.\\
 \\
 \textbf{Axiom}\\
-The $i$th prime number, $p_i$, is the least integer such that $p_i$ is not divisible by $p_j$ for all $j < i$, with the first prime number $p_0=2$. (Note: This is only an axiom because proving the statement is distracting to ASMs).\\
+The $i$th prime number, $p_i$, is the least integer that is greater than the $(i-1)th$ prime number and is not divisible by $p_j$ for all $j < i$ (with the first prime number $p_0=2$).\\ 
+Note: This is only an axiom because proving the statement is distracting to ASMs.\\
 \\
 \\
 \textbf{Lemma}\\
@@ -270,9 +301,9 @@ $|S_{1,1}| = P = \{$ the set of prime numbers $\}$\\
 \textit{Proof}\\
 $S_{1,1}$ starts with an initial cycle of length $1 + 1 = 2$, thus giving us the first prime number.\\
 \\
-For all $i, j$ such that $i > j \geq 0$, $C_i$ will have the property that $|C_i|$ $mod$ $|C_j| \geq 1$, equivalenty, $|C_i|$ is not divisible by any of the previous lengths $|C_j|$. Not only that, $|C_i|$ is also the smallest such integer with the property of not being divisible by the previous cycle lengths.\\
+For all $i, j$ such that $i > j \geq 0$, $C_i$ will have the property that $|C_i|$ $mod$ $|C_j| \geq 1$, equivalenty, $|C_i|$ is not divisible by any of the previous lengths $|C_j|$. Furthermore, $|C_i|$ is the smallest such integer greater than $|C_{i-1}|$ with the property of not being divisible by the previous cycle lengths.\\
 \\
-Thus by our axiom, $S_{1,1}$ produces the prime numbers.\\
+Thus, by our axiom, $S_{1,1}$ produces the prime numbers.\\
 \textit{Q.E.D}\\ 
 \\
 \\
@@ -283,9 +314,9 @@ For every ASM, $S$, the set $[S]$ is non-finite.\\
 Assume there exists an ASM, $S_{a,n}$ such that $[S_{a,n}]$ is finite.\\
 Let $s$ be the number of cycles in $[S_{a,n}]$.\\
 \\
-Then there exists some step $p$ on which the last cycle, $C_{max}$ of the ASM is discovered.\\
+Then there exists some step $p$ on which the last cycle, $C_{max}=C_{s-1}$ of the ASM is discovered.\\
 \\
-We know $C_{max}$ must have at least $(s-1)a$ non-activator nodes.\\
+We know $C_{max}$ must have at least $n + (s-1)a > (s-1)a$ non-activator nodes.\\
 \\
 We also know that on step $p$, all cycles $C_{i<s}$ must have been inactive to have discovered $C_{max}$.\\
 \\
@@ -293,7 +324,7 @@ Furthermore, on step $j$, $C_{max}$'s position is at 0.\\
 \\
 Let $z = \prod_{i<s}|C_i|$.\\
 \\
-If we move the $ASM$ $z$ steps, then the position of every $C_{i<z}$ will be maintained since $z$ is divisible by the length of every $C_{i<z}$ (TODO: Prove lemma).\\
+If we move the $ASM$ $z$ steps, then the position of every $C_{i<z}$ will be maintained since $z$ is a multiple of the length of every $C_{i<z}$.\\
 \\
 Thus, if after moving $z$ steps from $p$, $C_{max}$ is inactive, then we would need to create a new cycle, and we'd be finished with our proof.\\
 \\
@@ -303,7 +334,7 @@ Let $n =\overline{C_{max}}$\\
 \\
 We know $n < a$ since $C_{max}$ is inactive.\\
 \\
-Note: the position of $C_{max}$ after moving $zt$ steps is the same as after moving $nt$ steps for any $t$. (TODO: Prove lemma).\\
+Note: the position of $C_{max}$ after moving $zt$ steps is the same as after moving $nt$ steps since $z > |C_{max}|$ (if z were less than $|C_{max}|$, then moving $z$ steps would have inactivated $C_{max}$ since $z > a$).\\
 \\
 Let $j$ be the greatest integer such that $jn < a$.\\
 Then your position after moving $jz$ steps will be $a - jn$.\\
@@ -318,6 +349,7 @@ But that means: $a + a = 2a > (a-jn)+n \geq 2a$, which is a contradiction!\\
 \\
 Therefore, moving $(j+1)z$ steps from the discovery of $C_{max}$ will maintain the (inactive) positions of all $C_{i<z}$ and also move $C_{max}$ into one of it's inactive nodes, requiring a new cycle to be made, and completing our proof.\\
 \textit{Q.E.D}\\   
+\\
 \\
 \textbf{Corollary}\\
 There are an infinite number of prime numbers.\\
