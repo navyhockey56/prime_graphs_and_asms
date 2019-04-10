@@ -4,12 +4,12 @@
 
     <div class="tabs is-left">
       <ul>
-        <li class="is-active">
-          <router-link to="/">Home</router-link>
-        </li>
-        <li>
-          <router-link to="/theory">Theory</router-link>
-        </li>
+        <router-link tag="li" exact-active-class="is-active" to="/">
+          <a>Home</a>
+        </router-link>
+        <router-link tag="li" exact-active-class="is-active" to="/theory">
+          <a>Theory</a>
+        </router-link>
         <li>
           <a href="https://github.com/navyhockey56/prime_graphs_and_asms/tree/vue">Code</a>
         </li>
