@@ -6,7 +6,7 @@
     </p>
     <p class="control">
       <label class="label">Non-Activators</label>
-      <input v-model="nonActivators" @input="updateNonActivators" class="input is-rounded is-small" type="text" value="1">
+      <input v-model="nonActivators" @input="updateNonActivators" class="input is-rounded is-small" type="text">
     </p>
     <p class="control">
       <button class="button">Next</button>
@@ -21,21 +21,16 @@ import { mapActions, mapState } from 'vuex'
 export default Vue.extend({
   data() {
     return {
-      activators: this.$store.state.activators,
-      nonActivators: this.$store.state.nonActivators
+      activators: 1,
+      nonActivators: 1
     }
   },
   methods: {
-    ...mapActions([
-      'setActivators',
-      'setNonActivators'
-    ]),
     updateActivators(e: Event) {
-      console.log('test')
-      this.setActivators(e.target && e.target.value)
+      this.$store.dispatch('setActivators', e.target && e.target.value)
     },
     updateNonActivators(e: Event) {
-      this.setNonActivators(e.target && e.target.value)
+      this.$store.dispatch('setNonActivators', e.target && e.target.value)
     }
   },
 })
