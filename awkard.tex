@@ -35,14 +35,52 @@ Let's modify our experiment once again. This time, you need tacks, a corkboard, 
 
 If you run the above experiment and then count the number of tacks in each bar, you will find that the number of tacks in the bars enumerate the prime numbers in consequetive order. How did this happen? Well, this experiment is much more similar to the last two than it first appears. In this case, the way we move the flags on each bar is the same as wrapping the extended piece of yarn around the tacks in experiment two, or 'walking' the yarn up the extended piece of yarn from experiment one. However, this time our flags our able to preserve the state from the last iteration since you just have to move the flags one tack forward. The moving of each tack can be done in constant time for each bar, and is incredibly fast relative to the time it takes to re-wrap the extended strand of yarn around the tacks, or perform the 'walks'. Furthermore, this expirement doesn't need distance; rather, it only needs relative position (bottom tack, tack above that, ..., tack below top tack, top tack). By replacing distance with relative position, we can easily encode our experiment without the use of numbers using cycle graphs implemented via linked lists. 
   
-\section{The Prime Graph Machine}
+\section{Cycle Graphs}
 
+\textbf{Definition}\\
+A \textit{cycle graph} is a directed, connected graph whose points form a circle. More explicity, for any $n > 1$, the cycle graph $CG_n$ has points $\{$ $p_0, p_1, ..., p_{n-1}$ $\}$ such that for any $i < n - 1$, $p_i$ has only one edge which goes to $p_{i + 1}$, and $p_{n-1}$ has only one edge going to $p_0$.\\
+\\ 
+\\
+\textbf{Lemma}\\
+For any cycle graph $CG_n$, for any $p_i \in CG_n$, a walk of length $k = n - i$ will end at point $p_0$.\\
+\\
+\textit{Proof}\\
+For any point $p_j \in CG_n$, there is only one edge that can be traversed, thus there is only one walk that can be made.\\
+Furthermore, point $p_j$ is $h = n - j - 1$ steps from point $p_{n-1}$.\\
+Thus, moving $k = h + 1 = n - j - 1$ steps from $p_j$ will land you on the point $p_{n-1}$ has an edge to, which is $p_0$ by defining of the cycle graph.\\
+\textit{Q.E.D}\\ 
+\\ 
+\\
+\textbf{Corollary}\\
+For any cycle graph $CG_n$, a walk of length $n$ from point $p_0$ will end at point $p_0$.\\
+\\
+\textit{Proof}\\
+Pluggin $i = 0$ into the above lemma results in $k = n - i = n - 0 = n$. Thus a walk of length $n$ from $p_0$ will end at point $p_0$ by the above.\\
+\textit{Q.E.D}\\
+\\
+\\
+\textbf{Corollary}\\
+For any cycle graph $CG_n$, a wall of length $kn$, $k > 0$, from $p_0$ will end at point $p_0$.\\
+\\
+\textit{Proof}\\
+If we move $n$ steps from $p_0$ we will return to $p_0$.\\
+Assume after moving $in$, $i \geq 1$ steps from $p_0$, you have returned to point $p_0$.\\
+Then, moving $n$ more steps will return to point $p_0$.\\
+Thus moving $in + n = (i+1)n$ steps from $p_0$ returns you to $p_0$.\\
+\textit{Q.E.D}\\
+\\  
+\\
+\textbf{Lemma}\\
+For any cycle graph $C_n$, for any $k > 0$, for any $p_i \in C_n$, a walk of length $k$ starting at $p_i$ will end at point $p_h$ where $j = i + k$ $mod$ $n$.\\
+\\
+\textit{Proof}\\
+ 
 
 \section{Activation Cycle Machines}
 
 
 \textbf{Definition} \\
-An activation cycle machine (ACM) is a directed cycle graph, $C$, containing $0 < n < |G|$ consequetive nodes called activation nodes.
+An activation cycle machine (ACM) is a directed cycle graph, $C$, containing $0 < a < |G|$ consequetive nodes called activation nodes, followed by $n = |G| - a$ non-activation nodes.
 
 We can refer to the $ACM$ containing, $a$, activation nodes and, $n$, non-activation nodes as $C_{a,n}$.
  
