@@ -51,24 +51,25 @@ Thus, moving $k = h + 1 = n - j - 1$ steps from $p_j$ will land you on the point
 \textit{Q.E.D}\\ 
 \\ 
 \\
-\textbf{Corollary}\\
-For any cycle graph $CG_n$, a walk of length $n$ from point $p_0$ will end at point $p_0$.\\
+\textbf{Lemma}\\
+For any cycle graph $CG_n$, a walk of length $n$ from $p_i$ will end at point $p_i$.\\
 \\
 \textit{Proof}\\
-Pluggin $i = 0$ into the above lemma results in $k = n - i = n - 0 = n$. Thus a walk of length $n$ from $p_0$ will end at point $p_0$ by the above.\\
+For any $p_i \in CG_n$, a walk of length $n - i$ will end at point $p_0$.\\
+Thus, moving the final $j = n - n - i = i$ steps from point $p_0$ will land you on point $p_i$.\\
 \textit{Q.E.D}\\
 \\
 \\
 \textbf{Corollary}\\
-For any cycle graph $CG_n$, a wall of length $kn$, $k > 0$, from $p_0$ will end at point $p_0$.\\
+For any cycle graph $CG_n$, a walk of length $kn$, $k > 0$, from $p_0$ will end at point $p_0$.\\
 \\
-\textit{Proof}\\
-If we move $n$ steps from $p_0$ we will return to $p_0$.\\
-Assume after moving $in$, $i \geq 1$ steps from $p_0$, you have returned to point $p_0$.\\
-Then, moving $n$ more steps will return to point $p_0$.\\
-Thus moving $in + n = (i+1)n$ steps from $p_0$ returns you to $p_0$.\\
+\textit{Proof}
+If we move $n$ steps from $p_i$ we will return to $p_i$ by the above.\\
+Assume after moving $in$, $i \geq 1$ steps from $p_i$, you have returned to point $p_i$.\\
+Then, moving $n$ more steps from there will again return to point $p_i$.\\
+Thus moving $in + n = (i+1)n$ steps from $p_i$ returns you to $p_i$.\\
 \textit{Q.E.D}\\
-\\  
+\\
 \\
 \textbf{Lemma}\\
 For any cycle graph $C_n$, for any $k > 0$, for any $p_i \in C_n$, a walk of length $k$ starting at $p_i$ will end at point $p_h$ where $j = i + k$ $mod$ $n$.\\
