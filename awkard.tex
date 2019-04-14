@@ -119,27 +119,38 @@ If the current position of an ACM, $C_{n,a}$ is within the set of activotors ($\
 \\
 \\
 \textbf{Theorem}\\
-For any ACM, $C_{n,a}$, for any state, $k$, the position of state $(k + i)$ is given by talking a walk of length $i$ starting at position $\overline{C^k}$ around $CG_n$.\\
+For any ACM, $C_{n,a}$, for any state, $k$, the position of state $(k + i)$ is given by taking a walk of length $i$ starting at position $\overline{C^k}$ around $CG_n$, thus the position of state $k + i$ is: $\overline{C^k} + i$ $mod$ $n$.\\
 \\
 \textit{Proof}\\
-TODO
+By defininiton of an ACM, if the position of an ACM is $p_j$ on state $i - 1$, then the position at state $i$ will be the point connected to by $p_j$, which is equivalent to taking a walk of length 1 on $CG_n$ starting on point $p_j$.\\
 \\
+Assume for some $j$, $1 \leq j \leq i$, that the position of state $k + j$ is given by taking a walk of length $j$ starting at position $\overline{C^k}$ around $CG_{n,a}$.\\
 \\
-\textbf{Lemma}\\
-The position of $CG_{n,a}$ on state $k$ is given by $k$ $mod$ $n$.\\
-\\
-\textit{Proof}\\
-TODO
+Then the position on state $k + j$ is given by $\overline{C^k} + j$ $mod$ $n$.\\
+Thus, the the next state's position will be given by $\overline{C}^{k + j + 1} = \overline{C^k} + j + 1$ $mod$ $n$, which is the end position of a walk of length $j + 1$ when starting at point $\overline{C^k}$ on $CG_{n,a}$.\\
+\textit{Q.E.D}\\
 \\
 \\
 \textbf{Corollary}\\
-$CG_{n,a}$ is active on state $k$ if and only if $k$ $mod$ $n < a$.\\
+The position of $C_{n,a}$ on state $k$ is given by $k$ $mod$ $n$.\\
+\\
+\textit{Proof}\\ 
+The initial state, $0$, starts at position $0 = 0$ $mod$ $n$.\\
+Thus the position of state $k = k + 0$ is given by:\\
+$|C^0| + k$ $mod$ $n = 0 + k$ $mod$ $n = k$ $mod$ $n$.\\
+\textit{Q.E.D}\\   
+\\
+\\
+\textbf{Corollary}\\
+$C_{n,a}$ is active on state $k$ if and only if $k$ $mod$ $n < a$.\\
 \\
 \textit{Proof}\\
-TODO
+An ACM, $C_{n,a}$ is active if and only if it's position is on one of it's activators.\\
+The activators of $C_{n,a}$ are defined to be $p_{0 \leq i < a}$, or equivalenty positions $0 \leq i < a$.\\
 \\
-\\
-\textbf{Lemma}\\
+Thus, an $C_{n,a}$ is only active if it's position is less than $a$.\\
+Thus, $C$ is active if and only if $a > \overline{C^k} = k$ $mod$ $n$.\\
+\textit{Q.E.D} 
   
 \section{Awkward State Machines}
 
