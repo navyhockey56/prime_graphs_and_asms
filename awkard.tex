@@ -155,7 +155,25 @@ Thus, $C$ is active if and only if $a > \overline{C^k} = k$ $mod$ $n$.\\
 \section{Awkward State Machines}
 
 \textbf{Definition}\\
-An Activation Branch is defined to be...\\
+An \textit{activation branch} is directed graph that forms a line. Explicity, the activation branch of length $n$ has points $\{$ $p_0, p_1 ..., p_{n-1}$ $\}$ such that for every point $p_{i < n -1}$ has a single edge connecting it to $p_{i+1}$, and $p_{n-1}$ does not have any edges extending from it.\\
+\\
+Furthermore, an activation branch is equipped with $a > 0$ activator points: $A = \{$ $p_i$ $|$ $0 \leq i < a < n$ $\}$.\\ 
+\\
+We denote the activation branch with length $n$ and $a$ activator nodes $B_{n,a}$.
+\\
+\\
+\textbf{Lemma}\\
+For any $B_{n,a}$, adding an edge extending from $p_{n-1}$ to $p_0$ produces the cycle graph $CG_n$ for ACM $C_{n,a}$.\\
+\\
+\textit{Proof}\\ 
+By definition of $B_{n,a}$, all points $p_{i < n -1}$ have the same edges as the first $n - 1$ points in $CG_n$ for ACM $C_{n,a}$.\\
+\\
+Furthermore, the first $a$ points of $B_{n,a}$ are it's activator points, which are the activators of $C_{n,a}$.\\
+\\
+Thus, the only edge missing from $B_{n,a}$ that is contained within $CG_n$ is from  $p_{n-1}$ to $p_0$.\\
+\\
+Therefore, adding the edge will convert $B_{n,a}$ into $CG_n$ for $C_{n,a}$.\\
+\textit{Q.E.D}\\
 \\
 \textbf{Definition}\\
 An Akward State Machine (ASM) is a machine for producing $ACM$'s as it progresses through it's successive states. An ASM, $S_{a,n}$, begins with the ACM, $C_{a,n}$, and a activation branch of length $a + n + 1$.Like an ACM, we can denote an ASM's state as $S^i$ where $i$ is the number of iterations performed to produce the state. In it's initial state, $S^0$, the position of the initial cycle $C$ is 0.
