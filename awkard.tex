@@ -56,14 +56,14 @@ For any cycle graph $CG_n$, a walk of length $n$ from $p_i$ will end at point $p
 \\
 \textit{Proof}\\
 For any $p_i \in CG_n$, a walk of length $n - i$ will end at point $p_0$.\\
-Thus, moving the final $j = n - n - i = i$ steps from point $p_0$ will land you on point $p_i$.\\
+Thus, moving the final $j = n - (n - i) = i$ steps from point $p_0$ will land you on point $p_i$.\\
 \textit{Q.E.D}\\
 \\
 \\
 \textbf{Corollary}\\
 For any cycle graph $CG_n$, a walk of length $kn$, $k > 0$, from $p_0$ will end at point $p_0$.\\
 \\
-\textit{Proof}
+\textit{Proof}\\
 If we move $n$ steps from $p_i$ we will return to $p_i$ by the above.\\
 Assume after moving $in$, $i \geq 1$ steps from $p_i$, you have returned to point $p_i$.\\
 Then, moving $n$ more steps from there will again return to point $p_i$.\\
@@ -72,67 +72,74 @@ Thus moving $in + n = (i+1)n$ steps from $p_i$ returns you to $p_i$.\\
 \\
 \\
 \textbf{Lemma}\\
-For any cycle graph $C_n$, for any $k > 0$, for any $p_i \in C_n$, a walk of length $k$ starting at $p_i$ will end at point $p_h$ where $j = i + k$ $mod$ $n$.\\
+For any cycle graph $C_n$, for any $k > 0$, for any $p_i \in C_n$, a walk of length $k$ starting at $p_i$ will end at point $p_j$ where $j = i + k$ $mod$ $n$.\\
 \\
 \textit{Proof}\\
- 
-
+Let $CG_n$ be at point $p_i$.\\
+Let $0 > k$.\\
+If $k > n$, then there exists $q \geq 0$ such that $qn + r = k$ with $0 \leq r < n$.\\
+Furthermore, moving $qn$ positions from $p_i$ will return the cycle to $p_i$, leaving $r$ moves left.\\
+\\
+Let $e = i + r$.\\
+Assume $e < n$, then moving $r$ positions from $p_i$ will land on $p_{i + r}$.\\
+Thus, if $e < n$, moving $k = qn + r$ positions resulted in position $i + r = i + (qn + r)$ $mod$ $n = i + k$ $mod$ $n$.\\
+\\
+Assume $e \geq n$.\\
+Then $e = n + a = i + r$ for $0 \leq a < n$.\\
+Thus, $a = (i + r) - n = e - n$
+\\
+We can move $n - i$ positions from $p_i$ to return to point $p_0$.\\
+Leaving $r - (n - i) = r - n + i$ = $(r + i) - n = e - n = a < n$ moves remaing.\\
+Therefore, the cycle will land on point $p_a$.\\
+\\
+We need to show that $a = i + k$ $mod$ $n$.\\
+Substituting give us:\\
+\\
+$i + k$ $mod$ $n = i + (qn + r)$ $mod$ $n = i + r$ $mod$ $n$\\ 
+$= e$ $mod$ $n = (n + a)$ $mod$ $m = a$ $mod$ $m$.\\ 
+\\
+Thus we have shown that moving $k$ steps from $p_i$ will result in point $p_j$ where $j = k + i$ $mod$ $n$.\\
+\textit{Q.E.D}
 \section{Activation Cycle Machines}
 
-
-\textbf{Definition} \\
-An activation cycle machine (ACM) is a directed cycle graph, $C$, containing $0 < a < |G|$ consequetive nodes called activation nodes, followed by $n = |G| - a$ non-activation nodes.
-
-We can refer to the $ACM$ containing, $a$, activation nodes and, $n$, non-activation nodes as $C_{a,n}$.
- 
-An $ACM$'s length is equal to the number of nodes it contains; thus, $C_{a,n}$'s length is $a + n$. We use the notation $|C|$ to refer to $C$'s length. 
-
-The activation node that is connected to by a non-activation node is said to be at position $0$, with all other nodes' positions being determined by their relative position to $0$. Thus, there are $|C|$ unique positions the ASM $C$ can have. We use the notation $\overline{C}$ to refer to $C$'s position. Furthermore, we can identify the $|C|$ unique states as $C(0)$, $C(1)$, ..., $C(|C| - 1)$. We denote the set of unique states with $[C].$
-
-An ACM's initial state starts at position $0$, then moves to the next consequetive position with each iteration. We can keep track of how which state we are on using the notation $C^i$, where $i$ refers to how many iterations we've performed. Thus, $C^0$ denotes the initial state, $C^1$ the next, and $C^{50}$ would be the 51st state. We call $i$ the step of the ASM.
-
-An $ACM$'s state is said to be active if it's position is on one of it's activator nodes; otherwise, the $ACM$ is called inactive.\\
-\\
-\textbf{Definition} \\
-For an ASM, $C$, we can define the $*$ operation between two states $C(i)$ and $C(j)$ as:
-$C(i) * C(j) =$ $C(i + j$ $mod$ $|C|)$\\
-\\
-\textbf{Lemma}\\
-The $*$ operation for an ASM, $C$, forms a group with $C(0)$ as the identity. We can refer to this group as $<C>$.\\ 
-\\
-\textit{Proof}\\  
-TODO\\
-\\
-\textbf{Lemma}\\
-The group $<C>$ is isomorphic to the group of integers under addition modulo $|C|$.\\
-\\
-\textit{Proof}\\  
-TODO\\
-\\
-\textbf{Lemma}\\
-If $C_{a,n}$ is on position $p$ at step $m$, then $m$ $mod$ $|C| = p$.\\
-\\
-\textit{Proof}\\  
-TODO\\
-\\
-\textbf{Corollary}\\
-$C$ is active on step $m$ if and only if $m$ $mod$ $|C| < n$\\
-\\
-\textbf{Definition} \\
-We can define the $+$ operation between an ACM, $C$, and a positive integer $n$ as: $C^i + n = C^{j+n}$.\\
-\\
-\textbf{Definition} \\
-We define the $\alpha$ operation from arbitrary state $C^i$ to the unique state $C(i)$ as $\alpha(C^i) = C(i$ $mod$ $|C|$).\\  
-\\
 \textbf{Definition}\\
-Let $C^a<n> = \{$ $C(i)$ $|$  $C(i) = \alpha(C^a + jn)$ for some integer $j$ $\}$\\
+An \textit{activation cycle machine} (ACM) is state machine that runs on top of a cycle graph $CG_n$, that has been equipped with a subset of $a$ activator points $A = \{$ $p_i$ $|$ $0 \leq i < a < n$ $\}$.\\
 \\
-\textbf{Lemma}\\
-For $n < |C|$, $C^a<n> = [C]$ if $n$ is relatively prime to $|C|$.\\ 
+Each state of an ACM is associated with a position $p \in CG_n$.\\
+The initial state (state $0$) of any ASM has position $p_0 \in CG_n$.\\
+\\
+If the position of an ACM is $p_j$ on state $i - 1$, then the position at state $i$ will be the point connected to by $p_j$.
+Thus, if $j < n - 1$, then the next state's position will be $p_{j+1}$; otherwise, if $j = n - 1$, then the next state's position will be $p_0$.\\
+\\
+We denote the ACM containing cycle graph $CG_n$ and $a$ activator nodes as $C_{n,a}$.\\
+\\
+For simplicity, if the current position of $C_{n,a}$ is $p_i$ on state $j$, we write $\overline{C}^j_{n,a} = i$.\\ 
+\\
+If the current position of an ACM, $C_{n,a}$ is within the set of activotors ($\overline{C}_{n,a} < a$), then we say the ACM is \textit{active}; otherwise, we say the ACM is \textit{inactive}.\\
+\\
+\\
+\textbf{Theorem}\\
+For any ACM, $C_{n,a}$, for any state, $k$, the position of state $(k + i)$ is given by talking a walk of length $i$ starting at position $\overline{C^k}$ around $CG_n$.\\
 \\
 \textit{Proof}\\
 TODO
-
+\\
+\\
+\textbf{Lemma}\\
+The position of $CG_{n,a}$ on state $k$ is given by $k$ $mod$ $n$.\\
+\\
+\textit{Proof}\\
+TODO
+\\
+\\
+\textbf{Corollary}\\
+$CG_{n,a}$ is active on state $k$ if and only if $k$ $mod$ $n < a$.\\
+\\
+\textit{Proof}\\
+TODO
+\\
+\\
+\textbf{Lemma}\\
   
 \section{Awkward State Machines}
 
