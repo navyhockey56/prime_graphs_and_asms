@@ -176,15 +176,31 @@ Therefore, adding the edge will convert $B_{n,a}$ into $CG_n$ for $C_{n,a}$.\\
 \textit{Q.E.D}\\
 \\
 \textbf{Definition}\\
-An Akward State Machine (ASM) is a machine for producing $ACM$'s as it progresses through it's successive states. An ASM, $S_{a,n}$, begins with the ACM, $C_{a,n}$, and a activation branch of length $a + n + 1$.Like an ACM, we can denote an ASM's state as $S^i$ where $i$ is the number of iterations performed to produce the state. In it's initial state, $S^0$, the position of the initial cycle $C$ is 0.
-
-To progress from state $S^i$ to state $S^{i+1}$, increment the state each of the cycle's by one. If none of the cycles are active after doing so, the machine copies the activation branch, then closes one of the branches to create a new ACM with a position of $0$ (thus activating the new ACM). Finally, regardless of whether one of the previous cycles were active, add a new node to the end of the activation branch.\\
+An \textit{awkward state machine} (ASM) is state machine running on top of a directed graph composed of a set of ACMs and a single activation branch.\\
+\\
+Every ASMs initial state contains a single $ACM$, $C_{m,a} = C_0$, and the activation branch, $B_{m+1,a}$.\\
+Furthermore, the position of $C_0$ on the initial state is $0$.\\
+We denote the ASM with an initial state containing $C_{m,a}$ as $S_{a,n=m-a}$.\\
+\\
+To progress from state $i - 1$ to state $i$ for ASM, $S$, first move every ACM in $S$ to it's next state.\\
+If none of the ACMs in $S$ are active after moving to their next state, then:
+\begin{enumerate}
+\item Create a copy of the activation branch, giving you branches $B$ and $B`$.
+\item Convert $B$ into an $ACM$, $C$, by adding an edge to it's last point, thus leaving a single activation branch $B`$. Set the position of $C$ to $0$. Now $C$ is contained within the set of ACMs for $S$.
+\end{enumerate}
+Regardless of whether one of the ACMs were active, add a new point to the end of the activation branch. Explicitly, if the activation branch had length $n$, then add an edge extending from $p_{n-1}$ to the new point $p_n$, thus creating an activation branch of length $n + 1$.\\
+\\
+If none of the ACMs were active after moving them to their next state, we say that $S$ is \textit{inactive} after moving; otherwise we say $S$ was \textit{active} after moving. Therefore, we only add a new ACM to $S$ when $S$ is inactive after moving.\\
+\\
+We denote the inition cycle of an ASM $C_0$, the first discovered cycle $C_1$, and the $n$th discovered cycle $C_n$.\\
+\\
+We denote the graph of ASM $S_{a,n}$ on state $k$ as $S^k$.\\
+\\
+If $C_{p,a}$ is discovered by ASM $S_{a,n}$ on some step $k$, then we say that $C_{p,a}$ is \textit{discoverable} by $S$.\\
 \\
 \textbf{Definition}\\  
-We'll define $[S^a] = \{$ $C_{a.n}$ discovered by $S$ on step $a$ $\}$, and $[S] = \{$ $C_{a,n}$ discoverable by $S$ $\}$.\\
-\\
-\textbf{Definition}\\  
-We'll define $|S^a| = \{$ $q$ $|$ $q =  |C_i|$ for $C_i \in [S^a]$ $\}$, and $|S| = \{$ $q$ $|$ $q =  |C_i|$ for $C_i \in [S^a]$ $\}$.\\
+We'll define $[S^a] = \{$ $C_i$ within the graph of $S$ on step $a$ $\}$,\\
+and $[S] = \{$ $C_0$ and all $C_i$ disoverable by $S$ $\}$.\\
 \\
 \\
 \textbf{Lemma}\\
