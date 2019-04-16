@@ -447,5 +447,26 @@ There are an infinite number of prime numbers.\\
 \\
 \textit{Proof}\\ 
 $S_{1,1}$ produces the prime numbers, and $[S_{1,1}]$ is non-finite by the above theorem.\\
-\textit{Q.E.D}\\
+\textit{Q.E.D}
+
+\section{Needy Cycle Machines}
+
+\textbf{Definition}\\
+A \textit{Needy Cycle Machine} (NSM) is state machine running on top of a directed graph composed of a set of ACMs and a single activation branch.\\
+\\
+A NSM starts with $k > 0$ initial cycles, $\{$ $C_0, ..., C_{k-1}$ $\}$ . Each of the $k$ initial cycles must have a unique length and contain the same number of activator nodes. Futhermore, the initial position of every initial cycle is $0$.
+\\
+The initial branch length is a single node longer than the longest initial cycle.\\
+\\
+Like an ASM, every cycle in an NSM is moved one state with each iteration. However, an NSM is \textit{active} only if at least $k$ cycles are active; otherwise, the NSM is \textit{inactive}.\\
+\\
+If an NSM is inactive after moving all of it's cycles, then it behaves exactly as an ASM by copying its activation branch and creating a new cycle with one of the two branches.\\
+\\
+Regardless of whether an NSM is active after moving all of it's cycles, a new node is added to the end of the activation branch.
+
+\section{Complicated Cycle Machines}
+
+\textbf{Definition}\\
+A \textit{Complicated Cycle Machine} (CCM) is basically the same as an ASM; however, the activators nodes of an CCM can be any of the nodes within the initial cycle, with the condition that position $0$ is always one of the activator nodes.
+
 \end{document}
