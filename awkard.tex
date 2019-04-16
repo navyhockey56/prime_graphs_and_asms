@@ -103,7 +103,7 @@ Thus we have shown that moving $k$ steps from $p_i$ will result in point $p_j$ w
 \section{Activation Cycle Machines}
 
 \textbf{Definition}\\
-An \textit{activation cycle machine} (ACM) is state machine that runs on top of a cycle graph $CG_n$, that has been equipped with a subset of $a$ activator points $A = \{$ $p_i$ $|$ $0 \leq i < a < n$ $\}$.\\
+An \textit{activation cycle machine} (ACM) is state machine that runs on top of a cycle graph $CG_n$, that has been equipped with a subset of $0 < a < n$ activator points $A = \{$ $p_i$ $|$ $0 \leq i < a < n$ $\}$.\\
 \\
 Each state of an ACM is associated with a position $p \in CG_n$.\\
 The initial state (state $0$) of any ASM has position $p_0 \in CG_n$.\\
@@ -190,7 +190,7 @@ If none of the ACMs in $S$ are active after moving to their next state, then:
 \end{enumerate}
 Regardless of whether one of the ACMs were active, add a new point to the end of the activation branch. Explicitly, if the activation branch had length $n$, then add an edge extending from $p_{n-1}$ to the new point $p_n$, thus creating an activation branch of length $n + 1$.\\
 \\
-If none of the ACMs were active after moving them to their next state, we say that $S$ is \textit{inactive} after moving; otherwise we say $S$ was \textit{active} after moving. Therefore, we only add a new ACM to $S$ when $S$ is inactive after moving.\\
+If none of the ACMs were active after moving them to their next state, we say that $S$ is \textit{inactive} after moving; otherwise we say $S$ is \textit{active} after moving. Therefore, we only add a new ACM to $S$ when $S$ is inactive after moving.\\
 \\
 We denote the inition cycle of an ASM $C_0$, the first discovered cycle $C_1$, and the $n$th discovered cycle $C_n$.\\
 \\
@@ -332,7 +332,7 @@ Therefor $C_j$'s position was maintained.\\
 \\
 \\
 \textbf{Lemma}\\
-For any cycle $C \in [S]$, if $k \geq |C|$, then the position of $C$ after moving $k$ steps is the same as moving $k$ $mod$ $|C|$ steps.\\
+For any cycle $C \in [S]$, if $k \geq |C|$, then the position of $C$ after moving $k$ steps from $C$'s discovery is the same as moving $k$ $mod$ $|C|$ steps.\\
 \\
 \textit{Proof}\\
 Assume $C \in [S]$, and $S$ is on step $p$.\\
