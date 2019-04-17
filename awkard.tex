@@ -200,7 +200,7 @@ If $C_{p,a}$ is discovered by ASM $S_{a,n}$ on some step $k$, then we say that $
 \\
 \textbf{Definition}\\  
 We'll define $[S^a] = \{$ $C_i$ within the graph of $S$ on step $a$ $\}$,\\
-and $[S] = \{$ $C_0$ and all $C_i$ disoverable by $S$ $\}$.\\
+and $[S] = \{$ $C_0$ and all $C_i$ disoverable by $S$ $\}$. We refer to $[S]$ as the \textit{school} of cycles for $S$.\\
 \\
 \\
 \textbf{Lemma}\\
@@ -449,6 +449,9 @@ There are an infinite number of prime numbers.\\
 $S_{1,1}$ produces the prime numbers, and $[S_{1,1}]$ is non-finite by the above theorem.\\
 \textit{Q.E.D}
 
+\textbf{Question}\\
+For any two ASMs, are their schools unique?
+
 \section{Needy Cycle Machines}
 
 \textbf{Definition}\\
@@ -462,11 +465,27 @@ Like an ASM, every cycle in an NSM is moved one state with each iteration. Howev
 \\
 If an NSM is inactive after moving all of it's cycles, then it behaves exactly as an ASM by copying its activation branch and creating a new cycle with one of the two branches.\\
 \\
-Regardless of whether an NSM is active after moving all of it's cycles, a new node is added to the end of the activation branch.
+Regardless of whether an NSM is active after moving all of it's cycles, a new node is added to the end of the activation branch.\\
+\\
+\\
+\textbf{Question}\\
+Does every NSM discover an infinite number of cycles?\\
+\\
+\\
+\textbf{Question}\\
+What numbers do NSMs discover?
 
 \section{Complicated Cycle Machines}
 
 \textbf{Definition}\\
-A \textit{Complicated Cycle Machine} (CCM) is basically the same as an ASM; however, the activators nodes of an CCM can be any of the nodes within the initial cycle, with the condition that position $0$ is always one of the activator nodes.
+A \textit{Complicated Cycle Machine} (CCM) is basically the same as an ASM; however, the activators nodes of an CCM can be any of the nodes within the initial cycle, with the condition that position $0$ is always one of the activator nodes.\\
+\\
+\\
+\textbf{Question}\\
+Does every CSM discover an infinite number of cycles?\\
+\\
+\\
+\textbf{Question}\\
+What numbers do CSMs discover?
 
 \end{document}
