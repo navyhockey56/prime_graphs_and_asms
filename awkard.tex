@@ -35,24 +35,457 @@ Let's modify our experiment once again. This time, you need tacks, a corkboard, 
 
 If you run the above experiment and then count the number of tacks in each bar, you will find that the number of tacks in the bars enumerate the prime numbers in consequetive order. How did this happen? Well, this experiment is much more similar to the last two than it first appears. In this case, the way we move the flags on each bar is the same as wrapping the extended piece of yarn around the tacks in experiment two, or 'walking' the yarn up the extended piece of yarn from experiment one. However, this time our flags our able to preserve the state from the last iteration since you just have to move the flags one tack forward. The moving of each tack can be done in constant time for each bar, and is incredibly fast relative to the time it takes to re-wrap the extended strand of yarn around the tacks, or perform the 'walks'. Furthermore, this expirement doesn't need distance; rather, it only needs relative position (bottom tack, tack above that, ..., tack below top tack, top tack). By replacing distance with relative position, we can easily encode our experiment without the use of numbers using cycle graphs implemented via linked lists. 
   
-\section{The Prime Graph Machine}
+\section{Cycle Graphs}
 
-
-\section{Awkward State Machines}
-
-
-\textbf{Definition} \\
-An activation cycle machine (ACM) is a directed cycle graph, $G$, containing $0 < n < |G|$ consequetive nodes called activation nodes. The activation node that is connected to by a non-activation is referred to as position $0$, with all other nodes' positions being determined by their relative position to $0$. An ACM's initial state starts at position $0$, then moves to the next consequetive position with each iteration. An $ACM$ state's step is the number of iterations needed to get to that state from the initial state (thus, the initial state is step 0, the next state is state 1, and the state after 9 billion iterations is step 9 billion). An $ACM$'s state is said to be active if it's position is on one of it's activator nodes; otherwise, the $ACM$ is called inactive. We can refer to the $ACM$ containing, $a$, activation nodes and, $n$, non-activation nodes as $ACM_{a,n}$. An $ACM$'s length is equal to the number of nodes it contains.\\
+\textbf{Definition}\\
+A \textit{cycle graph} is a directed, connected graph whose points form a circle. More explicity, for any $n > 1$, the cycle graph $CG_n$ has points $\{$ $p_0, p_1, ..., p_{n-1}$ $\}$ such that for any $i < n - 1$, $p_i$ has only one edge which goes to $p_{i + 1}$, and $p_{n-1}$ has only one edge going to $p_0$.\\
+\\ 
 \\
 \textbf{Lemma}\\
-If $ACM_{a,n}$ is on position $p$ on step $m$, then $m$ $mod$ $(a + n) = p$.\\
+For any cycle graph $CG_n$, for any $p_i \in CG_n$, a walk of length $k = n - i$ will end at point $p_0$.\\
 \\
-\textit{Proof}\\  
-TODO\\
+\textit{Proof}\\
+For any point $p_j \in CG_n$, there is only one edge that can be traversed, thus there is only one walk that can be made.\\
+Furthermore, point $p_j$ is $h = n - j - 1$ steps from point $p_{n-1}$.\\
+Thus, moving $k = h + 1 = n - j - 1$ steps from $p_j$ will land you on the point $p_{n-1}$ has an edge to, which is $p_0$ by defining of the cycle graph.\\
+\textit{Q.E.D}\\ 
+\\ 
+\\
+\textbf{Lemma}\\
+For any cycle graph $CG_n$, a walk of length $n$ from $p_i$ will end at point $p_i$.\\
+\\
+\textit{Proof}\\
+For any $p_i \in CG_n$, a walk of length $n - i$ will end at point $p_0$.\\
+Thus, moving the final $j = n - (n - i) = i$ steps from point $p_0$ will land you on point $p_i$.\\
+\textit{Q.E.D}\\
+\\
 \\
 \textbf{Corollary}\\
-$ACM_{a,n}$ is active on step $m$ if and only if $m$ $mod$ $(a + n) < n$\\
+For any cycle graph $CG_n$, a walk of length $kn$, $k > 0$, from $p_0$ will end at point $p_0$.\\
 \\
+\textit{Proof}\\
+If we move $n$ steps from $p_i$ we will return to $p_i$ by the above.\\
+Assume after moving $in$, $i \geq 1$ steps from $p_i$, you have returned to point $p_i$.\\
+Then, moving $n$ more steps from there will again return to point $p_i$.\\
+Thus moving $in + n = (i+1)n$ steps from $p_i$ returns you to $p_i$.\\
+\textit{Q.E.D}\\
+\\
+\\
+\textbf{Lemma}\\
+For any cycle graph $C_n$, for any $k > 0$, for any $p_i \in C_n$, a walk of length $k$ starting at $p_i$ will end at point $p_j$ where $j = i + k$ $mod$ $n$.\\
+\\
+\textit{Proof}\\
+Let $CG_n$ be at point $p_i$.\\
+Let $0 > k$.\\
+If $k > n$, then there exists $q \geq 0$ such that $qn + r = k$ with $0 \leq r < n$.\\
+Furthermore, moving $qn$ positions from $p_i$ will return the cycle to $p_i$, leaving $r$ moves left.\\
+\\
+Let $e = i + r$.\\
+Assume $e < n$, then moving $r$ positions from $p_i$ will land on $p_{i + r}$.\\
+Thus, if $e < n$, moving $k = qn + r$ positions resulted in position $i + r = i + (qn + r)$ $mod$ $n = i + k$ $mod$ $n$.\\
+\\
+Assume $e \geq n$.\\
+Then $e = n + a = i + r$ for $0 \leq a < n$.\\
+Thus, $a = (i + r) - n = e - n$
+\\
+We can move $n - i$ positions from $p_i$ to return to point $p_0$.\\
+Leaving $r - (n - i) = r - n + i$ = $(r + i) - n = e - n = a < n$ moves remaing.\\
+Therefore, the cycle will land on point $p_a$.\\
+\\
+We need to show that $a = i + k$ $mod$ $n$.\\
+Substituting give us:\\
+\\
+$i + k$ $mod$ $n = i + (qn + r)$ $mod$ $n = i + r$ $mod$ $n$\\ 
+$= e$ $mod$ $n = (n + a)$ $mod$ $m = a$ $mod$ $m$.\\ 
+\\
+Thus we have shown that moving $k$ steps from $p_i$ will result in point $p_j$ where $j = k + i$ $mod$ $n$.\\
+\textit{Q.E.D}
+\section{Activation Cycle Machines}
+
+\textbf{Definition}\\
+An \textit{activation cycle machine} (ACM) is state machine that runs on top of a cycle graph $CG_n$, that has been equipped with a subset of $0 < a < n$ activator points $A = \{$ $p_i$ $|$ $0 \leq i < a < n$ $\}$.\\
+\\
+Each state of an ACM is associated with a position $p \in CG_n$.\\
+The initial state (state $0$) of any ASM has position $p_0 \in CG_n$.\\
+\\
+If the position of an ACM is $p_j$ on state $i - 1$, then the position at state $i$ will be the point connected to by $p_j$.
+Thus, if $j < n - 1$, then the next state's position will be $p_{j+1}$; otherwise, if $j = n - 1$, then the next state's position will be $p_0$.\\
+\\
+We denote the ACM containing cycle graph $CG_n$ and $a$ activator nodes as $C_{n,a}$.\\
+\\
+For simplicity, if the current position of $C_{n,a}$ is $p_i$ on state $j$, we write $\overline{C}^j_{n,a} = i$.\\ 
+\\
+If the current position of an ACM, $C_{n,a}$ is within the set of activotors ($\overline{C}_{n,a} < a$), then we say the ACM is \textit{active}; otherwise, we say the ACM is \textit{inactive}.\\
+\\
+\\
+\textbf{Theorem}\\
+For any ACM, $C_{n,a}$, for any state, $k$, the position of state $(k + i)$ is given by taking a walk of length $i$ starting at position $\overline{C^k}$ around $CG_n$, thus the position of state $k + i$ is: $\overline{C^k} + i$ $mod$ $n$.\\
+\\
+\textit{Proof}\\
+By defininiton of an ACM, if the position of an ACM is $p_j$ on state $i - 1$, then the position at state $i$ will be the point connected to by $p_j$, which is equivalent to taking a walk of length 1 on $CG_n$ starting on point $p_j$.\\
+\\
+Assume for some $j$, $1 \leq j \leq i$, that the position of state $k + j$ is given by taking a walk of length $j$ starting at position $\overline{C^k}$ around $CG_{n,a}$.\\
+\\
+Then the position on state $k + j$ is given by $\overline{C^k} + j$ $mod$ $n$.\\
+Thus, the the next state's position will be given by $\overline{C}^{k + j + 1} = \overline{C^k} + j + 1$ $mod$ $n$, which is the end position of a walk of length $j + 1$ when starting at point $\overline{C^k}$ on $CG_{n,a}$.\\
+\textit{Q.E.D}\\
+\\
+\\
+\textbf{Corollary}\\
+The position of $C_{n,a}$ on state $k$ is given by $k$ $mod$ $n$.\\
+\\
+\textit{Proof}\\ 
+The initial state, $0$, starts at position $0 = 0$ $mod$ $n$.\\
+Thus the position of state $k = k + 0$ is given by:\\
+$|C^0| + k$ $mod$ $n = 0 + k$ $mod$ $n = k$ $mod$ $n$.\\
+\textit{Q.E.D}\\   
+\\
+\\
+\textbf{Corollary}\\
+$C_{n,a}$ is active on state $k$ if and only if $k$ $mod$ $n < a$.\\
+\\
+\textit{Proof}\\
+An ACM, $C_{n,a}$ is active if and only if it's position is on one of it's activators.\\
+The activators of $C_{n,a}$ are defined to be $p_{0 \leq i < a}$, or equivalenty positions $0 \leq i < a$.\\
+\\
+Thus, an $C_{n,a}$ is only active if it's position is less than $a$.\\
+Thus, $C$ is active if and only if $a > \overline{C^k} = k$ $mod$ $n$.\\
+\textit{Q.E.D} 
   
+\section{Awkward State Machines}
+
+\textbf{Definition}\\
+An \textit{activation branch} is directed graph that forms a line. Explicity, the activation branch of length $n$ has points $\{$ $p_0, p_1 ..., p_{n-1}$ $\}$ such that for every point $p_{i < n -1}$ has a single edge connecting it to $p_{i+1}$, and $p_{n-1}$ does not have any edges extending from it.\\
+\\
+Furthermore, an activation branch is equipped with $a > 0$ activator points: $A = \{$ $p_i$ $|$ $0 \leq i < a < n$ $\}$.\\ 
+\\
+We denote the activation branch with length $n$ and $a$ activator nodes $B_{n,a}$.
+\\
+\\
+\textbf{Lemma}\\
+For any $B_{n,a}$, adding an edge extending from $p_{n-1}$ to $p_0$ produces the cycle graph $CG_n$ for ACM $C_{n,a}$.\\
+\\
+\textit{Proof}\\ 
+By definition of $B_{n,a}$, all points $p_{i < n -1}$ have the same edges as the first $n - 1$ points in $CG_n$ for ACM $C_{n,a}$.\\
+\\
+Furthermore, the first $a$ points of $B_{n,a}$ are it's activator points, which are the activators of $C_{n,a}$.\\
+\\
+Thus, the only edge missing from $B_{n,a}$ that is contained within $CG_n$ is from  $p_{n-1}$ to $p_0$.\\
+\\
+Therefore, adding the edge will convert $B_{n,a}$ into $CG_n$ for $C_{n,a}$.\\
+\textit{Q.E.D}\\
+\\
+\textbf{Definition}\\
+An \textit{awkward state machine} (ASM) is state machine running on top of a directed graph composed of a set of ACMs and a single activation branch.\\
+\\
+Every ASMs initial state contains a single $ACM$, $C_{m,a} = C_0$, and the activation branch, $B_{m+1,a}$.\\
+Furthermore, the position of $C_0$ on the initial state is $0$.\\
+We denote the ASM with an initial state containing $C_{m,a}$ as $S_{a,n=m-a}$.\\
+\\
+To progress from state $i - 1$ to state $i$ for ASM, $S$, first move every ACM in $S$ to it's next state.\\
+If none of the ACMs in $S$ are active after moving to their next state, then:
+\begin{enumerate}
+\item Create a copy of the activation branch, giving you branches $B$ and $B`$.
+\item Convert $B$ into an $ACM$, $C$, by adding an edge to it's last point, thus leaving a single activation branch $B`$. Set the position of $C$ to $0$. Now $C$ is contained within the set of ACMs for $S$.
+\end{enumerate}
+Regardless of whether one of the ACMs were active, add a new point to the end of the activation branch. Explicitly, if the activation branch had length $n$, then add an edge extending from $p_{n-1}$ to the new point $p_n$, thus creating an activation branch of length $n + 1$.\\
+\\
+If none of the ACMs were active after moving them to their next state, we say that $S$ is \textit{inactive} after moving; otherwise we say $S$ is \textit{active} after moving. Therefore, we only add a new ACM to $S$ when $S$ is inactive after moving.\\
+\\
+We denote the inition cycle of an ASM $C_0$, the first discovered cycle $C_1$, and the $n$th discovered cycle $C_n$.\\
+\\
+We denote the graph of ASM $S_{a,n}$ on state $k$ as $S^k$.\\
+\\
+If $C_{p,a}$ is discovered by ASM $S_{a,n}$ on some step $k$, then we say that $C_{p,a}$ is \textit{discoverable} by $S$.\\
+\\
+\textbf{Definition}\\  
+We'll define $[S^a] = \{$ $C_i$ within the graph of $S$ on step $a$ $\}$,\\
+and $[S] = \{$ $C_0$ and all $C_i$ disoverable by $S$ $\}$. We refer to $[S]$ as the \textit{school} of cycles for $S$.\\
+\\
+\\
+\textbf{Lemma}\\
+For $S_{a,n}$, the length of the branch, $B$, on step $k$ is given by $|B^k| = k + a + n + 1$.\\
+\\
+\textit{Proof}\\  
+One step $0$, the length of branch $B$ is given by $|B^0| = 0 + a + n + 1$.\\
+With each step, a single node is added to the branch $B$. Thus, $|B^{i+1}| = |B^{i}| + 1$.\\
+\\
+Assume $|B^{i}| = i + a + n + 1$.\\
+Then $|B^{i+1}| = |B^{i}| + 1 = (i + a + n + 1) + 1 = (i + 1) + a + n + 1$.\\
+\\
+Thus we have shown that $|B^k| = k + a + n + 1$ by induction.\\
+\textit{Q.E.D}\\
+\\
+\\
+\textbf{Lemma}\\
+For $S_{a,n}$, if $C_i$ is discovered on step $k$, then the length of $|C_i| = |B^{k-1}| = k + a + n$.\\
+\\
+Assume for $S_{a,n}$, that $C_i$ is discovered on step $k$.\\
+\\
+To produce state $k$, the ASM algorithm first moved all $C_j$ for $j < i$ from state $C^{k-1}$ to state $C^k$. After doing so, there did not exist a $j < i$ such that $C_j$ was active. Therefor, the algorithm copied the branch $B^{k-1}$ and closed one of the two branches to create $C_i$.\\
+\\ 
+Thus, the length of $C_i$ is equal to the length of the branch $B^{k-1}$:\\ $|C_i| = |B^{k-1}| = (k - 1) + a + n + 1 = k + a + n$.\\
+\textit{Q.E.D}\\
+\\
+\\
+\textbf{Lemma}\\
+For $S_{a,n}$, $|C_{i}| \geq |C_{i-1}| + a$.\\
+\\
+\textit{Proof}\\  
+Assume cycle $C_i$ is discovered by $S_{a,n}$ on step $k$.\\
+\\
+Then $\overline{C^k_i} = 0$.\\
+Furthermore, the new branch, $B$, will have $|C_i| + 1$ nodes at step $k$.\\
+\\
+For next, $1 \leq j < a$ steps, the cycle  $C^{k+j}_i$ will be active since there are $a$ activation nodes.\\
+Furthermore, the length of the branch $B$ at each step will be given by $|B| = |C_i| + j + 1$.\\
+\\
+The $a$th step after discovering $C_i$ will be the first time that $C_i$ will be inactive. The branch length of the $(a-1)$th step is given by $|B^{j + a - 1}| = |C_i| + a$. Thus, if $C_p$ for $0 \leq p < i$ are also inactive on step $a$th step after discovering $C_i$, then we will have to close $B$ on the $a$th step, thus creating cycle $C_{i+1}$ with length $|C_{i+1}| = |B^{j + a - 1}| = |C_i| + a$. Furthermore, if any of the cycles $C_p$ were active on the $a$th step after discovering $C_i$, then the branch would not close, thus the next cycle's length is at least as long as the branch on the $(j+a)$th step: $|C_{i+1}| >= |B^{j + a}| = |C_i| + a + 1$.\\
+\\
+Thus, we have shown that  $|C_{i}| \geq |C_{i-1}| + a$.\\
+\textit{Q.E.D}\\
+\\
+\\
+\textbf{Lemma}\\
+For any $C_i, C_j \in [S_{a,n}]$ with $j < i$, it holds that $|C_{i}| \geq |C_j| + (i - j)a$.\\
+\\
+\textit{Proof}\\ 
+If $i = j + 1$, then $j - i = 1$.\\
+Thus, $|C_i| \geq |C_j| + a = |C_j| + (j - i)a$.\\
+\\
+Assume for $k$, $i < k \leq j$, that $|C_k| \geq |C_i| + (k-i)a$.\\
+\\
+Then $|C_{k+1}| \geq |C_k| + a \geq (|C_i| + (k-i)a) + a = |C_i| + (k + 1 - i)a$.\\
+\\
+Thus we have shown that $|C_{i}| \geq |C_j| + (i - j)a$ by induction.\\
+\textit{Q.E.D}\\
+\\
+\\
+\textbf{Corollary}\\
+For any cycle $C_{j}$ of an ASM, $S_{a,n}$, $C_j$ has at least $n + ja$ non-activator nodes.\\
+\\
+\textit{Proof}\\
+$C_0$ is defined to have $n$ activator nodes.\\
+\\
+Let $C_{j>0} \in [S_{a,n}]$.\\
+\\
+Then $|C_j| \geq |C_1| + (j-1)a \geq (|C_0| + a) + (j-1)a $\\
+$= (2a + n) + (j-1)a = n + (j+1)a$.\\
+\\
+Thus, after removing the $a$ activator nodes from $C_j$, there are at least $n + ja$ non-activator nodes left.\\
+\textit{Q.E.D}\\
+\\
+\\
+\textbf{Lemma}\\
+Every ASM discovers at least one cycle.\\
+\\
+\textit{Proof}\\
+Let $C_0$ by the initial cycle for ASM, $S_{a,n}$.\\
+\\
+After taking $a$ steps from the initial state of the $S$, the ASM will be on it's first non-activator node.\\
+\\
+Since $C_0$ is the only cycle, the ASM would be inactive, thus a new cycle would be created.\\
+\textit{Q.E.D}\\
+\\ 
+\\
+\textbf{Lemma}\\
+For any step, $k$, for any $C_i \in [S^k_{a,n}]$, it holds that $\overline{C^k_i} = (k + a + n)$ $mod$ $|C_i|$.\\
+\\
+\textit{Proof}\\  
+The initial cycle $C_0$ starts at position $0$ on step $0$. By properties of ACM's, we know that the position of $C_0$ is given by:\\
+\\
+$\overline{C^k_0} = k$ $mod$ $|C_0| $
+$= [k +(a + n)]$ $mod$ $(a + n)$
+$= (k + a + n)$ $mod$ $|C_0|$.\\
+\\
+If a cycle, $C_i$, is discovered on step $k$, then we know it's length is given by $|C_i| = k + a + n$. Furthermore, when it's dicovered, it's position is set to 0.\\
+\\
+Thus, the position of $C^k_i$ is given by:\\
+\\
+$\overline{C^k_i} = 0 = (k + a + n)$ $mod$ $(k + a + n) = (k + a + n)$ $mod$ $|C_i|$.\\
+\\
+By properties of ACM's, the position for all steps $j > k$ will be given by:\\
+\\
+$\overline{C^j} = (\overline{C^k} + (j - k))$ $mod$ $|C^i|$
+$= (0 + (j-k))$ $mod$ $(k + a + n)$\\
+$= (k + a +n) + (j-k)$ $mod$ $|C_i| $
+$= (j + a + n)$ $mod$ $|C_i|$.\\
+\\
+Therefor we have shown that the position of $C_i$ on step $k$ for any $C_i \in [S^k_{a,n}]$ is given by $\overline{C^k_i} = (k + a + n)$ $mod$ $|C_i|$ for any $C_i$ in $[S^k]$.\\
+\textit{Q.E.D}\\
+\\
+\\
+\textbf{Corollary}\\
+For any cycle $C_j \in [S_{a,n}]$, moving $k|C_j|$ steps will maintain $C_j$'s position.\\
+\\
+\textit{Proof}\\
+Let $C_j \in [S]$.\\
+Assume $S$ is on step $p$.\\
+\\
+Then $\overline{C_j} = p + a + n $ $mod$ $|C_j|$.\\
+Thus, if we move $k|C_j|$ steps from $p$, the position of $C_j$ will be given by:\\
+\\
+$p + a + n + k|C_j|$ $mod$ $|C_j| = p + a + n$ $mod$ $|C_j|$.\\
+\\
+Therefor $C_j$'s position was maintained.\\
+\textit{Q.E.D}\\
+\\
+\\
+\textbf{Lemma}\\
+For any cycle $C \in [S]$, if $k \geq |C|$, then the position of $C$ after moving $k$ steps from $C$'s discovery is the same as moving $k$ $mod$ $|C|$ steps.\\
+\\
+\textit{Proof}\\
+Assume $C \in [S]$, and $S$ is on step $p$.\\
+Then the position of $C$ is given by $p + a + n$ $mod$ $|C|$.\\
+\\
+Let $k > |C|$, $b = k$ $mod$ $|C|$.\\
+\\
+The position of $C$ on step $p + k$ is given by:\\
+$p + k + a + n$ $mod$ $C = p + b + a + n$ $mod$ $C$ which is the position after moving $b$ steps from $p$.\\
+\textit{Q.E.D}\\
+\\
+\\
+\textbf{Lemma}\\
+For any $C_i, C_j \in [S_{a,n}]$ with $j < i$, it holds that $|C_i|$ $mod$ $|C_j| \geq a$.\\
+\\
+\textit{Proof}\\  
+Assume for ASM, $S_{a,n}$, that ACM, $C_i$, is discovered on step $k$.\\
+\\
+Then $|C_i| = k + a + n$.\\
+We know also know that the position of $C^k_j$ must be greater than or equal to $a$; otherwise, $C_j$ would be active on step $k$ and we would not have discovered $C_j$.\\
+\\
+Furthermore, we know the position of $C^k_j$ is given by:\\
+$\overline{C^k_j} = (k + a + n)$ $mod$ $|C_j|$.\\ 
+\\
+Finally, subsitituting gives us: $\overline{C^k_j} = |C_i|$ $mod$ $|C_j| \geq a$.\\
+\\
+Thus we have shown that, $|C_i|$ $mod$ $|C_j| \geq a$.\\
+\textit{Q.E.D}\\ 
+\\
+\\
+\textbf{Lemma}\\
+For any $C_i \in [S_{a,n}]$, $|C_i|$ is the least positive integer greater than $|C_{i-1}|$ such that $|C_i|$ $mod$ $|C_j| \geq a$ for all $j < i$.\\
+\\
+\textit{Proof}\\
+Assume you discovered $C_{i-1}$ on step $p$.\\
+Assume $k$ is the first step after discovering $C_{i-1}$ such that all cycles are inactive (if we can show that cycle $C_i$ is discovered on step $k$, then our proof will be complete).\\
+\\
+Then, on all steps, $q$, $p \leq q < k$, there must exist at least one cycle $C_j$ that is active (implying $q + a + n$ $mod$ $|C_j| < a$). Therefore, the ASM algoirthm cannot create cycle $C_i$ on any step $p \leq q < k$.\\
+\\
+Furthermore, on step $k$, the algorithm must create $C_i$, giving us $\overline{C^k_i} = 0 = k + a + n$ $mod$ $|C_i|$.\\
+\\
+Thus, since $k + a + n = |C_i|$ is the least positive integer such that $|C_i|$ $mod$ $|C_j| \geq a$ for all $j < i$, and have proved our lemma.\\
+\textit{Q.E.D}\\
+\\
+\\
+\textbf{Definition}\\
+A positive integer is prime if it's only factors are 1 and itself.\\
+\\
+\textbf{Axiom}\\
+The $i$th prime number, $p_i$, is the least integer that is greater than the $(i-1)th$ prime number and is not divisible by $p_j$ for all $j < i$ (with the first prime number $p_0=2$).\\ 
+Note: This is only an axiom because proving the statement is distracting to ASMs.\\
+\\
+\\
+\textbf{Lemma}\\
+$|S_{1,1}| = P = \{$ the set of prime numbers $\}$\\
+\\
+\textit{Proof}\\
+$S_{1,1}$ starts with an initial cycle of length $1 + 1 = 2$, thus giving us the first prime number.\\
+\\
+For all $i, j$ such that $i > j \geq 0$, $C_i$ will have the property that $|C_i|$ $mod$ $|C_j| \geq 1$, equivalenty, $|C_i|$ is not divisible by any of the previous lengths $|C_j|$. Furthermore, $|C_i|$ is the smallest such integer greater than $|C_{i-1}|$ with the property of not being divisible by the previous cycle lengths.\\
+\\
+Thus, by our axiom, $S_{1,1}$ produces the prime numbers.\\
+\textit{Q.E.D}\\ 
+\\
+\\
+\textbf{Theorem}\\
+For every ASM, $S$, the set $[S]$ is non-finite.\\
+\\
+\textit{Proof}\\  
+Assume there exists an ASM, $S_{a,n}$ such that $[S_{a,n}]$ is finite.\\
+Let $s$ be the number of cycles in $[S_{a,n}]$.\\
+\\
+Then there exists some step $p$ on which the last cycle, $C_{max}=C_{s-1}$ of the ASM is discovered.\\
+\\
+We know $C_{max}$ must have at least $n + (s-1)a > (s-1)a$ non-activator nodes.\\
+\\
+We also know that on step $p$, all cycles $C_{i<s}$ must have been inactive to have discovered $C_{max}$.\\
+\\
+Furthermore, on step $j$, $C_{max}$'s position is at 0.\\
+\\
+Let $z = \prod_{i<s}|C_i|$.\\
+\\
+If we move the $ASM$ $z$ steps, then the position of every $C_{i<z}$ will be maintained since $z$ is a multiple of the length of every $C_{i<z}$.\\
+\\
+Thus, if after moving $z$ steps from $p$, $C_{max}$ is inactive, then we would need to create a new cycle, and we'd be finished with our proof.\\
+\\
+Assume $C_{max}$ was active after moving the $z$ steps.\\
+\\
+Let $n =\overline{C_{max}}$\\
+\\
+We know $n < a$ since $C_{max}$ is inactive.\\
+\\
+Note: the position of $C_{max}$ after moving $zt$ steps is the same as after moving $nt$ steps since $z > |C_{max}|$ (if z were less than $|C_{max}|$, then moving $z$ steps would have inactivated $C_{max}$ since $z > a$).\\
+\\
+Let $j$ be the greatest integer such that $jn < a$.\\
+Then your position after moving $jz$ steps will be $a - jn$.\\
+Thus, the $(j+1)z$th step will put $C_{max}$ at position $(a-jn)+n \geq a$.\\   
+\\
+If the $ASM$ is to remain active, then $(a-jn)+n$ must go beyond all $(s-1)a$ non-activator nodes in $C_{max}$.\\
+\\
+Thus, $(a-jn)+n > a + (s-1)a \geq sa \geq 2a$.\\
+\\
+But both $n$ and $(a-jn)$ are less then $a$.\\
+But that means: $a + a = 2a > (a-jn)+n \geq 2a$, which is a contradiction!\\
+\\
+Therefore, moving $(j+1)z$ steps from the discovery of $C_{max}$ will maintain the (inactive) positions of all $C_{i<z}$ and also move $C_{max}$ into one of it's inactive nodes, requiring a new cycle to be made, and completing our proof.\\
+\textit{Q.E.D}\\   
+\\
+\\
+\textbf{Corollary}\\
+There are an infinite number of prime numbers.\\
+\\
+\textit{Proof}\\ 
+$S_{1,1}$ produces the prime numbers, and $[S_{1,1}]$ is non-finite by the above theorem.\\
+\textit{Q.E.D}
+
+\textbf{Question}\\
+For any two ASMs, are their schools unique?
+
+\section{Needy Cycle Machines}
+
+\textbf{Definition}\\
+A \textit{Needy Cycle Machine} (NSM) is state machine running on top of a directed graph composed of a set of ACMs and a single activation branch.\\
+\\
+A NSM starts with $k > 0$ initial cycles, $\{$ $C_0, ..., C_{k-1}$ $\}$ . Each of the $k$ initial cycles must have a unique length and contain the same number of activator nodes. Futhermore, the initial position of every initial cycle is $0$.
+\\
+The initial branch length is a single node longer than the longest initial cycle.\\
+\\
+Like an ASM, every cycle in an NSM is moved one state with each iteration. However, an NSM is \textit{active} only if at least $k$ cycles are active; otherwise, the NSM is \textit{inactive}.\\
+\\
+If an NSM is inactive after moving all of it's cycles, then it behaves exactly as an ASM by copying its activation branch and creating a new cycle with one of the two branches.\\
+\\
+Regardless of whether an NSM is active after moving all of it's cycles, a new node is added to the end of the activation branch.\\
+\\
+\\
+\textbf{Question}\\
+Does every NSM discover an infinite number of cycles?\\
+\\
+\\
+\textbf{Question}\\
+What numbers do NSMs discover?
+
+\section{Complicated Cycle Machines}
+
+\textbf{Definition}\\
+A \textit{Complicated Cycle Machine} (CCM) is basically the same as an ASM; however, the activators nodes of an CCM can be any of the nodes within the initial cycle, with the condition that position $0$ is always one of the activator nodes.\\
+\\
+\\
+\textbf{Question}\\
+Does every CSM discover an infinite number of cycles?\\
+\\
+\\
+\textbf{Question}\\
+What numbers do CSMs discover?
 
 \end{document}
