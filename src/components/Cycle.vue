@@ -1,7 +1,7 @@
 <template>
   <ul>
     <li v-for="n in Number(length)">
-      <Node :active="n === activeIndex"/>
+      <Node :active="n === cursor"/>
     </li>
   </ul>
 </template>
@@ -14,7 +14,7 @@ export default Vue.extend({
   components: { Node },
   props: {
     length: Number,
-    activeIndex: Number
+    cursor: Number
   },
   methods: {
   },

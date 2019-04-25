@@ -1,27 +1,61 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
+import _ from 'lodash';
+
 Vue.use(Vuex);
+
+interface ICycle {
+  cursor: number;
+  length: number;
+}
+
+const startingCycles: ICycle[] = [
+  {cursor: 2, length: 2},
+];
 
 export default new Vuex.Store({
   state: {
-    activators: 1,
-    nonActivators: 1
+    asm: {
+      activators: 1,
+      // cycles: new Array<ICycle>(),
+      cycles: startingCycles,
+      iteration: 0,
+    },
+  },
+  getters: {
+    anyActive(state): boolean {
+      return _.some(state.asm.cycles, (cycle) => {
+        return cycle.cursor <= state.asm.activators;
+      });
+    },
   },
   mutations: {
-    setActivators(state, num: number) {
-      state.activators = num;
+    incrementIteration(state) {
+      state.asm.iteration++;
     },
-    setNonActivators(state, num: number) {
-      state.nonActivators = num;
+    incrementActiveIndices(state) {
+      state.asm.cycles.forEach((cycle) => {
+        if (cycle.cursor >= cycle.length) {
+          cycle.cursor = 1;
+        } else {
+          cycle.cursor++;
+        }
+      });
+    },
+    addCycle(state) {
+      const newCycle: ICycle = {
+        cursor: 1,
+        length: state.asm.iteration + 3,
+      };
+      state.asm.cycles.push(newCycle);
     },
   },
   actions: {
-    setActivators(context, num: number) {
-      context.commit('setActivators', num);
-    },
-    setNonActivators(context, num: number) {
-      context.commit('setNonActivators', num);
+    nextState({ commit, getters }) {
+      if (!getters.anyActive) { commit('addCycle'); }
+      commit('incrementActiveIndices');
+      commit('incrementIteration');
     },
   },
 });
