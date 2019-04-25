@@ -11,13 +11,15 @@ interface ICycle {
 }
 
 const startingCycles: ICycle[] = [
-  {cursor: 2, length: 2},
+  { cursor: 1, length: 2 },
+  { cursor: 3, length: 3 },
 ];
 
 export default new Vuex.Store({
   state: {
     asm: {
       activators: 1,
+      nonActivators: 1,
       // cycles: new Array<ICycle>(),
       cycles: startingCycles,
       iteration: 0,
@@ -32,10 +34,24 @@ export default new Vuex.Store({
   },
   mutations: {
     setActivators(state, payload: number) {
-      state.asm.activators = payload;
+      state.asm.activators = Number(payload);
+      const cycleLength = state.asm.activators + state.asm.nonActivators;
+      state.asm.cycles = [
+        { cursor: 1, length: cycleLength },
+        { cursor: cycleLength + 1, length: cycleLength + 1 },
+      ];;
+    },
+    setNonActivators(state, payload: number) {
+      state.asm.nonActivators = Number(payload);
+      const cycleLength = state.asm.activators + state.asm.nonActivators;
+      state.asm.cycles = [
+        { cursor: 1, length: cycleLength },
+        { cursor: cycleLength + 1, length: cycleLength + 1 },
+      ];;
     },
     incrementIteration(state) {
       state.asm.iteration++;
+      state.asm.cycles[state.asm.cycles.length].length++
     },
     incrementActiveIndices(state) {
       state.asm.cycles.forEach((cycle) => {
@@ -49,19 +65,22 @@ export default new Vuex.Store({
     addCycle(state) {
       const newCycle: ICycle = {
         cursor: 1,
-        length: state.asm.iteration + 3,
+        length: state.asm.iteration + state.asm.activators + state.asm.nonActivators + 1,
       };
       state.asm.cycles.push(newCycle);
     },
   },
   actions: {
     nextState({ commit, getters }) {
-      if (!getters.anyActive) { commit('addCycle'); }
       commit('incrementActiveIndices');
+      if (!getters.anyActive) { commit('addCycle'); }
       commit('incrementIteration');
     },
     setActivators({ commit }, payload: number) {
-      commit('setActivators', payload)
-    }
+      commit('setActivators', payload);
+    },
+    setNonActivators({ commit }, payload: number) {
+      commit('setNonActivators', payload);
+    },
   },
 });
