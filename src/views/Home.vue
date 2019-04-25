@@ -12,14 +12,12 @@
 import Vue from 'vue';
 import { mapState } from 'vuex'
 
-import HelloWorld from '@/components/HelloWorld.vue';
 import Cycle from '@/components/Cycle.vue';
 import Controls from '@/components/Controls.vue';
 
 export default Vue.extend({
   name: 'Home',
   components: {
-    HelloWorld,
     Cycle,
     Controls
   },
