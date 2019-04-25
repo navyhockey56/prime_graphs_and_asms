@@ -7,8 +7,8 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import Node from './Node.vue'
+import Vue from "vue";
+import Node from "./Node.vue";
 
 export default Vue.extend({
   components: { Node },
@@ -18,24 +18,25 @@ export default Vue.extend({
   },
   methods: {
     getType(nodeNum: number) {
-      if(nodeNum <= this.activators) {
-        return 'square'
+      if (nodeNum <= this.activators) {
+        return "square";
       } else {
-        return 'circle'
+        return "circle";
       }
     }
   },
   computed: {
     activators(): number {
-      return this.$store.state.asm.activators
+      return this.$store.state.asm.activators;
     }
   }
-})
+});
 </script>
 
 <style scoped>
-  ul, li{
-    display: inline;
-    list-style: none;
-  }
+ul,
+li {
+  display: inline;
+  list-style: none;
+}
 </style>
