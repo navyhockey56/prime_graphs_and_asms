@@ -31,6 +31,9 @@ export default new Vuex.Store({
     },
   },
   mutations: {
+    setActivators(state, payload: number) {
+      state.asm.activators = payload;
+    },
     incrementIteration(state) {
       state.asm.iteration++;
     },
@@ -57,5 +60,8 @@ export default new Vuex.Store({
       commit('incrementActiveIndices');
       commit('incrementIteration');
     },
+    setActivators({ commit }, payload: number) {
+      commit('setActivators', payload)
+    }
   },
 });

@@ -1,7 +1,7 @@
 <template>
   <ul>
     <li v-for="n in Number(length)">
-      <Node :active="n === cursor"/>
+      <Node :type="getType(n)" :active="n === cursor"/>
     </li>
   </ul>
 </template>
@@ -17,8 +17,18 @@ export default Vue.extend({
     cursor: Number
   },
   methods: {
+    getType(nodeNum: number) {
+      if(nodeNum <= this.activators) {
+        return 'square'
+      } else {
+        return 'circle'
+      }
+    }
   },
   computed: {
+    activators(): number {
+      return this.$store.state.asm.activators
+    }
   }
 })
 </script>
