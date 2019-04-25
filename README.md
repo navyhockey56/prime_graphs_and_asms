@@ -13,7 +13,7 @@ The Prime-Graph is self-building. We start with the center and then using the st
 - The unfinished cycle should be completed at the end of the iteration if and only if the center is 'off' after all the other cycles have moved. In this event, the unfinished cycle is connected to the center, and then it moves, thus turning the center on. (Thus, the center is always 'on' at the end of every iteration [other than the first iteration]).
 
 ### Relationship to primes
-Each of the completed cycles produced by running the Prime-Graph reprents a unique prime number. The prime number a cycle represents is equal to the number of points within it (thus, the state machine produces cycles of prime length). Furthermore, the cycles are produced in consequetive order (2, 3, 5, 7, ...). 
+Each of the completed cycles produced by running the Prime-Graph reprents a unique prime number. The prime number a cycle represents is equal to the number of points within it (thus, the state machine produces cycles of prime length). Furthermore, the cycles are produced in consequetive order (2, 3, 5, 7, ...).
 
 #### Why is this?
 Since all cycles start at the center in the 'on' position, and we move the 'on' position to the next adjacent for each cycle, all the cycles within the graph are 'in-sync' (the way we create each new unfinished cycle preserves the synchronization). This implies that for each cycle, the distance from the center to the 'on' point is equal to the `current_iteration` moded by the `cycle_length`. Therefor, if the current iteration results with the 5-cycle's 'on' position being the center, then we know the current iteration is divisible by 5. Furthermore, if the iteration results in none of the previously completed cycles 'on' position being the center, then the current iteration is not divisible by any of the previous cycle lengths. Thus, by connecting the currently unfinished cycle to the center, we are creating a new completed cycle that has the length of this undivisible size. This new cycle's length is relatively prime to all the previous lengths; and since we started on iteration 1, the numbers we find are actually the primes.
@@ -38,26 +38,26 @@ puts "The first #{prime_graph.cycles.count} primes are: #{prime_graph.primes}"
 ```
 
 ### Analysis
-Let `p(n) = the number of primes less than or equal to n.`  
+Let `p(n) = the number of primes less than or equal to n.`
 
 
-#### Fully-connected 
+#### Fully-connected
 
-Each iteration, `i`, the algorithm will need to:  
-1. Move each existing cycle.  
+Each iteration, `i`, the algorithm will need to:
+1. Move each existing cycle.
 2. Check if any existing cycle is on the center.
-3. Add the new node.  
+3. Add the new node.
 
 Step `1` will always require `p(i)` operations, and step `2` will require at most `p(i)` operations. Thus, between steps `1` and `2` we will perform at most `2p(i)` operations. Step `3` has a constant number of iterations, `c`.
 
 Thus, to run the algorithm for the first `n` iterations, the number of operations, `o(n)`, is given by:
-`o(n) <= Sum[i=1, n]{ 2p(i) + c } = 2*Sum[i=1, n]{ p(i) } + n*c <= 2*Sum[i=1, n]{ i } + n+c = n*(n+1) + n*c = n^2 + n*(c + 1)`.  
+`o(n) <= Sum[i=1, n]{ 2p(i) + c } = 2*Sum[i=1, n]{ p(i) } + n*c <= 2*Sum[i=1, n]{ i } + n+c = n*(n+1) + n*c = n^2 + n*(c + 1)`.
 
 Furthermore, the number of nodes within the fully-connected graph on for any iteration, `i`, is `i` itself. Thus, the size of the fully-connected graph grows linearly!
 
 
 # Awkward State Machines
-Time to generalize! 
+Time to generalize!
 
 ### Framing
 What if instead of starting with a branch of length 1 extending from our center, we started with a branch of length 2 or 3, or any other number?  For example, what if our initial state looked like:`[center : off] -> (node 1 : off) -> ... -> (node n : on)`.
@@ -184,9 +184,39 @@ ASM<9, 7> -> [16, 25, 41, 59, 73, 91, 109]
 ASM<9, 8> -> [17, 26, 43, 61, 77, 95, 113]
 ASM<9, 9> -> [18, 27, 45, 63, 99, 117]
 ```
-NOTE: The first 8100 iterations of the ASTs above can be found within `nine_by_nine_iter_8102.txt`.  
+NOTE: The first 8100 iterations of the ASTs above can be found within `nine_by_nine_iter_8102.txt`.
 
 NOTE: You can quickly produce an array containing the ASTs above with:
 ```ruby
 niners = AwkwardMath.nine_by_nine
 ```
+
+
+## Vue Notes
+### Project setup
+```
+yarn install
+```
+
+#### Compiles and hot-reloads for development
+```
+yarn run serve
+```
+
+#### Compiles and minifies for production
+```
+yarn run build
+```
+
+#### Run your tests
+```
+yarn run test
+```
+
+#### Lints and fixes files
+```
+yarn run lint
+```
+
+#### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
