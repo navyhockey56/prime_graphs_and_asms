@@ -19,3 +19,10 @@ export default Vue.extend({
   computed: mapState(['asm.graph.cycles'])
 })
 </script>
+
+<style scoped>
+  ul, li {
+    display: inline;
+    list-style: none;
+  }
+</style>

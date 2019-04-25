@@ -24,7 +24,7 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-  li {
+  ul, li{
     display: inline;
     list-style: none;
   }
