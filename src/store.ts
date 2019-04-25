@@ -26,7 +26,7 @@ export default new Vuex.Store({
   },
   getters: {
     anyActive(state): boolean {
-      var isActive = false;
+      let isActive = false;
       state.asm.cycles.forEach((cycle) => {
         if (cycle.cursor <= state.asm.activators) {
           isActive = true;
@@ -65,7 +65,7 @@ export default new Vuex.Store({
       state.asm.cycles.forEach((cycle) => {
         const length = state.asm.iteration + state.asm.activators + state.asm.nonActivators + 1;
         if (cycle.length >= length) {
-          //Do nothing
+          // Do nothing
         } else if (cycle.cursor >= cycle.length) {
           cycle.cursor = 1;
         } else {

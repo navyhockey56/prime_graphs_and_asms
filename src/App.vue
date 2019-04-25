@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <h1 class="title">Welcome to Prime Graphs and ASMs</h1>
+    <h1 class="title">The Prime Graph and Awkward State Machines</h1>
 
     <div class="tabs is-left">
       <ul>

@@ -7,29 +7,30 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import Node from "./Node.vue";
+import Vue from 'vue';
+import Node from './Node.vue';
+
 
 export default Vue.extend({
   components: { Node },
   props: {
     length: Number,
-    cursor: Number
+    cursor: Number,
   },
   methods: {
     getType(nodeNum: number) {
       if (nodeNum <= this.activators) {
-        return "square";
+        return 'square';
       } else {
-        return "circle";
+        return 'circle';
       }
-    }
+    },
   },
   computed: {
     activators(): number {
       return this.$store.state.asm.activators;
-    }
-  }
+    },
+  },
 });
 </script>
 

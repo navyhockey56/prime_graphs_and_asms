@@ -25,27 +25,29 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { mapActions, mapState } from "vuex";
+import Vue from 'vue';
+import { mapActions, mapState } from 'vuex';
 
 export default Vue.extend({
   data() {
     return {
       activators: 1,
-      nonActivators: 1
+      nonActivators: 1,
     };
   },
   methods: {
     nextState() {
-      this.$store.dispatch("nextState");
+      this.$store.dispatch('nextState');
     },
     updateActivators(e: Event) {
-      this.$store.dispatch("setActivators", e.target && e.target.value);
+      const target = e.target as HTMLInputElement;
+      this.$store.dispatch('setActivators', e.target && target.value);
     },
     updateNonActivators(e: Event) {
-      this.$store.dispatch("setNonActivators", e.target && e.target.value);
-    }
-  }
+      const target = e.target as HTMLInputElement;
+      this.$store.dispatch('setNonActivators', target && target.value);
+    },
+  },
 });
 </script>
 
