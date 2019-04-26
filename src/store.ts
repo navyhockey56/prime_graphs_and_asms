@@ -34,37 +34,37 @@ export default new Vuex.Store({
       });
       return isActive;
     },
+    branchLength(state): number {
+      return state.asm.iteration + state.asm.activators + state.asm.nonActivators + 1;
+    },
   },
   mutations: {
     setActivators(state, payload: number) {
       state.asm.activators = Number(payload);
-      const cycleLength = state.asm.activators + state.asm.nonActivators;
-      state.asm.cycles = [
-        { cursor: 1, length: cycleLength },
-        { cursor: cycleLength + 1, length: cycleLength + 1 },
-      ];
-      state.asm.iteration = 0;
     },
     setNonActivators(state, payload: number) {
       state.asm.nonActivators = Number(payload);
-      const cycleLength = state.asm.activators + state.asm.nonActivators;
+    },
+    resetCycles(state, getters) {
+      const cycleLength = getters.branchLength - 1;
       state.asm.cycles = [
         { cursor: 1, length: cycleLength },
         { cursor: cycleLength + 1, length: cycleLength + 1 },
       ];
       state.asm.iteration = 0;
     },
-    incrementIteration(state) {
+    incrementIteration(state, getters) {
       state.asm.iteration++;
-      const length = state.asm.iteration + state.asm.activators + state.asm.nonActivators + 1;
-      state.asm.cycles[state.asm.cycles.length - 1].length = 0;
-      state.asm.cycles[state.asm.cycles.length - 1].cursor = length;
-      state.asm.cycles[state.asm.cycles.length - 1].length = length;
+      const length = getters.branchLength;
+      const cycle = _.last(state.asm.cycles);
+      if (cycle != null) {
+        cycle.cursor = length;
+        cycle.length = length;
+      }
     },
-    incrementActiveIndices(state) {
+    incrementActiveIndices(state, getters) {
       state.asm.cycles.forEach((cycle) => {
-        const length = state.asm.iteration + state.asm.activators + state.asm.nonActivators + 1;
-        if (cycle.length >= length) {
+        if (cycle.length >= getters.branchLength) {
           // Do nothing
         } else if (cycle.cursor >= cycle.length) {
           cycle.cursor = 1;
@@ -73,28 +73,33 @@ export default new Vuex.Store({
         }
       });
     },
-    addCycle(state) {
+    addCycle(state, getters) {
       const newCycle: ICycle = {
         cursor: 1,
-        length: state.asm.iteration + state.asm.activators + state.asm.nonActivators + 1,
+        length: getters.branchLength,
       };
-      state.asm.cycles[state.asm.cycles.length - 1].cursor = 1;
+      const cycle = _.last(state.asm.cycles);
+      if (cycle != null) {
+        cycle.cursor = 1;
+      }
       state.asm.cycles.push(newCycle);
     },
   },
   actions: {
     nextState({ commit, getters }) {
-      commit('incrementActiveIndices');
+      commit('incrementActiveIndices', getters);
       if (!getters.anyActive) {
-        commit('addCycle');
+        commit('addCycle', getters);
       }
-      commit('incrementIteration');
+      commit('incrementIteration', getters);
     },
-    setActivators({ commit }, payload: number) {
+    setActivators({ commit, getters }, payload: number) {
       commit('setActivators', payload);
+      commit('resetCycles', getters);
     },
-    setNonActivators({ commit }, payload: number) {
+    setNonActivators({ commit, getters }, payload: number) {
       commit('setNonActivators', payload);
+      commit('resetCycles', getters);
     },
   },
 });

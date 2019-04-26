@@ -10,7 +10,6 @@
 import Vue from 'vue';
 import Node from './Node.vue';
 
-
 export default Vue.extend({
   components: { Node },
   props: {
