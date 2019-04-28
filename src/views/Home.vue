@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="overflow-x: scroll; overflow-y: hidden; white-space: nowrap;">
     <Controls/>
     <li v-for="cycle in cycles">
       <Cycle :cursor="cycle.cursor" :length="cycle.length" />
