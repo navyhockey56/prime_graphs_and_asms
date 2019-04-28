@@ -11,57 +11,95 @@ interface ICycle {
 }
 
 const startingCycles: ICycle[] = [
-  {cursor: 2, length: 2},
+  { cursor: 1, length: 2 },
+  { cursor: 3, length: 3 },
 ];
 
 export default new Vuex.Store({
   state: {
     asm: {
       activators: 1,
-      // cycles: new Array<ICycle>(),
+      nonActivators: 1,
       cycles: startingCycles,
       iteration: 0,
     },
   },
   getters: {
     anyActive(state): boolean {
-      return _.some(state.asm.cycles, (cycle) => {
-        return cycle.cursor <= state.asm.activators;
+      let isActive = false;
+      state.asm.cycles.forEach((cycle) => {
+        if (cycle.cursor <= state.asm.activators) {
+          isActive = true;
+        }
       });
+      return isActive;
+    },
+    branchLength(state): number {
+      return state.asm.iteration + state.asm.activators + state.asm.nonActivators + 1;
     },
   },
   mutations: {
     setActivators(state, payload: number) {
-      state.asm.activators = payload;
+      state.asm.activators = Number(payload);
     },
-    incrementIteration(state) {
+    setNonActivators(state, payload: number) {
+      state.asm.nonActivators = Number(payload);
+    },
+    resetCycles(state, getters) {
+      const cycleLength = getters.branchLength - 1;
+      state.asm.cycles = [
+        { cursor: 1, length: cycleLength },
+        { cursor: cycleLength + 1, length: cycleLength + 1 },
+      ];
+      state.asm.iteration = 0;
+    },
+    incrementIteration(state, getters) {
       state.asm.iteration++;
+      const length = getters.branchLength;
+      const cycle = _.last(state.asm.cycles);
+      if (cycle != null) {
+        cycle.cursor = length;
+        cycle.length = length;
+      }
     },
-    incrementActiveIndices(state) {
+    incrementActiveIndices(state, getters) {
       state.asm.cycles.forEach((cycle) => {
-        if (cycle.cursor >= cycle.length) {
+        if (cycle.length >= getters.branchLength) {
+          // Do nothing
+        } else if (cycle.cursor >= cycle.length) {
           cycle.cursor = 1;
         } else {
           cycle.cursor++;
         }
       });
     },
-    addCycle(state) {
+    addCycle(state, getters) {
       const newCycle: ICycle = {
         cursor: 1,
-        length: state.asm.iteration + 3,
+        length: getters.branchLength,
       };
+      const cycle = _.last(state.asm.cycles);
+      if (cycle != null) {
+        cycle.cursor = 1;
+      }
       state.asm.cycles.push(newCycle);
     },
   },
   actions: {
     nextState({ commit, getters }) {
-      if (!getters.anyActive) { commit('addCycle'); }
-      commit('incrementActiveIndices');
-      commit('incrementIteration');
+      commit('incrementActiveIndices', getters);
+      if (!getters.anyActive) {
+        commit('addCycle', getters);
+      }
+      commit('incrementIteration', getters);
     },
-    setActivators({ commit }, payload: number) {
-      commit('setActivators', payload)
-    }
+    setActivators({ commit, getters }, payload: number) {
+      commit('setActivators', payload);
+      commit('resetCycles', getters);
+    },
+    setNonActivators({ commit, getters }, payload: number) {
+      commit('setNonActivators', payload);
+      commit('resetCycles', getters);
+    },
   },
 });
