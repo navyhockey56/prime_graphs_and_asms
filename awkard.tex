@@ -122,14 +122,15 @@ Thus we have shown that moving $k$ steps from $p_i$ will result in point $p_j$ w
 \textit{Q.E.D}
 \section{Activation Cycle Machines}
 
+\begin{figure}[h]
 \begin{tikzpicture}
 
 \tikzset{vertex/.style = {shape=rectangle,draw,minimum size=1.5em}}
 \tikzset{edge/.style = {->,> = latex'}}
 
 \node[vertex] (a) at  (0,0) {$p_0$};
-\node[vertex] (b) at  (2,2) {$p_1$};
 \tikzset{vertex/.style = {shape=circle,draw,minimum size=1.5em}}
+\node[vertex] (b) at  (2,2) {$p_1$};
 \node[vertex] (c) at  (4,0) {$p_2$};
 \node[vertex] (d) at  (2,-2) {$p_3$};
 
@@ -140,8 +141,8 @@ Thus we have shown that moving $k$ steps from $p_i$ will result in point $p_j$ w
 
 \tikzset{vertex/.style = {shape=rectangle,draw,minimum size=1.5em}}
 \node[vertex] (a1) at  (6,0) {$p_0$};
-\tikzset{vertex/.style = {shape=circle,draw,minimum size=1.5em}}
 \node[vertex] (b1) at  (8,2) {$p_1$};
+\tikzset{vertex/.style = {shape=circle,draw,minimum size=1.5em}}
 \node[vertex] (c1) at  (10,0) {$p_2$};
 \node[vertex] (d1) at  (8,-2) {$p_3$};
 
@@ -150,9 +151,23 @@ Thus we have shown that moving $k$ steps from $p_i$ will result in point $p_j$ w
 \draw[edge] (c1) to (d1);
 \draw[edge] (d1) to (a1);
 
-\end{tikzpicture}\\
-\\
-\textbf{Definition}\\
+\tikzset{vertex/.style = {shape=rectangle,draw,minimum size=1.5em}}
+\node[vertex] (a2) at  (12,0) {$p_0$};
+\node[vertex] (b2) at  (14,2) {$p_1$};
+\node[vertex] (c2) at  (16,0) {$p_2$};
+\tikzset{vertex/.style = {shape=circle,draw,minimum size=1.5em}}
+\node[vertex] (d2) at  (14,-2) {$p_3$};
+
+\draw[edge] (a2) to (b2);
+\draw[edge] (b2) to (c2);
+\draw[edge] (c2) to (d2);
+\draw[edge] (d2) to (a2);
+
+\end{tikzpicture}
+\caption{$C_{1,4}, C_{2,4}, C_{3,4}$}
+The square nodes represent activators, and the circle nodes are non-activators.
+\end{figure}
+\textbf{Definition}
 An \textit{activation cycle machine} (ACM) is state machine that runs on top of a cycle graph $CG_n$, that has been equipped with a subset of $0 < a < n$ activator points $A = \{$ $p_i$ $|$ $0 \leq i < a < n$ $\}$.\\
 \\
 Each state of an ACM is associated with a position $p \in CG_n$.\\
