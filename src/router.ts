@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
+import CanvasAsm from './views/CanvasAsm.vue';
 import Home from './views/Home.vue';
 import Theory from './views/Theory.vue';
 
@@ -17,6 +18,11 @@ export default new Router({
       component: Theory,
       name: 'Theory',
       path: '/theory',
+    },
+    {
+      component: CanvasAsm,
+      name: 'CanvasAsm',
+      path: '/canvas-asm',
     },
   ],
 });
