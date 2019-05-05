@@ -1,6 +1,6 @@
 export type Point = number[];
 
-interface Pathlike {
+export interface Pathlike {
   // Line styles
   lineWidth: number;
   lineCap: 'butt' | 'round' | 'square';
